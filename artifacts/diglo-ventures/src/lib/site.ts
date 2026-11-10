@@ -8,12 +8,10 @@ export const CONTACT = {
 };
 
 export const SERVICE_NAMES = [
-  "Brand Identity",
-  "Business Printing",
-  "Large Format",
-  "Apparel",
-  "Packaging",
-  "Brand Refresh",
+  "Gift Packs",
+  "Corporate Uniforms",
+  "PPE",
+  "Printing Services",
   "Not sure yet",
 ];
 

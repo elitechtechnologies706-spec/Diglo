@@ -60,7 +60,7 @@ export function SiteProviders({ children }: { children: ReactNode }) {
     <SiteCtx.Provider value={{ openWhatsApp, openQuote, showPhoneUnavailable }}>
       {children}
       <Dialog open={quoteOpen} onOpenChange={setQuoteOpen}>
-        <DialogContent className="max-h-[90dvh] overflow-y-auto rounded-2xl border-[#D2D2D7] bg-white sm:max-w-lg">
+        <DialogContent className="max-h-[90dvh] overflow-y-auto rounded-2xl border-[#3A3A3C] bg-[#2D2D2F] text-[#F5F5F7] sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="font-display text-[22px] text-[#1D1D1F]">Get a Free Quote</DialogTitle>
             <DialogDescription className="text-[#6E6E73]">Tell us what you need. We reply on WhatsApp.</DialogDescription>
@@ -69,7 +69,7 @@ export function SiteProviders({ children }: { children: ReactNode }) {
         </DialogContent>
       </Dialog>
       <Dialog open={!!waNotice} onOpenChange={(o) => !o && setWaNotice(null)}>
-        <DialogContent className="rounded-2xl border-[#D2D2D7] bg-white sm:max-w-md">
+        <DialogContent className="rounded-2xl border-[#3A3A3C] bg-[#2D2D2F] text-[#F5F5F7] sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="font-display text-[#1D1D1F]">{noticeKind} number not configured yet</DialogTitle>
             <DialogDescription className="text-[#6E6E73]">
@@ -99,7 +99,7 @@ export function FloatingWhatsApp() {
     <button
       onClick={() => openWhatsApp(DEFAULT_WA_MESSAGE)}
       aria-label="Get a quote on WhatsApp"
-      className="group fixed bottom-[92px] right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#FF6B00] text-white shadow-[0_14px_30px_-12px_rgba(255,107,0,.8)] transition-transform duration-200 hover:-translate-y-1 hover:scale-105 md:bottom-6 md:right-6"
+      className="group fixed bottom-[140px] right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#FF6B00] text-white shadow-[0_14px_30px_-12px_rgba(255,107,0,.8)] transition-transform duration-200 hover:-translate-y-1 hover:scale-105 md:bottom-6 md:right-6"
       data-testid="button-floating-whatsapp"
     >
       <MessageCircle className="h-6 w-6 transition-transform group-hover:rotate-[-8deg]" />

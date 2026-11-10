@@ -57,19 +57,20 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
 
   if (result) {
     return result.sent ? (
-      <div className="rounded-2xl border border-[#D2D2D7] bg-white p-6 animate-in fade-in zoom-in-95 duration-300" data-testid="status-quote-sent">
-        <CheckCircle2 className="h-8 w-8 text-[#1D1D1F]" />
-        <p className="mt-4 text-[16px] leading-relaxed text-[#1D1D1F]">
+      <div className="rounded-2xl border border-[#3A3A3C] bg-[#2D2D2F] p-5 text-[#F5F5F7] animate-in fade-in zoom-in-95 duration-300 md:p-6" data-testid="status-quote-sent">
+        <CheckCircle2 className="h-8 w-8 text-[#F5F5F7]" />
+        <p className="mt-4 break-words font-display text-[24px] font-bold leading-tight text-white" style={{ fontFamily: "Sora" }}>{result.ref}</p>
+        <p className="mt-3 text-[16px] leading-relaxed text-[#F5F5F7]">
           Thank you, {result.name}. Your quote request {result.ref} has been sent. We will reply within 5 minutes on WhatsApp.
         </p>
         {whatsappUrl(`Hello Diglo Ventures, I just sent quote request ${result.ref}.`) ? (
-          <a href={whatsappUrl(`Hello Diglo Ventures, I just sent quote request ${result.ref}.`)!} target="_blank" rel="noopener noreferrer" className={`${btnOrange} mt-4`}>Continue on WhatsApp</a>
+          <a href={whatsappUrl(`Hello Diglo Ventures, I just sent quote request ${result.ref}.`)!} target="_blank" rel="noopener noreferrer" className={`${btnOrange} mt-4 w-full md:w-auto`}>Open WhatsApp</a>
         ) : <p className="mt-3 text-sm">The business WhatsApp number is not configured yet. Your saved request is available to Diglo in Supabase.</p>}
       </div>
     ) : (
-      <div className="rounded-2xl border border-[#D2D2D7] bg-[#F5F5F7] p-6 animate-in fade-in duration-300" data-testid="status-quote-pending">
-        <Clock className="h-7 w-7 text-[#1D1D1F]" />
-        <p className="mt-4 font-semibold text-[#1D1D1F]">Saved on this device. Not sent yet.</p>
+      <div className="rounded-2xl border border-[#3A3A3C] bg-[#242426] p-5 text-[#F5F5F7] animate-in fade-in duration-300 md:p-6" data-testid="status-quote-pending">
+        <Clock className="h-7 w-7 text-[#F5F5F7]" />
+        <p className="mt-4 font-semibold text-white">Saved on this device. Not sent yet.</p>
         <p className="mt-2 text-[15px] leading-relaxed">
           Your request {result.ref} could not reach us right now. It is saved on this device for up to seven days and will be retried when this page is open and online. This message will update once it is delivered. Clearing browser data will remove the saved request.
         </p>
@@ -83,24 +84,24 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
 
   return (
     <form onSubmit={submit} className="space-y-4" noValidate>
-      <div className={`grid gap-4 ${compact ? "" : "sm:grid-cols-2"}`}>
+      <div className={`grid gap-4 ${compact ? "" : "md:grid-cols-2"}`}>
         <label className="block"><span className={labelCls}>Name</span>
-          <input required value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} className={inputCls} placeholder="Full name" autoComplete="name" data-testid="input-quote-name" /></label>
+          <input required value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} className={`${inputCls} !h-[52px] md:!h-12`} placeholder="Full name" autoComplete="name" data-testid="input-quote-name" /></label>
         <label className="block"><span className={labelCls}>Phone</span>
           <div className="flex">
-            <span className="grid h-12 place-items-center rounded-l-xl border border-r-0 border-[#D2D2D7] bg-white px-3 text-[15px] font-medium text-[#1D1D1F]">+256</span>
-            <input required type="tel" inputMode="tel" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} className={`${inputCls} rounded-l-none`} placeholder="7XX XXX XXX" autoComplete="tel-national" data-testid="input-quote-phone" />
+            <span className="grid h-[52px] place-items-center rounded-l-xl border border-r-0 border-[#3A3A3C] bg-[#2D2D2F] px-3 text-[15px] font-medium text-white md:h-12">+256</span>
+            <input required type="tel" inputMode="tel" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} className={`${inputCls} !h-[52px] rounded-l-none md:!h-12`} placeholder="7XX XXX XXX" autoComplete="tel-national" data-testid="input-quote-phone" />
           </div>
         </label>
       </div>
-      <div className="grid gap-4 sm:grid-cols-[1.4fr_1fr]">
+      <div className="grid gap-4 md:grid-cols-[1.4fr_1fr]">
         <label className="block"><span className={labelCls}>Service</span>
-          <select required value={f.service} onChange={(e) => setF({ ...f, service: e.target.value })} className={inputCls} data-testid="select-quote-service">
+          <select required value={f.service} onChange={(e) => setF({ ...f, service: e.target.value })} className={`${inputCls} !h-[52px] md:!h-12`} data-testid="select-quote-service">
             <option value="">Choose a service</option>
             {SERVICE_NAMES.map((s) => <option key={s}>{s}</option>)}
           </select></label>
         <label className="block"><span className={labelCls}>Quantity</span>
-          <input required type="number" min={1} inputMode="numeric" value={f.quantity} onChange={(e) => setF({ ...f, quantity: e.target.value })} className={inputCls} placeholder="100" data-testid="input-quote-quantity" /></label>
+          <input required type="number" min={1} inputMode="numeric" value={f.quantity} onChange={(e) => setF({ ...f, quantity: e.target.value })} className={`${inputCls} !h-[52px] md:!h-12`} placeholder="100" data-testid="input-quote-quantity" /></label>
       </div>
       <label className="block"><span className={labelCls}>Message</span>
         <textarea rows={compact ? 3 : 4} value={f.message} onChange={(e) => setF({ ...f, message: e.target.value })} className={`${inputCls} h-auto py-3`} placeholder="Business name, colours, deadline, delivery area" data-testid="input-quote-message" /></label>

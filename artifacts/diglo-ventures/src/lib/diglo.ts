@@ -57,7 +57,7 @@ function pendingLeads(): PendingLead[] {
       Number.isInteger(item?.quantity) && typeof item?.queuedAt === "number" &&
       Date.now() - item.queuedAt < QUEUE_TTL_MS);
   } catch {
-    throw new Error("Your saved quote queue could not be read. Please contact Diglo before clearing browser data.");
+    throw new Error("Your saved quote queue could not be read. Please contact Diglo Ventures before clearing browser data.");
   }
 }
 
@@ -121,7 +121,7 @@ export async function submitLead(input: LeadInput): Promise<{ ref: string; sent:
   const lead: PendingLead = { ...input, name, service, message, phone, id: crypto.randomUUID(), ref: makeRef(), queuedAt: Date.now() };
   // Write before attempting the network: a tab close cannot silently lose the lead.
   try { saveQueue([...queue, lead]); }
-  catch { throw new Error("This browser cannot save your quote for retry. Please allow local storage or contact Diglo directly."); }
+  catch { throw new Error("This browser cannot save your quote for retry. Please allow local storage or contact Diglo Ventures directly."); }
   try {
     const ref = await persistLead(lead);
     saveQueue(pendingLeads().filter((p) => p.id !== lead.id));
@@ -143,7 +143,7 @@ async function adminClient() {
   const client = requireSupabase();
   const { data, error } = await client.auth.getUser();
   if (error) throw new Error(error.message);
-  if (!isAdmin(data.user)) throw new Error("This account is not an authorised Diglo administrator.");
+  if (!isAdmin(data.user)) throw new Error("This account is not an authorised Diglo Ventures administrator.");
   return client;
 }
 

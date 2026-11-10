@@ -25,7 +25,7 @@ function isValidQuery(q: string) {
 function Timeline({ order }: { order: TrackedOrder }) {
   const idx = STAGES.findIndex((s) => s.toLowerCase() === String(order.stage).toLowerCase());
   return (
-    <article className="rounded-2xl border border-[#D2D2D7] bg-white p-6 animate-in fade-in slide-in-from-bottom-2 duration-500" data-testid={`card-order-${order.ref}`}>
+    <article className="rounded-2xl border border-[#3A3A3C] bg-[#2D2D2F] p-5 text-[#F5F5F7] animate-in fade-in slide-in-from-bottom-2 duration-500 md:p-6" data-testid={`card-order-${order.ref}`}>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-[13px] font-semibold uppercase tracking-[0.12em]">Order</p>
@@ -43,7 +43,7 @@ function Timeline({ order }: { order: TrackedOrder }) {
               {i < STAGES.length - 1 && (
                 <span className={`absolute left-[13px] top-7 h-[calc(100%-20px)] w-0.5 sm:left-7 sm:top-[13px] sm:h-0.5 sm:w-[calc(100%-20px)] ${past ? "bg-[#1D1D1F]" : "bg-[#D2D2D7]"}`} />
               )}
-              <span className={`relative z-10 grid h-7 w-7 shrink-0 place-items-center rounded-full border-2 ${current ? "border-[#FF6B00] bg-[#FF6B00] text-white" : past ? "border-[#1D1D1F] bg-[#1D1D1F] text-white" : "border-[#D2D2D7] bg-white"}`}>
+              <span className={`relative z-10 grid h-7 w-7 shrink-0 place-items-center rounded-full border-2 ${current ? "border-[#FF6B00] bg-[#FF6B00] text-white" : past ? "border-[#A1A1A6] bg-[#A1A1A6] text-[#1D1D1F]" : "border-[#3A3A3C] bg-[#2D2D2F] text-[#A1A1A6]"}`}>
                 {past ? <Check className="h-3.5 w-3.5" /> : current ? <span className="pulse-dot h-2 w-2 rounded-full bg-white" /> : null}
               </span>
               <span className={`text-[14px] sm:mt-3 ${current ? "font-bold text-[#1D1D1F]" : past ? "font-medium text-[#1D1D1F]" : "text-[#6E6E73]"}`}>{s}</span>
@@ -78,7 +78,7 @@ export default function Track() {
 
   return (
     <PageShell active="track">
-      <section className="bg-white py-16 md:py-24">
+      <section className="bg-[#1D1D1F] py-12 text-[#F5F5F7] md:py-20">
         <div className={`${wrap} max-w-[880px]`}>
           <p className="mb-3 text-[13px] font-semibold uppercase tracking-[0.14em]">Track Order</p>
           <h1 className="text-[36px] font-extrabold leading-[1.05] sm:text-[52px]" style={{ letterSpacing: "-0.03em" }}>Where is my order?</h1>
@@ -96,13 +96,13 @@ export default function Track() {
           <div className="mt-10" aria-live="polite">
             {state.kind === "loading" && (
               <div className="space-y-4 rounded-2xl border border-[#D2D2D7] p-6">
-                <div className="h-5 w-32 animate-pulse rounded bg-[#F5F5F7]" />
-                <div className="h-4 w-56 animate-pulse rounded bg-[#F5F5F7]" />
-                <div className="h-10 w-full animate-pulse rounded bg-[#F5F5F7]" />
+                <div className="h-5 w-32 animate-pulse rounded bg-[#242426]" />
+                <div className="h-4 w-56 animate-pulse rounded bg-[#242426]" />
+                <div className="h-10 w-full animate-pulse rounded bg-[#242426]" />
               </div>
             )}
             {state.kind === "notfound" && (
-              <div className="rounded-2xl border border-[#D2D2D7] bg-[#F5F5F7] p-6" data-testid="status-track-notfound">
+              <div className="rounded-2xl border border-[#3A3A3C] bg-[#242426] p-5 text-[#F5F5F7] md:p-6" data-testid="status-track-notfound">
                 <p className="text-[16px] font-semibold text-[#1D1D1F]">{NOT_FOUND}</p>
                 <button onClick={() => openWhatsApp(`Hello Diglo Ventures, I would like an update on my order ${q.trim()}.`)} className={`${btnOrange} mt-4`} data-testid="button-track-whatsapp"><MessageCircle className="h-4 w-4" /> WhatsApp Us</button>
               </div>
