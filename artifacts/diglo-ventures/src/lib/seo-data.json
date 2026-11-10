@@ -1,0 +1,120 @@
+{
+  "siteName": "Diglo Ventures",
+  "homeTitle": "Diglo Ventures | Branding and Printing Services in Kampala, Uganda",
+  "homeDescription": "Diglo Ventures designs and prints premium branding for growing businesses in Kampala. Logo design, business cards, banners, T-shirts, packaging and signage.",
+  "homeQuestion": "What Is Diglo Ventures?",
+  "homeAnswer": "Diglo Ventures is a branding and printing studio in Kampala, Uganda. We design logos and print business cards, flyers, banners, T-shirts, stickers and packaging for growing businesses, with a free design proof, 24 hour express options and delivery across Kampala.",
+  "homeFaqs": [
+    { "q": "How fast can you deliver?", "a": "Our 24 Hour Express option covers many standard print jobs once your design proof is approved. Larger or custom orders take longer, and we confirm the exact timeline with your quote." },
+    { "q": "Do you deliver outside Kampala?", "a": "We deliver across Kampala. For orders outside Kampala, please ask in your quote request and we will confirm whether delivery is possible and any extra cost." },
+    { "q": "Do you design, or do I need my own artwork?", "a": "We design for you. Every order includes a free design proof. If you already have artwork, send it and we will check it is ready for print." },
+    { "q": "Is there a minimum order?", "a": "Minimums depend on the product. Our listed prices show common quantities, such as 100 business cards. Tell us what you need and we will advise." },
+    { "q": "How do I pay?", "a": "Payment is by Mobile Money or Bank Transfer. Payment details are shared with your confirmed quote." },
+    { "q": "What if I do not like the design?", "a": "You approve a design proof before anything is printed. Tell us what to change and we revise it. Our Quality Guarantee covers a free reprint if a print fault is our mistake." }
+  ],
+  "homeProducts": [
+    { "name": "Business Cards (100)", "price": 80000 },
+    { "name": "Flyers (100)", "price": 120000 },
+    { "name": "Logo Complete", "price": 250000 },
+    { "name": "Banner 3x2", "price": 150000 },
+    { "name": "T-Shirt", "price": 35000 },
+    { "name": "Stickers (100)", "price": 60000 }
+  ],
+  "pages": [
+    {
+      "slug": "logo-design-kampala",
+      "service": "Brand Identity",
+      "eyebrow": "Logo Design",
+      "title": "Logo Design in Kampala | Diglo Ventures",
+      "h1": "Logo Design in Kampala",
+      "description": "Professional logo design in Kampala from 250,000 UGX. Logo, colour palette, font guide and brand book with a free design proof from Diglo Ventures.",
+      "question": "How much does logo design cost in Kampala?",
+      "answer": "At Diglo Ventures, a complete logo package in Kampala starts from 250,000 UGX. It includes your logo, colour palette, font guide and brand book. You approve a free design proof first, so your brand looks professional right from day one.",
+      "productName": "Logo Complete",
+      "price": 250000,
+      "priceNote": "Logo, colour palette, font guide and brand book",
+      "image": "hero.jpg",
+      "faqs": [
+        { "q": "What do I receive with a logo package?", "a": "Your logo, a colour palette, a font guide and a brand book that shows how to use them consistently." },
+        { "q": "Can I request changes?", "a": "Yes. You receive a free design proof and can request changes before the design is finalised." },
+        { "q": "Can you refresh an existing logo?", "a": "Yes. Our Brand Refresh service starts from 180,000 UGX and modernises your logo without losing your customers." }
+      ]
+    },
+    {
+      "slug": "business-cards-kampala",
+      "service": "Business Printing",
+      "eyebrow": "Business Cards",
+      "title": "Business Card Printing in Kampala | Diglo Ventures",
+      "h1": "Business Card Printing in Kampala",
+      "description": "Business card printing in Kampala from 80,000 UGX for 100 cards, including a free design proof and delivery across Kampala.",
+      "question": "How much does business card printing cost in Kampala?",
+      "answer": "Diglo Ventures prints 100 business cards in Kampala from 80,000 UGX, including a free design proof. Many standard card orders can be ready through our 24 hour express option after approval, with delivery available across Kampala straight to your door.",
+      "productName": "Business Cards (100)",
+      "price": 80000,
+      "priceNote": "100 cards, design proof included",
+      "image": "hero.jpg",
+      "faqs": [
+        { "q": "Do you design the card for me?", "a": "Yes. We design your card and send a free proof for approval before printing." },
+        { "q": "Can I order more than 100 cards?", "a": "Yes. Use the price calculator or request a quote for larger quantities." },
+        { "q": "How do I pay?", "a": "Payment is by Mobile Money or Bank Transfer." }
+      ]
+    },
+    {
+      "slug": "tshirt-printing-kampala",
+      "service": "Apparel",
+      "eyebrow": "T-Shirt Printing",
+      "title": "T-Shirt Printing in Kampala | Diglo Ventures",
+      "h1": "T-Shirt Printing in Kampala",
+      "description": "Branded T-shirt printing in Kampala from 35,000 UGX per shirt. Hoodies, caps and uniforms also available from Diglo Ventures.",
+      "question": "How much does T-shirt printing cost in Kampala?",
+      "answer": "Diglo Ventures prints branded T-shirts in Kampala from 35,000 UGX per shirt, including a free design proof. We also print hoodies, caps and staff uniforms, so your team looks consistent and professional, with delivery available across Kampala for every order.",
+      "productName": "Printed T-Shirt",
+      "price": 35000,
+      "priceNote": "Per printed shirt",
+      "image": "apparel.jpg",
+      "faqs": [
+        { "q": "Do you print hoodies and caps?", "a": "Yes. We print T-shirts, hoodies, caps and uniforms." },
+        { "q": "Can you add my logo?", "a": "Yes. Send your logo or let us design one, and we will send a proof before printing." },
+        { "q": "Is there a minimum quantity?", "a": "Minimums depend on the garment and print method. Tell us your quantity and we will advise." }
+      ]
+    },
+    {
+      "slug": "banner-printing-kampala",
+      "service": "Large Format",
+      "eyebrow": "Banner Printing",
+      "title": "Banner Printing in Kampala | Diglo Ventures",
+      "h1": "Banner Printing in Kampala",
+      "description": "Banner printing in Kampala from 150,000 UGX for a 3 x 2 metre banner. Roll-ups, posters, stickers and signage from Diglo Ventures.",
+      "question": "How much does banner printing cost in Kampala?",
+      "answer": "Diglo Ventures prints a 3 x 2 metre banner in Kampala from 150,000 UGX, including a free design proof. We also produce roll-up banners, posters, stickers and signage designed to get noticed from across the street, all delivered across Kampala.",
+      "productName": "Banner 3x2",
+      "price": 150000,
+      "priceNote": "3 x 2 metres, design proof included",
+      "image": "signage.jpg",
+      "faqs": [
+        { "q": "Can you print other sizes?", "a": "Yes. Request a quote with your size and we will confirm the price." },
+        { "q": "Do you make roll-up banners?", "a": "Yes. Roll-ups, posters, stickers and signage are part of our Large Format service." },
+        { "q": "Do you design the banner?", "a": "Yes. Every order includes a free design proof." }
+      ]
+    },
+    {
+      "slug": "packaging-uganda",
+      "service": "Packaging",
+      "eyebrow": "Packaging",
+      "title": "Packaging and Label Printing in Uganda | Diglo Ventures",
+      "h1": "Packaging and Label Printing in Uganda",
+      "description": "Product packaging, labels, boxes and paper bags in Uganda from 60,000 UGX. Designed and printed by Diglo Ventures in Kampala.",
+      "question": "How much does packaging printing cost in Uganda?",
+      "answer": "Diglo Ventures designs and prints product packaging from our Kampala studio, starting from 60,000 UGX. We produce labels, boxes, paper bags and stickers that make your product look expensive before it is opened, with a free design proof always included.",
+      "productName": "Stickers and Labels (100)",
+      "price": 60000,
+      "priceNote": "From 100 stickers or labels",
+      "image": "packaging.jpg",
+      "faqs": [
+        { "q": "What packaging do you print?", "a": "Labels, boxes, paper bags and stickers." },
+        { "q": "Do you deliver outside Kampala?", "a": "Please ask in your quote request and we will confirm whether delivery is possible and any extra cost." },
+        { "q": "Can you design my packaging?", "a": "Yes. We design it and send a free proof for approval before printing." }
+      ]
+    }
+  ]
+}

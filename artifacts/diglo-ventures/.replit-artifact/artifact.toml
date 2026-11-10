@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Diglo Ventures"
+description = "Premium branding and printing website for Diglo Ventures in Kampala, Uganda. Preview only."
+version = "1.0.0"
+id = "artifacts/diglo-ventures"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23732
+
+[services.development]
+run = "pnpm --filter @workspace/diglo-ventures run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/diglo-ventures", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/diglo-ventures/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23732"
+BASE_PATH = "/"

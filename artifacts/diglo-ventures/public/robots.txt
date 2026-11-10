@@ -1,0 +1,5 @@
+# Preview build: indexing disabled.
+# A production robots.txt with a sitemap is generated at build time
+# only when VITE_SITE_URL (approved absolute origin) is configured.
+User-agent: *
+Disallow: /

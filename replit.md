@@ -1,6 +1,6 @@
-# [Project name]
+# Diglo Ventures
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+Branding and printing website for growing businesses in Kampala, Uganda.
 
 ## Run & Operate
 
@@ -34,7 +34,16 @@ _Describe the high-level user-facing capabilities of this app once they exist._
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Preview only. Do not deploy or suggest publishing unless the user changes this instruction.
+- English only; no Luganda or slang.
+- The strict brand palette and orange-use restrictions in the supplied brief take precedence over generic design guidance.
+- Offer exactly six services: Brand Identity, Business Printing, Large Format, Apparel, Packaging, and Brand Refresh. Do not add social media services or social links.
+- Differentiate mobile navigation from desktop navigation; desktop links have no dropdown icons.
+- Exact testimonial quotes and FAQ answers from the referenced earlier brief were not available. Do not invent customer quotes.
+- No WhatsApp or phone number was supplied. Do not invent contact details or imply that live order tracking is connected.
+- Functionality additions must preserve the established colours and design.
+- The user explicitly chose Supabase for leads, orders and admin authentication. Do not replace it with another provider.
+- A queued offline quote must never display the sent confirmation until Supabase confirms receipt.
 
 ## Gotchas
 
