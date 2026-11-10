@@ -1,8 +1,8 @@
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
 import { useLocation } from "wouter";
 import { Mail, MessageCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { whatsappUrl, retryPendingLeads } from "@/lib/diglo";
+import { whatsappUrl } from "@/lib/diglo";
 import { CONTACT } from "@/lib/site";
 import { btnDark } from "@/components/tokens";
 import { QuoteForm } from "@/components/quote-form";
@@ -45,14 +45,6 @@ export function SiteProviders({ children }: { children: ReactNode }) {
   const showPhoneUnavailable = useCallback(() => {
     if (CONTACT.phone) window.location.href = `tel:${CONTACT.phone}`;
     else setWaNotice({ kind: "phone", message: DEFAULT_WA_MESSAGE });
-  }, []);
-
-  // Retry queued leads at startup and whenever the browser comes back online.
-  useEffect(() => {
-    const run = () => { retryPendingLeads().catch(() => undefined); };
-    run();
-    window.addEventListener("online", run);
-    return () => window.removeEventListener("online", run);
   }, []);
 
   const noticeKind = waNotice?.kind === "phone" ? "Phone" : "WhatsApp";

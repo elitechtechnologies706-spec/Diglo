@@ -7,6 +7,14 @@ import { PageShell } from "@/components/site-shell";
 import { useSite } from "@/components/site-providers";
 import { btnDark, btnOrange, wrap } from "@/components/tokens";
 import NotFound from "@/pages/not-found";
+import { ProductPhoto } from "@/components/product-photo";
+import { DIGLO_IMAGES } from "@/lib/images";
+
+function seoPhoto(slug: string) {
+  if (slug === "logo-design-kampala" || slug === "business-cards-kampala" || slug === "banner-printing-kampala") return DIGLO_IMAGES.printing;
+  if (slug === "tshirt-printing-kampala") return DIGLO_IMAGES.uniforms;
+  return DIGLO_IMAGES.giftPacks;
+}
 
 export default function SeoPage({ slug }: { slug: string }) {
   const page = seo.pages.find((p) => p.slug === slug);
@@ -28,9 +36,13 @@ export default function SeoPage({ slug }: { slug: string }) {
               <button onClick={() => openWhatsApp(`Hello Diglo Ventures, I would like a quote for ${page.productName}.`)} className={btnDark} data-testid="button-seo-whatsapp"><MessageCircle className="h-4 w-4" /> Ask on WhatsApp</button>
             </div>
           </div>
-          <div className="grid min-h-[220px] place-items-center rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5 text-center text-[14px] text-[#A1A1A6]" data-testid="photo-pending-seo">
-            Exact {page.productName} photo pending
-          </div>
+          <ProductPhoto
+            src={seoPhoto(page.slug)}
+            alt={`Diglo Ventures - ${page.productName} in Kampala`}
+            label={page.productName}
+            className="aspect-[4/3] min-h-[220px] rounded-xl border border-[#3A3A3C]"
+            data-testid="photo-seo"
+          />
         </div>
       </section>
 

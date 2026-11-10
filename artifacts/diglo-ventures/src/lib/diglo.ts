@@ -17,11 +17,6 @@ export type Order = {
   status: LeadStatus; stage: OrderStage; updated_at: string;
 };
 export type TrackedOrder = Pick<Order, "ref" | "service" | "stage" | "updated_at">;
-export type LeadInput = Pick<Lead, "name" | "phone" | "service" | "quantity" | "message">;
-type PendingLead = LeadInput & { id: string; ref: string; queuedAt: number };
-const QUEUE_KEY = "diglo_pending_leads_v1";
-const MAX_QUEUE = 20;
-const QUEUE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 export function requireSupabase() {
   if (!supabase) throw new Error("Supabase is not connected in this preview. Please contact Diglo Ventures by WhatsApp or email.");
@@ -47,91 +42,10 @@ export function whatsappUrl(message: string): string | null {
   return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
 }
 
-function pendingLeads(): PendingLead[] {
-  const raw = localStorage.getItem(QUEUE_KEY);
-  if (!raw) return [];
-  try {
-    const items: unknown = JSON.parse(raw);
-    if (!Array.isArray(items)) throw new Error("Invalid queue");
-    return items.filter((item): item is PendingLead =>
-      typeof item?.id === "string" && typeof item?.ref === "string" &&
-      typeof item?.name === "string" && typeof item?.phone === "string" &&
-      typeof item?.service === "string" && typeof item?.message === "string" &&
-      Number.isInteger(item?.quantity) && typeof item?.queuedAt === "number" &&
-      Date.now() - item.queuedAt < QUEUE_TTL_MS);
-  } catch {
-    throw new Error("Your saved quote queue could not be read. Please contact Diglo Ventures before clearing browser data.");
-  }
-}
-
-function saveQueue(items: PendingLead[]) {
-  localStorage.setItem(QUEUE_KEY, JSON.stringify(items));
-}
-
-function makeRef() {
+export function makeQuoteRef() {
   const bytes = crypto.getRandomValues(new Uint8Array(4));
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   return "DG-" + [...bytes].map((b) => alphabet[b % alphabet.length]).join("");
-}
-
-async function persistLead(lead: PendingLead): Promise<string> {
-  const client = requireSupabase();
-  const { data, error } = await client.rpc("diglo_submit_lead", {
-    p_id: lead.id, p_ref: lead.ref, p_name: lead.name, p_phone: lead.phone,
-    p_service: lead.service, p_quantity: lead.quantity, p_message: lead.message,
-  });
-  if (error) throw new Error(error.message);
-  if (typeof data !== "string" || !/^DG-[A-Z0-9]{4}$/.test(data)) {
-    throw new Error("The server did not confirm a quote reference.");
-  }
-  return data;
-}
-
-let retrying: Promise<number> | null = null;
-export function retryPendingLeads(): Promise<number> {
-  if (retrying) return retrying;
-  retrying = (async () => {
-    if (!supabase || !navigator.onLine) return 0;
-    const initial = pendingLeads();
-    let sent = 0;
-    for (const lead of initial) {
-      try {
-        const ref = await persistLead(lead);
-        // Read again after awaiting so a new quote submitted in the meantime is retained.
-        saveQueue(pendingLeads().filter((p) => p.id !== lead.id));
-        window.dispatchEvent(new CustomEvent("diglo:lead-sent", { detail: { ref, queuedRef: lead.ref } }));
-        sent++;
-      } catch {
-        // Retain the item; retry on the next online event or explicit retry.
-      }
-    }
-    return sent;
-  })().finally(() => { retrying = null; });
-  return retrying;
-}
-
-export async function submitLead(input: LeadInput): Promise<{ ref: string; sent: boolean }> {
-  const phone = normalizePhone(input.phone);
-  const name = input.name.trim();
-  const service = input.service.trim();
-  const message = input.message.trim();
-  if (name.length < 2 || name.length > 120) throw new Error("Enter a name between 2 and 120 characters.");
-  if (!service || service.length > 120) throw new Error("Choose a service.");
-  if (!Number.isInteger(input.quantity) || input.quantity < 1 || input.quantity > 1000000) throw new Error("Enter a valid quantity.");
-  if (message.length > 5000) throw new Error("Please keep your message under 5,000 characters.");
-  const queue = pendingLeads();
-  if (queue.length >= MAX_QUEUE) throw new Error("Your offline queue is full. Retry the saved requests before submitting another.");
-  const lead: PendingLead = { ...input, name, service, message, phone, id: crypto.randomUUID(), ref: makeRef(), queuedAt: Date.now() };
-  // Write before attempting the network: a tab close cannot silently lose the lead.
-  try { saveQueue([...queue, lead]); }
-  catch { throw new Error("This browser cannot save your quote for retry. Please allow local storage or contact Diglo Ventures directly."); }
-  try {
-    const ref = await persistLead(lead);
-    saveQueue(pendingLeads().filter((p) => p.id !== lead.id));
-    return { ref, sent: true };
-  } catch {
-    return { ref: lead.ref, sent: false };
-  }
 }
 
 export async function lookupOrders(query: string): Promise<TrackedOrder[]> {

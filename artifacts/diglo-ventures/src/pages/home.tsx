@@ -9,6 +9,8 @@ import { Footer, MobileBar, MobileCtaBar, Nav } from "@/components/site-shell";
 import { PriceCalculator } from "@/components/price-calculator";
 import { QuoteForm } from "@/components/quote-form";
 import { UniformIndustry } from "@/components/uniform-industry";
+import { ProductPhoto } from "@/components/product-photo";
+import { DIGLO_IMAGES } from "@/lib/images";
 
 /* ---------- data ---------- */
 const SERVICES = [
@@ -28,16 +30,16 @@ const PRICES = [
 ];
 
 type Cat = "Branding" | "Print" | "Merch" | "Signage";
-const WORK: { title: string; cat: Cat; client: string; ordered: string; from: number; time: string; service: string }[] = [
-  { title: "Bakery gift pack", cat: "Branding", client: "Home bakery", ordered: "Gift boxes, branded bags and labels", from: 250000, time: "3–5 days", service: "Gift Packs" },
-  { title: "Launch print set", cat: "Print", client: "New retail shop", ordered: "100 business cards, 100 flyers", from: 200000, time: "24 hours", service: "Printing Services" },
-  { title: "Gym team kit", cat: "Merch", client: "Fitness studio", ordered: "Printed T-shirts and caps", from: 35000, time: "2–3 days", service: "Corporate Uniforms" },
-  { title: "Storefront roll-up", cat: "Signage", client: "Fitness studio", ordered: "Roll-up banner and wall sign", from: 150000, time: "48 hours", service: "Printing Services" },
-  { title: "Boutique gift set", cat: "Branding", client: "Fashion boutique", ordered: "Branded bags, tags and thank-you cards", from: 180000, time: "4–6 days", service: "Gift Packs" },
-  { title: "Product label run", cat: "Print", client: "Juice producer", ordered: "100 bottle labels", from: 60000, time: "24 hours", service: "Printing Services" },
-  { title: "Staff uniforms", cat: "Merch", client: "Restaurant", ordered: "Embroidered polo uniforms", from: 35000, time: "3–4 days", service: "Corporate Uniforms" },
-  { title: "Event banner", cat: "Signage", client: "Conference organiser", ordered: "3 x 2 m stage banner", from: 150000, time: "24 hours", service: "Printing Services" },
-  { title: "Shopping bag set", cat: "Branding", client: "Cosmetics seller", ordered: "Branded paper bags and stickers", from: 60000, time: "3 days", service: "Gift Packs" },
+const WORK: { title: string; cat: Cat; client: string; ordered: string; from: number; time: string; service: string; photo: keyof typeof DIGLO_IMAGES }[] = [
+  { title: "Bakery gift pack", cat: "Branding", client: "Home bakery", ordered: "Gift boxes, branded bags and labels", from: 250000, time: "3–5 days", service: "Gift Packs", photo: "giftPacks" },
+  { title: "Launch print set", cat: "Print", client: "New retail shop", ordered: "100 business cards, 100 flyers", from: 200000, time: "24 hours", service: "Printing Services", photo: "printing" },
+  { title: "Gym team kit", cat: "Merch", client: "Fitness studio", ordered: "Printed T-shirts and caps", from: 35000, time: "2–3 days", service: "Corporate Uniforms", photo: "uniforms" },
+  { title: "Storefront roll-up", cat: "Signage", client: "Fitness studio", ordered: "Roll-up banner and wall sign", from: 150000, time: "48 hours", service: "Printing Services", photo: "printing" },
+  { title: "Boutique gift set", cat: "Branding", client: "Fashion boutique", ordered: "Branded bags, tags and thank-you cards", from: 180000, time: "4–6 days", service: "Gift Packs", photo: "giftPacks" },
+  { title: "Product label run", cat: "Print", client: "Juice producer", ordered: "100 bottle labels", from: 60000, time: "24 hours", service: "Printing Services", photo: "printing" },
+  { title: "Staff uniforms", cat: "Merch", client: "Restaurant", ordered: "Embroidered polo uniforms", from: 35000, time: "3–4 days", service: "Corporate Uniforms", photo: "uniforms" },
+  { title: "Event banner", cat: "Signage", client: "Conference organiser", ordered: "3 x 2 m stage banner", from: 150000, time: "24 hours", service: "Printing Services", photo: "printing" },
+  { title: "Shopping bag set", cat: "Branding", client: "Cosmetics seller", ordered: "Branded paper bags and stickers", from: 60000, time: "3 days", service: "Gift Packs", photo: "giftPacks" },
 ];
 
 const FAQS = seo.homeFaqs.map((f) => ({ q: f.q, a: f.a }));
@@ -130,21 +132,13 @@ function Hero({ onQuote, onWhatsApp }: { onQuote: () => void; onWhatsApp: () => 
           <p className="mt-5 text-[13px] text-[#A1A1A6]">Kampala · Mon–Sat, 8AM–7PM</p>
         </div>
         <div className="grid h-[280px] grid-cols-2 grid-rows-2 gap-3 md:h-[360px] lg:h-[420px]">
-          <PhotoPending label="Gift Pack photo needed" className="row-span-2 md:hidden" />
-          <PhotoPending label="Gift Pack" className="row-span-2 hidden md:block" />
-          <PhotoPending label="Uniform photo needed" className="hidden md:block" />
-          <PhotoPending label="PPE photo needed" className="hidden md:block" />
+          <ProductPhoto src={DIGLO_IMAGES.giftPacks} alt="Diglo Ventures - Gift Packs in Kampala" label="Gift Packs" className="row-span-2 min-h-0 rounded-xl border border-[#3A3A3C] md:hidden" />
+          <ProductPhoto src={DIGLO_IMAGES.giftPacks} alt="Diglo Ventures - Gift Packs in Kampala" label="Gift Packs" className="row-span-2 hidden min-h-0 rounded-xl border border-[#3A3A3C] md:block" />
+          <ProductPhoto src={DIGLO_IMAGES.uniforms} alt="Diglo Ventures - Uniforms in Kampala" label="Corporate Uniforms" className="hidden min-h-0 rounded-xl border border-[#3A3A3C] md:block" />
+          <ProductPhoto src={DIGLO_IMAGES.ppe} alt="Diglo Ventures - PPE in Kampala" label="PPE" className="hidden min-h-0 rounded-xl border border-[#3A3A3C] md:block" />
         </div>
       </div>
     </section>
-  );
-}
-
-function PhotoPending({ label, className = "" }: { label: string; className?: string }) {
-  return (
-    <div className={`grid min-h-0 place-items-center rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-4 text-center ${className}`} aria-label={label}>
-      <span className="text-[13px] font-medium text-[#A1A1A6]">{label} · upload exact photo</span>
-    </div>
   );
 }
 
@@ -311,7 +305,7 @@ function Work({ onOrder }: { onOrder: (s: string) => void }) {
     <section id="work" className="bg-[#1D1D1F] py-10 md:py-16">
       <div className={wrap}>
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHead eyebrow="Our work" title="Made for teams in Kampala." sub="Matching project photos are being added as approved assets become available." />
+          <SectionHead eyebrow="Our work" title="Made for teams in Kampala." sub="Gift packs, uniforms and print pieces for local teams." />
         </div>
         <div className="mb-6" role="tablist">
           <div className="flex flex-wrap gap-2">
@@ -323,12 +317,7 @@ function Work({ onOrder }: { onOrder: (s: string) => void }) {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {list.map((w, i) => (
             <article key={w.title} className="group flex flex-col overflow-hidden rounded-xl border border-[#3A3A3C] bg-[#2D2D2F]" data-testid={`card-work-${i}`}>
-              <div className="grid aspect-[4/3] place-items-center border-b border-[#3A3A3C] bg-[#2D2D2F] p-5 text-center">
-                <div>
-                  <p className="text-[15px] font-semibold text-white">{w.title}</p>
-                  <p className="mt-2 text-[13px] text-[#A1A1A6]">{w.service} photo pending</p>
-                </div>
-              </div>
+              <ProductPhoto src={DIGLO_IMAGES[w.photo]} alt={`Diglo Ventures - ${w.service} for ${w.title} in Kampala`} label={w.service} className="aspect-[4/3] border-b border-[#3A3A3C]" />
               <div className="flex flex-1 flex-col p-5">
                 <h3 className="text-[18px] font-semibold">{w.title}</h3>
                 <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-[14px]">

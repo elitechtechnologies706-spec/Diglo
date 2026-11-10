@@ -7,7 +7,6 @@ import ts from "typescript";
 
 const source = readFileSync(new URL("../src/lib/diglo.ts", import.meta.url), "utf8");
 function load(env = {}, rpc = null) {
-  const store = new Map();
   const code = ts.transpileModule(source.replaceAll("import.meta.env", JSON.stringify(env)), {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText;
@@ -20,9 +19,8 @@ function load(env = {}, rpc = null) {
       : { createClient: () => ({ rpc }) },
   };
   vm.runInNewContext(code, context);
-  return { api: context.exports, store };
+  return { api: context.exports };
 }
-const input = { name: "QA Test", phone: "0700000000", service: "Business Printing", quantity: 100, message: "Test only" };
 test("normalises Uganda phone input and rejects malformed numbers", () => {
   const { api } = load();
   assert.equal(api.normalizePhone("0700000000"), "+256700000000");
@@ -58,31 +56,17 @@ test("rejects invalid tracking query", async () => {
   const { api } = load();
   await assert.rejects(api.lookupOrders("not-a-code-or-phone"), /valid phone number/);
 });
-test("unconfigured Supabase queues without saying sent", async () => {
-  const { api, store } = load();
-  const result = await api.submitLead(input);
-  assert.equal(result.sent, false);
-  assert.match(result.ref, /^DG-[A-Z0-9]{4}$/);
-  assert.equal(JSON.parse(store.get("diglo_pending_leads_v1")).length, 1);
-  assert.equal(await api.retryPendingLeads(), 0);
-});
-test("server acknowledgement removes queued record and preserves returned reference", async () => {
-  const { api, store } = load({ VITE_SUPABASE_URL: "https://test.supabase.co", VITE_SUPABASE_ANON_KEY: "public-test" },
-    async () => ({ data: "DG-TEST", error: null }));
-  const result = await api.submitLead(input);
-  assert.equal(result.sent, true);
-  assert.equal(result.ref, "DG-TEST");
-  assert.equal(JSON.parse(store.get("diglo_pending_leads_v1")).length, 0);
-});
-test("network failure remains queued and a retry removes it only after acknowledgement", async () => {
-  let fail = true;
-  const { api, store } = load({ VITE_SUPABASE_URL: "https://test.supabase.co", VITE_SUPABASE_ANON_KEY: "public-test" },
-    async () => fail ? { error: { message: "Offline" }, data: null } : { data: "DG-TEST", error: null });
-  assert.equal((await api.submitLead(input)).sent, false);
-  assert.equal(JSON.parse(store.get("diglo_pending_leads_v1")).length, 1);
-  fail = false;
-  assert.equal(await api.retryPendingLeads(), 1);
-  assert.equal(JSON.parse(store.get("diglo_pending_leads_v1")).length, 0);
+test("generates a local quote code and includes it with details in the WhatsApp link", () => {
+  const { api } = load();
+  const ref = api.makeQuoteRef();
+  assert.match(ref, /^DG-[A-Z0-9]{4}$/);
+  const message = `Hello Diglo Ventures, I would like a quote - Code ${ref} - Service: Printing Services - Qty: 100 - Details: Matte finish - Name: QA Test`;
+  const url = new URL(api.whatsappUrl(message));
+  assert.equal(url.hostname, "wa.me");
+  assert.equal(url.pathname, "/254721928484");
+  assert.equal(url.searchParams.get("text"), message);
+  assert.equal(typeof api.submitLead, "undefined");
+  assert.equal(typeof api.retryPendingLeads, "undefined");
 });
 test("admin flag must be server-owned app metadata, not user metadata", () => {
   const { api } = load();

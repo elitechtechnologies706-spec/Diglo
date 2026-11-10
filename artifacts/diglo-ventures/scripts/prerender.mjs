@@ -22,6 +22,7 @@ const base = (process.env.BASE_PATH || "/").replace(/\/?$/, "/");
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const abs = (p) => (site ? site + p : null);
 
+const heroImage = "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80";
 const business = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
@@ -34,7 +35,7 @@ const business = {
   currenciesAccepted: "UGX",
   paymentAccepted: "Mobile Money, Bank Transfer",
   openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], opens: "08:00", closes: "19:00" }],
-  ...(site ? { url: site + "/", image: site + base + "images/hero.jpg" } : {}),
+  ...(site ? { url: site + "/", image: heroImage } : {}),
 };
 const faqLd = (faqs) => ({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
 const productLd = (name, price, url) => ({
@@ -76,7 +77,7 @@ for (const r of routes) {
   html = setMeta(html, "name", "robots", indexable && !r.noindex ? "index, follow" : "noindex, nofollow");
   if (site) {
     html = setMeta(html, "property", "og:url", site + r.path);
-    html = setMeta(html, "property", "og:image", site + base + "images/hero.jpg");
+    html = setMeta(html, "property", "og:image", heroImage);
     if (!r.noindex) html = html.replace("</head>", `    <link rel="canonical" href="${site + r.path}" />\n  </head>`);
   }
   if (r.ld.length) {

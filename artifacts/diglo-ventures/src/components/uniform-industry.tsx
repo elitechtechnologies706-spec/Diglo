@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import { useSite } from "@/components/site-providers";
 import { formatUGX } from "@/lib/site";
+import { ProductPhoto } from "@/components/product-photo";
+import { DIGLO_IMAGES } from "@/lib/images";
 
 type Industry = {
   name: string;
@@ -17,6 +19,7 @@ type Industry = {
   summary: string;
   items: [string, string, string];
   mark: string;
+  photo: keyof typeof DIGLO_IMAGES;
 };
 
 const INDUSTRIES: Industry[] = [
@@ -26,6 +29,7 @@ const INDUSTRIES: Industry[] = [
     summary: "A considered look from front of house to the kitchen.",
     items: ["Chef Jacket", "Apron", "Waiter Shirt"],
     mark: "01",
+    photo: "chefApron",
   },
   {
     name: "Hospitals & Clinics",
@@ -33,6 +37,7 @@ const INDUSTRIES: Industry[] = [
     summary: "Practical, clean uniforms for patient-facing teams.",
     items: ["Nurse Scrubs", "Lab Coat", "Reception Tunic"],
     mark: "02",
+    photo: "uniforms",
   },
   {
     name: "Schools",
@@ -40,6 +45,7 @@ const INDUSTRIES: Industry[] = [
     summary: "Cohesive staff wear built for busy school days.",
     items: ["School Polo", "Teacher Shirt", "Cardigan"],
     mark: "03",
+    photo: "uniforms",
   },
   {
     name: "Offices & Banks",
@@ -47,6 +53,7 @@ const INDUSTRIES: Industry[] = [
     summary: "Sharp everyday pieces for teams that meet the public.",
     items: ["Corporate Shirt", "Branded Polo", "Blazer"],
     mark: "04",
+    photo: "officeTeam",
   },
   {
     name: "Security & Cleaning",
@@ -54,6 +61,7 @@ const INDUSTRIES: Industry[] = [
     summary: "Durable, easy-to-identify gear for hands-on work.",
     items: ["Reflective Vest", "Work Shirt", "Safety Trousers"],
     mark: "05",
+    photo: "ppe",
   },
   {
     name: "Churches & Events",
@@ -61,6 +69,7 @@ const INDUSTRIES: Industry[] = [
     summary: "A unified team presence for gatherings and occasions.",
     items: ["Event Polo", "Choir Shirt", "Branded Scarf"],
     mark: "06",
+    photo: "officeTeam",
   },
 ];
 
@@ -148,18 +157,12 @@ export function UniformIndustry() {
                   key={item.name}
                   className={`w-[min(84vw,330px)] shrink-0 snap-start overflow-hidden rounded-xl border bg-[#2D2D2F] transition-colors md:w-auto md:shrink ${isSelected ? "border-[#A1A1A6]" : "border-[#3A3A3C] hover:border-[#A1A1A6]"}`}
                 >
-                  <div className="relative grid h-[116px] place-items-center overflow-hidden border-b border-[#3A3A3C] bg-[#2D2D2F]" aria-label={`${item.name} uniform photo pending`}>
-                    <div className="absolute inset-0 opacity-25" aria-hidden="true">
-                      <div className="absolute -right-4 -top-6 h-24 w-24 rounded-full border border-[#3A3A3C]" />
-                      <div className="absolute -bottom-8 left-8 h-24 w-24 rounded-full border border-[#3A3A3C]" />
-                      <div className="absolute left-1/2 top-0 h-full border-l border-dashed border-[#3A3A3C]" />
-                    </div>
-                    <div className="relative flex items-center gap-2 rounded-full border border-[#3A3A3C] bg-[#1D1D1F]/80 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.1em] text-[#A1A1A6]">
-                      <Shirt className="h-3.5 w-3.5" aria-hidden="true" />
-                      Photo pending
-                    </div>
-                    <span className="absolute left-4 top-3 font-mono text-[11px] text-[#A1A1A6]">{item.mark} / {item.code}</span>
-                  </div>
+                  <ProductPhoto
+                    src={DIGLO_IMAGES[item.photo]}
+                    alt={`Diglo Ventures - ${item.name} team uniforms in Kampala`}
+                    label={item.name}
+                    className="h-[116px] border-b border-[#3A3A3C]"
+                  />
                   <div className="flex min-h-[238px] flex-col p-5">
                     <h4 className="text-[18px] font-semibold leading-snug text-white">{item.name}</h4>
                     <p className="mt-1.5 min-h-[42px] text-[15px] leading-relaxed text-[#A1A1A6]">{item.summary}</p>
