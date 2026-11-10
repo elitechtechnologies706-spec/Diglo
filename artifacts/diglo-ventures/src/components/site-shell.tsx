@@ -5,6 +5,7 @@ import { CONTACT } from "@/lib/site";
 import seo from "@/lib/seo-data.json";
 import { btnOrange, homeHash, wrap } from "@/components/tokens";
 import { useSite } from "@/components/site-providers";
+import { DesktopProductsMenu, MobileProductsAccordion } from "@/components/products-menu";
 
 const SERVICE_LIST = ["Gift Packs", "Corporate Uniforms", "PPE", "Printing Services"];
 
@@ -27,18 +28,24 @@ export function Nav({ active = "", menuOpen, setMenuOpen }: { active?: string; m
     ["home", "Home"], ["service-gift-packs", "Gift Packs"], ["service-corporate-uniforms", "Uniforms"],
     ["service-ppe", "PPE"], ["service-printing-services", "Printing"], ["work", "Our Work"], ["pricing", "Pricing"],
   ] as const;
-  const linkCls = (id: string) => `relative whitespace-nowrap py-1 text-[13px] font-medium text-white transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-[2px] after:scale-x-0 after:bg-[#FF6B00] after:transition-transform hover:text-[#FF6B00] hover:after:scale-x-100 xl:text-[14px] ${active === id ? "text-[#FF6B00] after:scale-x-100" : ""}`;
+  const linkCls = (id: string) => `relative whitespace-nowrap py-1 text-[11px] font-medium text-white transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-[2px] after:scale-x-0 after:bg-[#FF6B00] after:transition-transform hover:text-[#FF6B00] hover:after:scale-x-100 xl:text-[12px] ${active === id ? "text-[#FF6B00] after:scale-x-100" : ""}`;
   return (
     <header className={`sticky top-0 z-40 border-b border-[#3A3A3C] bg-[#1D1D1F]/95 backdrop-blur-md transition-shadow ${scrolled ? "shadow-[0_4px_20px_rgba(0,0,0,.30)]" : ""}`}>
       <div className={`${wrap} flex h-16 items-center justify-between`}>
         <a href={homeHash("home")} aria-label="Diglo Ventures home" data-testid="link-logo"><Logo /></a>
-        <nav className="hidden flex-1 items-center justify-center gap-3 lg:flex xl:gap-7">
-          {links.map(([id, l]) => (
+        <nav aria-label="Main navigation" className="hidden min-w-0 flex-1 items-center justify-center gap-2 lg:flex xl:gap-3">
+          <a href={homeHash("home")} className={linkCls("home")} data-testid="link-nav-home">Home</a>
+          <DesktopProductsMenu active={active === "products"} linkClassName={linkCls("products")} />
+          {links.filter(([id]) => id.startsWith("service-")).map(([id, l]) => (
+            <a key={id} href={homeHash(id)} className={linkCls(id)} data-testid={`link-nav-${id}`}>{l}</a>
+          ))}
+          <Link href="/about" className={linkCls("about")} data-testid="link-nav-about">About Us</Link>
+          {links.filter(([id]) => id === "work" || id === "pricing").map(([id, l]) => (
             <a key={id} href={homeHash(id)} className={linkCls(id)} data-testid={`link-nav-${id}`}>{l}</a>
           ))}
           <Link href="/track" className={linkCls("track")} data-testid="link-nav-track">Track Order</Link>
         </nav>
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <a href={`tel:${CONTACT.phone.replace(/[^\d+]/g, "")}`} className="hidden items-center gap-2 whitespace-nowrap text-[14px] font-medium text-white lg:flex" aria-label={`Call ${CONTACT.phone}`} data-testid="link-nav-phone">
             <Phone className="h-4 w-4" />{CONTACT.phone}
           </a>
@@ -52,12 +59,18 @@ export function Nav({ active = "", menuOpen, setMenuOpen }: { active?: string; m
         </div>
       </div>
       <div className={`overflow-hidden border-t bg-[#2D2D2F] transition-all duration-300 lg:hidden ${menuOpen ? "max-h-[70vh] border-[#3A3A3C] opacity-100" : "max-h-0 border-transparent opacity-0"}`}>
-        <div className={`${wrap} flex flex-col py-3`}>
-          {links.map(([id, l]) => (
+        <nav aria-label="Mobile navigation" className={`${wrap} flex max-h-[70vh] flex-col overflow-y-auto py-3`}>
+          <a href={homeHash("home")} onClick={() => setMenuOpen(false)} className="py-3 text-base font-medium text-white" data-testid="link-menu-home">Home</a>
+          <MobileProductsAccordion onNavigate={() => setMenuOpen(false)} />
+          {links.filter(([id]) => id.startsWith("service-")).map(([id, l]) => (
+            <a key={id} href={homeHash(id)} onClick={() => setMenuOpen(false)} className="py-3 text-base font-medium text-white" data-testid={`link-menu-${id}`}>{l}</a>
+          ))}
+          <Link href="/about" onClick={() => setMenuOpen(false)} className="py-3 text-base font-medium text-white" data-testid="link-menu-about">About Us</Link>
+          {links.filter(([id]) => id === "work" || id === "pricing").map(([id, l]) => (
             <a key={id} href={homeHash(id)} onClick={() => setMenuOpen(false)} className="py-3 text-base font-medium text-white" data-testid={`link-menu-${id}`}>{l}</a>
           ))}
           <Link href="/track" onClick={() => setMenuOpen(false)} className="py-3 text-base font-medium text-white" data-testid="link-menu-track">Track Order</Link>
-        </div>
+        </nav>
       </div>
     </header>
   );
@@ -106,6 +119,7 @@ export function Footer() {
           <ul className="space-y-2.5 text-[15px]">
             <li><a href={homeHash("work")} className="transition hover:text-white">Work</a></li>
             <li><a href={homeHash("pricing")} className="transition hover:text-white">Pricing</a></li>
+            <li><Link href="/about" className="transition hover:text-white" data-testid="link-footer-about">About Us</Link></li>
             <li><Link href="/track" className="transition hover:text-white">Track Order</Link></li>
             <li><a href={homeHash("faq")} className="transition hover:text-white">FAQ</a></li>
           </ul>

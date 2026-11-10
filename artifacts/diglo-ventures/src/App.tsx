@@ -7,6 +7,7 @@ import NotFound from '@/pages/not-found';
 import Home from '@/pages/home';
 import Track from '@/pages/track';
 import Admin from '@/pages/admin';
+import About from '@/pages/about';
 import SeoPage from '@/pages/seo-page';
 import seo from '@/lib/seo-data.json';
 import { FloatingWhatsApp, SiteProviders } from '@/components/site-providers';
@@ -25,6 +26,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/track" component={Track} />
+        <Route path="/about" component={About} />
         <Route path="/admin" component={Admin} />
         {seo.pages.map((p) => (
           <Route key={p.slug} path={`/${p.slug}`}>

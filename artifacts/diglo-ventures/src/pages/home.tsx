@@ -159,7 +159,12 @@ function SectionHead({ eyebrow, title, sub, center = false }: { eyebrow: string;
 }
 
 function Services({ onOrder }: { onOrder: (s: string) => void }) {
-  const [filter, setFilter] = useState("All");
+  const params = new URLSearchParams(window.location.search);
+  const productSelection = params.get("product");
+  const serviceSelection = params.get("service");
+  const initialFilter = serviceSelection === "Uniforms" || serviceSelection === "Printing" || serviceSelection === "PPE" || serviceSelection === "Gift Packs" ? serviceSelection : "All";
+  const [filter, setFilter] = useState(initialFilter);
+  const [selectedProduct, setSelectedProduct] = useState(productSelection);
   const filters = ["All", "Gift Packs", "Uniforms", "PPE", "Printing"];
   const visibleServices = SERVICES.filter((s) => {
     if (filter === "All") return true;
@@ -173,9 +178,10 @@ function Services({ onOrder }: { onOrder: (s: string) => void }) {
         <SectionHead eyebrow="Services" title="Four services. One dependable team." sub="Designed today. Delivered in Kampala." />
         <div className="sticky top-16 z-30 -mx-4 mb-5 flex flex-wrap gap-2 border-y border-[#3A3A3C] bg-[#1D1D1F]/95 px-4 py-2 backdrop-blur md:hidden">
           {filters.map((f) => (
-            <button key={f} onClick={() => setFilter(f)} aria-pressed={filter === f} className={`min-h-10 rounded-full border px-3 text-[12px] font-semibold ${filter === f ? "border-[#A1A1A6] bg-[#2D2D2F] text-white" : "border-[#3A3A3C] text-[#A1A1A6]"}`} data-testid={`button-service-filter-${f.toLowerCase().replaceAll(" ", "-")}`}>{f}</button>
+            <button key={f} onClick={() => { setFilter(f); setSelectedProduct(null); }} aria-pressed={filter === f} className={`min-h-10 rounded-full border px-3 text-[12px] font-semibold ${filter === f ? "border-[#A1A1A6] bg-[#2D2D2F] text-white" : "border-[#3A3A3C] text-[#A1A1A6]"}`} data-testid={`button-service-filter-${f.toLowerCase().replaceAll(" ", "-")}`}>{f}</button>
           ))}
         </div>
+        {selectedProduct && <p className="mb-4 text-[13px] text-[#A1A1A6]" data-testid="text-selected-product">Showing service for <span className="font-semibold text-white">{selectedProduct}</span></p>}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {visibleServices.map((s, i) => <ServiceCard key={s.name} service={s} index={i} onOrder={onOrder} />)}
         </div>

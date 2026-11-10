@@ -55,6 +55,7 @@ const routes = [
     body: `<h1>${esc(p.h1)}</h1><h2>${esc(p.question)}</h2><p>${esc(p.answer)}</p><p>${esc(p.productName)} from ${fmt(p.price)} UGX. ${esc(p.priceNote)}.</p><h2>FAQ</h2>${p.faqs.map((f) => `<h3>${esc(f.q)}</h3><p>${esc(f.a)}</p>`).join("")}<p><a href="${base}">Get a Free Quote from Diglo Ventures</a></p>`,
   })),
   { path: "/track", title: "Track Your Order | Diglo Ventures", description: "Check the stage of your Diglo Ventures order using your DG order code or phone number.", ld: [], body: `<h1>Where is my order?</h1>` },
+  { path: "/about", title: "About Diglo Ventures | Kampala Branding and Printing", description: "Meet Diglo Ventures, a Kampala branding partner for gift packs, uniforms, PPE and printing.", ld: [business], body: `<h1>About Diglo Ventures</h1><p>We help teams in Kampala look professional. Designed today. Delivered tomorrow.</p><h2>Our Mission</h2><p>To make every team in Uganda look professional, feel proud, and be remembered - with affordable branding, uniforms and printing, delivered fast.</p><h2>Our Vision</h2><p>To be Uganda's most trusted branding partner - the first name businesses call when they want gift packs, uniforms, PPE and printing done right.</p>` },
   { path: "/admin", title: "Admin | Diglo Ventures", description: "Staff only.", ld: [], body: "", noindex: true },
 ];
 
