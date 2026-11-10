@@ -11,7 +11,6 @@ import {
 import { useSite } from "@/components/site-providers";
 import { formatUGX } from "@/lib/site";
 import { ProductPhoto } from "@/components/product-photo";
-import { DIGLO_IMAGES } from "@/lib/images";
 
 type Industry = {
   name: string;
@@ -19,7 +18,7 @@ type Industry = {
   summary: string;
   items: [string, string, string];
   mark: string;
-  photo: keyof typeof DIGLO_IMAGES;
+  photo: string;
 };
 
 const INDUSTRIES: Industry[] = [
@@ -29,7 +28,7 @@ const INDUSTRIES: Industry[] = [
     summary: "A considered look from front of house to the kitchen.",
     items: ["Chef Jacket", "Apron", "Waiter Shirt"],
     mark: "01",
-    photo: "chefApron",
+    photo: "/images/industries/hospitality.jpg",
   },
   {
     name: "Hospitals & Clinics",
@@ -37,7 +36,7 @@ const INDUSTRIES: Industry[] = [
     summary: "Practical, clean uniforms for patient-facing teams.",
     items: ["Nurse Scrubs", "Lab Coat", "Reception Tunic"],
     mark: "02",
-    photo: "uniforms",
+    photo: "/images/industries/healthcare.jpg",
   },
   {
     name: "Schools",
@@ -45,7 +44,7 @@ const INDUSTRIES: Industry[] = [
     summary: "Cohesive staff wear built for busy school days.",
     items: ["School Polo", "Teacher Shirt", "Cardigan"],
     mark: "03",
-    photo: "uniforms",
+    photo: "/images/industries/education.jpg",
   },
   {
     name: "Offices & Banks",
@@ -53,7 +52,7 @@ const INDUSTRIES: Industry[] = [
     summary: "Sharp everyday pieces for teams that meet the public.",
     items: ["Corporate Shirt", "Branded Polo", "Blazer"],
     mark: "04",
-    photo: "officeTeam",
+    photo: "/images/industries/corporate.jpg",
   },
   {
     name: "Security & Cleaning",
@@ -61,7 +60,7 @@ const INDUSTRIES: Industry[] = [
     summary: "Durable, easy-to-identify gear for hands-on work.",
     items: ["Reflective Vest", "Work Shirt", "Safety Trousers"],
     mark: "05",
-    photo: "ppe",
+    photo: "/images/industries/operations.jpg",
   },
   {
     name: "Churches & Events",
@@ -69,7 +68,7 @@ const INDUSTRIES: Industry[] = [
     summary: "A unified team presence for gatherings and occasions.",
     items: ["Event Polo", "Choir Shirt", "Branded Scarf"],
     mark: "06",
-    photo: "officeTeam",
+    photo: "/images/industries/community.jpg",
   },
 ];
 
@@ -158,10 +157,11 @@ export function UniformIndustry() {
                   className={`w-[min(84vw,330px)] shrink-0 snap-start overflow-hidden rounded-xl border bg-[#2D2D2F] transition-colors md:w-auto md:shrink ${isSelected ? "border-[#A1A1A6]" : "border-[#3A3A3C] hover:border-[#A1A1A6]"}`}
                 >
                   <ProductPhoto
-                    src={DIGLO_IMAGES[item.photo]}
-                    alt={`Diglo Ventures - ${item.name} team uniforms in Kampala`}
+                    src={item.photo}
+                    alt={`Diglo Ventures - ${item.name === "Hospitals & Clinics" ? "Healthcare" : item.name === "Offices & Banks" ? "Corporate" : item.name === "Security & Cleaning" ? "Operations" : item.name === "Churches & Events" ? "Community" : item.name === "Hotels & Restaurants" ? "Hospitality" : "Education"} Uniforms in Kampala - Branded`}
                     label={item.name}
-                    className="h-[116px] border-b border-[#3A3A3C]"
+                    className="h-[160px] border-b border-[#3A3A3C] md:h-[180px]"
+                    imageClassName="object-[center_28%]"
                   />
                   <div className="flex min-h-[238px] flex-col p-5">
                     <h4 className="text-[18px] font-semibold leading-snug text-white">{item.name}</h4>
