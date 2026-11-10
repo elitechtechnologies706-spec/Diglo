@@ -87,7 +87,7 @@ function Dashboard({ user }: { user: User }) {
   const fOrders = useMemo(() => orders.filter(match), [orders, q, status]); // eslint-disable-line react-hooks/exhaustive-deps
   const orderRefs = useMemo(() => new Set(orders.map((o) => o.ref)), [orders]);
 
-  const th = "px-4 py-3 text-left text-[12px] font-semibold uppercase tracking-[0.1em] text-[#86868B] whitespace-nowrap";
+  const th = "px-4 py-3 text-left text-[12px] font-semibold uppercase tracking-[0.1em] text-[#A1A1A6] whitespace-nowrap";
   const td = "px-4 py-3 align-top text-[14px] text-[#F5F5F7]";
 
   return (
@@ -125,7 +125,7 @@ function Dashboard({ user }: { user: User }) {
           {flash && <Notice>{flash}</Notice>}
         </div>
 
-        <div className="mt-5 overflow-x-auto rounded-2xl border border-[#3A3A3C] bg-[#2D2D2F]">
+        <div className="mt-5 overflow-x-auto rounded-xl border border-[#3A3A3C] bg-[#2D2D2F]">
           {loading ? (
             <div className="space-y-3 p-6">{[0, 1, 2, 3].map((i) => <div key={i} className="h-10 animate-pulse rounded bg-[#242426]" />)}</div>
           ) : tab === "leads" ? (
@@ -193,7 +193,7 @@ export default function Admin() {
 
   return (
     <div className="grid min-h-[100dvh] place-items-center bg-[#1D1D1F] px-4 py-10 text-[#F5F5F7]">
-      <div className="w-full max-w-[400px] rounded-2xl border border-[#3A3A3C] bg-[#2D2D2F] p-6 animate-in fade-in zoom-in-95 duration-300 md:p-7">
+      <div className="w-full max-w-[400px] rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5 animate-in fade-in zoom-in-95 duration-300">
         <Logo />
         <h1 className="mt-6 text-[24px] font-bold">Admin sign in</h1>
         <div className="mt-6">

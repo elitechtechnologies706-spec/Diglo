@@ -22,7 +22,7 @@ export function useSite() {
   return c;
 }
 
-/** Shared helper for every WhatsApp button. Never invents a number. */
+/** Shared helper for every WhatsApp button; the testing number lives in CONTACT. */
 export function getWhatsAppLink(message: string): string | null {
   try {
     return whatsappUrl(message);
@@ -60,20 +60,20 @@ export function SiteProviders({ children }: { children: ReactNode }) {
     <SiteCtx.Provider value={{ openWhatsApp, openQuote, showPhoneUnavailable }}>
       {children}
       <Dialog open={quoteOpen} onOpenChange={setQuoteOpen}>
-        <DialogContent className="max-h-[90dvh] overflow-y-auto rounded-2xl border-[#3A3A3C] bg-[#2D2D2F] text-[#F5F5F7] sm:max-w-lg">
+        <DialogContent className="max-h-[90dvh] overflow-y-auto rounded-xl border-[#3A3A3C] bg-[#2D2D2F] text-[#F5F5F7] sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle className="font-display text-[22px] text-[#1D1D1F]">Get a Free Quote</DialogTitle>
-            <DialogDescription className="text-[#6E6E73]">Tell us what you need. We reply on WhatsApp.</DialogDescription>
+            <DialogTitle className="font-display text-[18px] text-white">Get a Quote</DialogTitle>
+            <DialogDescription className="text-[#A1A1A6]">Tell us what you need. We’ll reply on WhatsApp.</DialogDescription>
           </DialogHeader>
           <QuoteForm key={quoteOpen ? `open-${quoteService}` : "closed"} initialService={quoteService} />
         </DialogContent>
       </Dialog>
       <Dialog open={!!waNotice} onOpenChange={(o) => !o && setWaNotice(null)}>
-        <DialogContent className="rounded-2xl border-[#3A3A3C] bg-[#2D2D2F] text-[#F5F5F7] sm:max-w-md">
+        <DialogContent className="rounded-xl border-[#3A3A3C] bg-[#2D2D2F] text-[#F5F5F7] sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="font-display text-[#1D1D1F]">{noticeKind} number not configured yet</DialogTitle>
-            <DialogDescription className="text-[#6E6E73]">
-              A {noticeKind === "WhatsApp" ? "WhatsApp" : "phone"} number has not been added to this website yet, so nothing was opened. You can reach Diglo Ventures by email instead.
+            <DialogTitle className="font-display text-white">{noticeKind} is unavailable</DialogTitle>
+            <DialogDescription className="text-[#A1A1A6]">
+              Your message could not be opened. You can reach Diglo Ventures by email instead.
             </DialogDescription>
           </DialogHeader>
           {waNotice && (

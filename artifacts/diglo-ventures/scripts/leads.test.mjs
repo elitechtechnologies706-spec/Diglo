@@ -15,7 +15,9 @@ function load(env = {}, rpc = null) {
     exports: {}, crypto: webcrypto, navigator: { onLine: true }, CustomEvent,
     window: new EventTarget(),
     localStorage: { getItem: (k) => store.get(k) ?? null, setItem: (k, v) => store.set(k, v) },
-    require: () => ({ createClient: () => ({ rpc }) }),
+    require: (specifier) => specifier === "@/lib/site"
+      ? { CONTACT: { whatsapp: "254721928484" } }
+      : { createClient: () => ({ rpc }) },
   };
   vm.runInNewContext(code, context);
   return { api: context.exports, store };
@@ -26,11 +28,35 @@ test("normalises Uganda phone input and rejects malformed numbers", () => {
   assert.equal(api.normalizePhone("0700000000"), "+256700000000");
   assert.equal(api.normalizePhone("700000000"), "+256700000000");
   assert.equal(api.normalizePhone("+256 700 000 000"), "+256700000000");
+  assert.equal(api.normalizePhone("+254 721 928 484"), "+254721928484");
   assert.throws(() => api.normalizePhone("123"));
 });
-test("no invented WhatsApp destination", () => {
+test("uses the single testing WhatsApp destination", () => {
   const { api } = load();
-  assert.equal(api.whatsappUrl("Hello"), null);
+  const url = new URL(api.whatsappUrl("Hello Diglo Ventures"));
+  assert.equal(url.hostname, "wa.me");
+  assert.equal(url.pathname, "/254721928484");
+  assert.equal(url.searchParams.get("text"), "Hello Diglo Ventures");
+});
+test("tracks by reference and normalized phone", async () => {
+  const calls = [];
+  const { api } = load(
+    { VITE_SUPABASE_URL: "https://test.supabase.co", VITE_SUPABASE_ANON_KEY: "public-test" },
+    async (name, args) => {
+      calls.push({ name, args });
+      return { data: [{ ref: "DG-AB12", service: "Printing Services", stage: "Received", updated_at: "2026-01-01T00:00:00Z" }], error: null };
+    },
+  );
+  const byRef = await api.lookupOrders("dg-ab12");
+  assert.equal(calls[0].name, "diglo_track_orders");
+  assert.equal(calls[0].args.p_query, "DG-AB12");
+  assert.equal(byRef[0].stage, "Received");
+  await api.lookupOrders("0700 000 000");
+  assert.equal(calls[1].args.p_query, "+256700000000");
+});
+test("rejects invalid tracking query", async () => {
+  const { api } = load();
+  await assert.rejects(api.lookupOrders("not-a-code-or-phone"), /valid phone number/);
 });
 test("unconfigured Supabase queues without saying sent", async () => {
   const { api, store } = load();

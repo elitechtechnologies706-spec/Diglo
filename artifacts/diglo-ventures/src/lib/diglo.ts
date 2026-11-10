@@ -1,4 +1,5 @@
 import { createClient, type User } from "@supabase/supabase-js";
+import { CONTACT } from "@/lib/site";
 
 const url = import.meta.env.VITE_SUPABASE_URL?.trim();
 const key = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim();
@@ -33,13 +34,15 @@ export function isAdmin(user: User | null | undefined): boolean {
 
 export function normalizePhone(phone: string): string {
   const digits = phone.replace(/\D/g, "");
-  const normalized = digits.startsWith("0") ? "256" + digits.slice(1) : digits.length === 9 ? "256" + digits : digits;
-  if (!/^256[1-9]\d{8}$/.test(normalized)) throw new Error("Enter a valid Ugandan phone number, for example +256 followed by 9 digits.");
+  let normalized = digits.startsWith("00") ? digits.slice(2) : digits;
+  if (normalized.startsWith("0")) normalized = "256" + normalized.slice(1);
+  else if (normalized.length === 9) normalized = "256" + normalized;
+  if (!/^[1-9]\d{7,14}$/.test(normalized)) throw new Error("Enter a valid phone number with country code.");
   return "+" + normalized;
 }
 
 export function whatsappUrl(message: string): string | null {
-  const digits = (import.meta.env.VITE_WHATSAPP_NUMBER || "").replace(/\D/g, "");
+  const digits = CONTACT.whatsapp.replace(/\D/g, "");
   if (!/^[1-9]\d{7,14}$/.test(digits)) return null;
   return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
 }

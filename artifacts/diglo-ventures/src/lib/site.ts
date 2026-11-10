@@ -1,9 +1,9 @@
-// Central contact configuration. Phone and WhatsApp are intentionally empty:
-// no verified numbers have been supplied. Do not invent numbers.
+// TESTING ONLY: replace this one number before the live launch.
+const WHATSAPP_DIGITS = "254721928484";
 export const CONTACT = {
   email: "hello@digloventures.com",
-  phone: "",
-  whatsapp: "",
+  phone: `+${WHATSAPP_DIGITS.slice(0, 3)} ${WHATSAPP_DIGITS.slice(3, 6)} ${WHATSAPP_DIGITS.slice(6, 9)} ${WHATSAPP_DIGITS.slice(9)}`,
+  whatsapp: WHATSAPP_DIGITS,
   hours: "Mon–Sat, 8AM–7PM EAT",
 };
 

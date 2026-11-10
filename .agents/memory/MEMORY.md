@@ -1,0 +1,1 @@
+- [Diglo scope and imagery](diglo-scope-and-imagery.md) — keep the four-service catalog and use only exact, no-cost imagery.

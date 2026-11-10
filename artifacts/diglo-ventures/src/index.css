@@ -433,8 +433,8 @@
   }
 }
 
-html { scroll-behavior: smooth; scroll-padding-top: 84px; }
-body { font-size: 16px; color: #F5F5F7; background: #1D1D1F; overflow-x: hidden; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body { font-size: 15px; line-height: 1.6; color: #D4D4D4; background: #1D1D1F; overflow-x: hidden; }
 h1,h2,h3,h4,.font-display { font-family: var(--app-font-display); color: #FFFFFF; letter-spacing: -0.02em; }
 .dark-zone h1,.dark-zone h2,.dark-zone h3,.dark-zone h4 { color: #FFFFFF; }
 @keyframes rise { from { opacity: 0; transform: translateY(18px);} to { opacity: 1; transform: none;} }
@@ -444,3 +444,7 @@ h1,h2,h3,h4,.font-display { font-family: var(--app-font-display); color: #FFFFFF
 @keyframes pulse-dot { 0%,100% { transform: scale(1); opacity: 1;} 50% { transform: scale(1.35); opacity: .7;} }
 .pulse-dot { animation: pulse-dot 2.4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .rise,.reveal { animation: none; opacity: 1; transform: none; transition: none; } }
+@media (max-width: 767px) {
+  html { scroll-padding-top: 64px; }
+  .rise,.reveal { animation: none; opacity: 1; transform: none; transition: none; }
+}

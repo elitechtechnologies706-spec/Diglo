@@ -4,7 +4,7 @@ import { submitLead, retryPendingLeads, whatsappUrl } from "@/lib/diglo";
 import { SERVICE_NAMES } from "@/lib/site";
 import { btnGhost, btnOrange, inputCls, labelCls } from "@/components/tokens";
 
-type Result = { ref: string; sent: boolean; name: string };
+type Result = { ref: string; sent: boolean; name: string; service: string };
 
 export function QuoteForm({ initialService = "", compact = false }: { initialService?: string; compact?: boolean }) {
   const [f, setF] = useState({ name: "", phone: "", service: initialService, quantity: "", message: "" });
@@ -33,9 +33,9 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
     setBusy(true);
     try {
       const r = await submitLead({ name: f.name.trim(), phone: f.phone.trim(), service: f.service, quantity: qty, message: f.message.trim() });
-      setResult({ ...r, name: f.name.trim() });
+      setResult({ ...r, name: f.name.trim(), service: f.service });
       if (r.sent) {
-        const url = whatsappUrl(`Hello Diglo Ventures, I just sent quote request ${r.ref} for ${f.service}, quantity ${qty}.`);
+        const url = whatsappUrl(`Hello Diglo Ventures, I would like a quote for ${f.service} - ${r.ref}`);
         if (url) window.open(url, "_blank", "noopener,noreferrer");
       }
     } catch (err) {
@@ -57,18 +57,18 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
 
   if (result) {
     return result.sent ? (
-      <div className="rounded-2xl border border-[#3A3A3C] bg-[#2D2D2F] p-5 text-[#F5F5F7] animate-in fade-in zoom-in-95 duration-300 md:p-6" data-testid="status-quote-sent">
+      <div className="rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5 text-[#F5F5F7] animate-in fade-in zoom-in-95 duration-300" data-testid="status-quote-sent">
         <CheckCircle2 className="h-8 w-8 text-[#F5F5F7]" />
         <p className="mt-4 break-words font-display text-[24px] font-bold leading-tight text-white" style={{ fontFamily: "Sora" }}>{result.ref}</p>
         <p className="mt-3 text-[16px] leading-relaxed text-[#F5F5F7]">
           Thank you, {result.name}. Your quote request {result.ref} has been sent. We will reply within 5 minutes on WhatsApp.
         </p>
-        {whatsappUrl(`Hello Diglo Ventures, I just sent quote request ${result.ref}.`) ? (
-          <a href={whatsappUrl(`Hello Diglo Ventures, I just sent quote request ${result.ref}.`)!} target="_blank" rel="noopener noreferrer" className={`${btnOrange} mt-4 w-full md:w-auto`}>Open WhatsApp</a>
-        ) : <p className="mt-3 text-sm">The business WhatsApp number is not configured yet. Your saved request is available to Diglo in Supabase.</p>}
+        {whatsappUrl(`Hello Diglo Ventures, I would like a quote for ${result.service} - ${result.ref}`) ? (
+          <a href={whatsappUrl(`Hello Diglo Ventures, I would like a quote for ${result.service} - ${result.ref}`)!} target="_blank" rel="noopener noreferrer" className={`${btnOrange} mt-4 w-full md:w-auto`}>Open WhatsApp</a>
+        ) : <p className="mt-3 text-sm">Your saved request is available to Diglo Ventures.</p>}
       </div>
     ) : (
-      <div className="rounded-2xl border border-[#3A3A3C] bg-[#242426] p-5 text-[#F5F5F7] animate-in fade-in duration-300 md:p-6" data-testid="status-quote-pending">
+      <div className="rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5 text-[#F5F5F7] animate-in fade-in duration-300" data-testid="status-quote-pending">
         <Clock className="h-7 w-7 text-[#F5F5F7]" />
         <p className="mt-4 font-semibold text-white">Saved on this device. Not sent yet.</p>
         <p className="mt-2 text-[15px] leading-relaxed">
@@ -88,10 +88,7 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
         <label className="block"><span className={labelCls}>Name</span>
           <input required value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} className={`${inputCls} !h-[52px] md:!h-12`} placeholder="Full name" autoComplete="name" data-testid="input-quote-name" /></label>
         <label className="block"><span className={labelCls}>Phone</span>
-          <div className="flex">
-            <span className="grid h-[52px] place-items-center rounded-l-xl border border-r-0 border-[#3A3A3C] bg-[#2D2D2F] px-3 text-[15px] font-medium text-white md:h-12">+256</span>
-            <input required type="tel" inputMode="tel" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} className={`${inputCls} !h-[52px] rounded-l-none md:!h-12`} placeholder="7XX XXX XXX" autoComplete="tel-national" data-testid="input-quote-phone" />
-          </div>
+          <input required type="tel" inputMode="tel" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} className={`${inputCls} !h-[52px] md:!h-12`} placeholder="Phone number with country code" autoComplete="tel" data-testid="input-quote-phone" />
         </label>
       </div>
       <div className="grid gap-4 md:grid-cols-[1.4fr_1fr]">
@@ -105,7 +102,7 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
       </div>
       <label className="block"><span className={labelCls}>Message</span>
         <textarea rows={compact ? 3 : 4} value={f.message} onChange={(e) => setF({ ...f, message: e.target.value })} className={`${inputCls} h-auto py-3`} placeholder="Business name, colours, deadline, delivery area" data-testid="input-quote-message" /></label>
-      {error && <p className="text-[14px] font-medium text-[#6E6E73]" role="alert" data-testid="text-quote-error">{error}</p>}
+      {error && <p className="text-[14px] font-medium text-[#A1A1A6]" role="alert" data-testid="text-quote-error">{error}</p>}
       <button type="submit" disabled={busy} className={`${btnOrange} w-full`} data-testid="button-quote-submit">
         <Send className="h-4 w-4" /> {busy ? "Sending" : "Send Quote Request"}
       </button>

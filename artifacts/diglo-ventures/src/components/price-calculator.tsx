@@ -49,18 +49,18 @@ export function PriceCalculator() {
   const Row = ({ label, value, testid, muted = false }: { label: string; value: string; testid: string; muted?: boolean }) => (
     <div className="flex items-baseline justify-between gap-4 py-2.5">
       <dt className="text-[15px]">{label}</dt>
-      <dd className={`text-right text-[15px] font-semibold ${muted ? "text-[#6E6E73] italic" : "text-[#1D1D1F]"}`} data-testid={testid}>{value}</dd>
+      <dd className={`text-right text-[15px] font-semibold ${muted ? "text-[#A1A1A6] italic" : "text-white"}`} data-testid={testid}>{value}</dd>
     </div>
   );
 
   return (
-    <div id="calculator" className="reveal mt-8 grid overflow-visible rounded-2xl border border-[#3A3A3C] bg-[#2D2D2F] lg:grid-cols-[1.15fr_.85fr]">
+    <div id="calculator" className="reveal mt-8 grid overflow-visible rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] lg:grid-cols-[1.15fr_.85fr]">
       <div className="p-5 md:p-8">
         <div className="flex items-center gap-3">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#1D1D1F] text-white"><Calculator className="h-5 w-5" /></span>
           <div>
-            <h3 className="text-[20px] font-semibold">Price Calculator</h3>
-            <p className="text-[14px]">An instant estimate. We confirm the final price.</p>
+            <h3 className="text-[18px] font-semibold">Price Calculator</h3>
+            <p className="text-[14px] text-[#A1A1A6]">We confirm the final price.</p>
           </div>
         </div>
 
@@ -102,13 +102,13 @@ export function PriceCalculator() {
         </dl>
         <div className="mt-4 border-t-2 border-[#3A3A3C] pt-4">
           <p className="text-[14px]">Estimated total</p>
-          <p className="font-display text-[30px] font-bold leading-tight text-[#FF6B00] transition-all" style={{ fontFamily: "Sora" }} data-testid="text-calc-total">
+          <p className="font-display text-[24px] font-bold leading-tight text-[#FF6B00] transition-all" style={{ fontFamily: "Sora" }} data-testid="text-calc-total">
             {est.total !== null ? formatUGX(est.total) : `${formatUGX(known)} +`}
           </p>
           {est.discount > 0 && <p className="mt-1 text-[14px] font-semibold text-[#F5F5F7]" data-testid="text-calc-saving">You save 10% ({fmt(est.discount)} UGX) on the base price for 500+.</p>}
           {(est.needsConfirmation || est.total === null) && <p className="mt-2 text-[13px]" data-testid="text-calc-confirm">Some charges are not set yet and will be confirmed with your quote. They are not counted as zero.</p>}
         </div>
-        <button onClick={send} className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#FF6B00] px-5 text-[15px] font-semibold text-white transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_24px_-10px_rgba(255,107,0,.7)]" data-testid="button-calc-whatsapp">
+        <button onClick={send} className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#FF6B00] px-[18px] text-[15px] font-semibold text-white transition-colors hover:brightness-105 md:text-[14px] lg:max-w-[220px]" data-testid="button-calc-whatsapp">
           <MessageCircle className="h-4 w-4" /> Send This Quote to WhatsApp
         </button>
       </div>

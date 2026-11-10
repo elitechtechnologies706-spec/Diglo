@@ -1,9 +1,9 @@
 {
   "siteName": "Diglo Ventures",
   "homeTitle": "Diglo Ventures | Branding and Printing Services in Kampala, Uganda",
-  "homeDescription": "Diglo Ventures designs and prints premium branding for growing businesses in Kampala. Logo design, business cards, banners, T-shirts, packaging and signage.",
+  "homeDescription": "Gift packs, corporate uniforms, PPE and printing services for teams in Kampala. Fast turnaround, proof approval and delivery arranged by Diglo Ventures.",
   "homeQuestion": "What Is Diglo Ventures?",
-  "homeAnswer": "Diglo Ventures is a branding and printing studio in Kampala, Uganda. We design logos and print business cards, flyers, banners, T-shirts, stickers and packaging for growing businesses, with a free design proof, 24 hour express options and delivery across Kampala.",
+  "homeAnswer": "Diglo Ventures is a Kampala branding and printing company for local teams. We supply branded gift packs, corporate uniforms, personal protective equipment, and business printing. Customers receive a design proof, clear pricing, fast turnaround options, and delivery arranged across Kampala.",
   "homeFaqs": [
     { "q": "How fast can you deliver?", "a": "Our 24 Hour Express option covers many standard print jobs once your design proof is approved. Larger or custom orders take longer, and we confirm the exact timeline with your quote." },
     { "q": "Do you deliver outside Kampala?", "a": "We deliver across Kampala. For orders outside Kampala, please ask in your quote request and we will confirm whether delivery is possible and any extra cost." },
@@ -23,7 +23,7 @@
   "pages": [
     {
       "slug": "logo-design-kampala",
-      "service": "Brand Identity",
+      "service": "Printing Services",
       "eyebrow": "Logo Design",
       "title": "Logo Design in Kampala | Diglo Ventures",
       "h1": "Logo Design in Kampala",
@@ -33,7 +33,6 @@
       "productName": "Logo Complete",
       "price": 250000,
       "priceNote": "Logo, colour palette, font guide and brand book",
-      "image": "hero.jpg",
       "faqs": [
         { "q": "What do I receive with a logo package?", "a": "Your logo, a colour palette, a font guide and a brand book that shows how to use them consistently." },
         { "q": "Can I request changes?", "a": "Yes. You receive a free design proof and can request changes before the design is finalised." },
@@ -42,7 +41,7 @@
     },
     {
       "slug": "business-cards-kampala",
-      "service": "Business Printing",
+      "service": "Printing Services",
       "eyebrow": "Business Cards",
       "title": "Business Card Printing in Kampala | Diglo Ventures",
       "h1": "Business Card Printing in Kampala",
@@ -52,7 +51,6 @@
       "productName": "Business Cards (100)",
       "price": 80000,
       "priceNote": "100 cards, design proof included",
-      "image": "hero.jpg",
       "faqs": [
         { "q": "Do you design the card for me?", "a": "Yes. We design your card and send a free proof for approval before printing." },
         { "q": "Can I order more than 100 cards?", "a": "Yes. Use the price calculator or request a quote for larger quantities." },
@@ -61,7 +59,7 @@
     },
     {
       "slug": "tshirt-printing-kampala",
-      "service": "Apparel",
+      "service": "Corporate Uniforms",
       "eyebrow": "T-Shirt Printing",
       "title": "T-Shirt Printing in Kampala | Diglo Ventures",
       "h1": "T-Shirt Printing in Kampala",
@@ -71,7 +69,6 @@
       "productName": "Printed T-Shirt",
       "price": 35000,
       "priceNote": "Per printed shirt",
-      "image": "apparel.jpg",
       "faqs": [
         { "q": "Do you print hoodies and caps?", "a": "Yes. We print T-shirts, hoodies, caps and uniforms." },
         { "q": "Can you add my logo?", "a": "Yes. Send your logo or let us design one, and we will send a proof before printing." },
@@ -80,7 +77,7 @@
     },
     {
       "slug": "banner-printing-kampala",
-      "service": "Large Format",
+      "service": "Printing Services",
       "eyebrow": "Banner Printing",
       "title": "Banner Printing in Kampala | Diglo Ventures",
       "h1": "Banner Printing in Kampala",
@@ -90,7 +87,6 @@
       "productName": "Banner 3x2",
       "price": 150000,
       "priceNote": "3 x 2 metres, design proof included",
-      "image": "signage.jpg",
       "faqs": [
         { "q": "Can you print other sizes?", "a": "Yes. Request a quote with your size and we will confirm the price." },
         { "q": "Do you make roll-up banners?", "a": "Yes. Roll-ups, posters, stickers and signage are part of our Large Format service." },
@@ -99,7 +95,7 @@
     },
     {
       "slug": "packaging-uganda",
-      "service": "Packaging",
+      "service": "Gift Packs",
       "eyebrow": "Packaging",
       "title": "Packaging and Label Printing in Uganda | Diglo Ventures",
       "h1": "Packaging and Label Printing in Uganda",
@@ -109,7 +105,6 @@
       "productName": "Stickers and Labels (100)",
       "price": 60000,
       "priceNote": "From 100 stickers or labels",
-      "image": "packaging.jpg",
       "faqs": [
         { "q": "What packaging do you print?", "a": "Labels, boxes, paper bags and stickers." },
         { "q": "Do you deliver outside Kampala?", "a": "Please ask in your quote request and we will confirm whether delivery is possible and any extra cost." },
