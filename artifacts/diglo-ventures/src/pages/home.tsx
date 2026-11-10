@@ -132,8 +132,8 @@ function Hero({ onQuote, onWhatsApp }: { onQuote: () => void; onWhatsApp: () => 
           <p className="mt-5 text-[13px] text-[#A1A1A6]">Kampala · Mon–Sat, 8AM–7PM</p>
         </div>
         <div className="grid h-[280px] grid-cols-2 grid-rows-2 gap-3 md:h-[360px] lg:h-[420px]">
-          <ProductPhoto src={DIGLO_IMAGES.giftPacks} alt="Diglo Ventures - Gift Packs in Kampala" label="Gift Packs" className="row-span-2 min-h-0 rounded-xl border border-[#3A3A3C] md:hidden" />
-          <ProductPhoto src={DIGLO_IMAGES.giftPacks} alt="Diglo Ventures - Gift Packs in Kampala" label="Gift Packs" className="row-span-2 hidden min-h-0 rounded-xl border border-[#3A3A3C] md:block" />
+          <ProductPhoto src={DIGLO_IMAGES.giftPacks} alt="Diglo Ventures - Gift Packs in Kampala" label="Gift Packs" loading="eager" className="row-span-2 min-h-0 rounded-xl border border-[#3A3A3C] md:hidden" />
+          <ProductPhoto src={DIGLO_IMAGES.giftPacks} alt="Diglo Ventures - Gift Packs in Kampala" label="Gift Packs" loading="eager" className="row-span-2 hidden min-h-0 rounded-xl border border-[#3A3A3C] md:block" />
           <ProductPhoto src={DIGLO_IMAGES.uniforms} alt="Diglo Ventures - Uniforms in Kampala" label="Corporate Uniforms" className="hidden min-h-0 rounded-xl border border-[#3A3A3C] md:block" />
           <ProductPhoto src={DIGLO_IMAGES.ppe} alt="Diglo Ventures - PPE in Kampala" label="PPE" className="hidden min-h-0 rounded-xl border border-[#3A3A3C] md:block" />
         </div>

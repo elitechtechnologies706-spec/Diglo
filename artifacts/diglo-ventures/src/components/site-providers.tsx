@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { useLocation } from "wouter";
 import { Mail, MessageCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -35,6 +35,13 @@ export function SiteProviders({ children }: { children: ReactNode }) {
   const [waNotice, setWaNotice] = useState<null | { kind: "whatsapp" | "phone"; message: string }>(null);
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [quoteService, setQuoteService] = useState("");
+  useEffect(() => {
+    try {
+      window.localStorage.removeItem("diglo_pending_leads_v1");
+    } catch {
+      // The retired quote queue is not used by this flow.
+    }
+  }, []);
 
   const openWhatsApp = useCallback((message: string = DEFAULT_WA_MESSAGE) => {
     const url = getWhatsAppLink(message);

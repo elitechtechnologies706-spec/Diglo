@@ -7,6 +7,7 @@ export function ProductPhoto({
   className = "",
   imageClassName = "",
   "data-testid": testId,
+  loading = "lazy",
 }: {
   src: string;
   alt: string;
@@ -14,6 +15,7 @@ export function ProductPhoto({
   className?: string;
   imageClassName?: string;
   "data-testid"?: string;
+  loading?: "lazy" | "eager";
 }) {
   const [failed, setFailed] = useState(false);
   return (
@@ -26,7 +28,7 @@ export function ProductPhoto({
         <img
           src={src}
           alt={alt}
-          loading="lazy"
+          loading={loading}
           decoding="async"
           onError={() => setFailed(true)}
           className={`h-full w-full object-cover ${imageClassName}`}

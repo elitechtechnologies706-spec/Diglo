@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CheckCircle2, Copy, Send } from "lucide-react";
-import { makeQuoteRef, whatsappUrl } from "@/lib/diglo";
+import { buildQuoteMessage, makeQuoteRef, whatsappUrl } from "@/lib/diglo";
 import { SERVICE_NAMES } from "@/lib/site";
 import { btnDark, btnOrange, inputCls, labelCls } from "@/components/tokens";
 
@@ -28,7 +28,7 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
       return;
     }
     const ref = makeQuoteRef();
-    const message = `Hello Diglo Ventures, I would like a quote - Code ${ref} - Service: ${service} - Qty: ${quantity} - Details: ${details || "-"} - Name: ${name}`;
+    const message = buildQuoteMessage({ ref, service, quantity, details, name });
     const whatsapp = whatsappUrl(message);
     if (!whatsapp) {
       setError("WhatsApp is unavailable right now. Please try again.");

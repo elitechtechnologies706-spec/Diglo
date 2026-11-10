@@ -60,7 +60,7 @@ test("generates a local quote code and includes it with details in the WhatsApp 
   const { api } = load();
   const ref = api.makeQuoteRef();
   assert.match(ref, /^DG-[A-Z0-9]{4}$/);
-  const message = `Hello Diglo Ventures, I would like a quote - Code ${ref} - Service: Printing Services - Qty: 100 - Details: Matte finish - Name: QA Test`;
+  const message = api.buildQuoteMessage({ ref, service: "Printing Services", quantity: 100, details: "Matte finish", name: "QA Test" });
   const url = new URL(api.whatsappUrl(message));
   assert.equal(url.hostname, "wa.me");
   assert.equal(url.pathname, "/254721928484");

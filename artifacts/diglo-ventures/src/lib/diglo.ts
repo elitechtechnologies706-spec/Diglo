@@ -48,6 +48,10 @@ export function makeQuoteRef() {
   return "DG-" + [...bytes].map((b) => alphabet[b % alphabet.length]).join("");
 }
 
+export function buildQuoteMessage(input: { ref: string; service: string; quantity: number; details: string; name: string }) {
+  return `Hello Diglo Ventures, I would like a quote - Code ${input.ref} - Service: ${input.service} - Qty: ${input.quantity} - Details: ${input.details || "-"} - Name: ${input.name}`;
+}
+
 export async function lookupOrders(query: string): Promise<TrackedOrder[]> {
   const cleaned = query.trim().toUpperCase();
   const lookup = /^DG-[A-Z0-9]{4}$/.test(cleaned) ? cleaned : normalizePhone(query);
