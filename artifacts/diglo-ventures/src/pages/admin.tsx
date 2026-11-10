@@ -16,7 +16,7 @@ const when = (d: string) => new Date(d).toLocaleString("en-GB", { dateStyle: "me
 
 function Notice({ tone = "info", children }: { tone?: "info" | "error"; children: React.ReactNode }) {
   return (
-    <div role={tone === "error" ? "alert" : "status"} className="flex items-start gap-3 rounded-xl border border-[#E5E5E5] bg-[#F2F2F2] p-4 text-[14px] text-[#1A1A1A]">
+    <div role={tone === "error" ? "alert" : "status"} className="flex items-start gap-3 rounded-xl border border-[#D2D2D7] bg-[#F5F5F7] p-4 text-[14px] text-[#1D1D1F]">
       <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" /> <div>{children}</div>
     </div>
   );
@@ -49,7 +49,7 @@ function Login() {
 
 function Pill({ value, onChange, options, testid, disabled }: { value: string; onChange: (v: string) => void; options: string[]; testid: string; disabled?: boolean }) {
   return (
-    <select value={value} disabled={disabled} onChange={(e) => onChange(e.target.value)} className="h-9 rounded-lg border border-[#E5E5E5] bg-white px-2 text-[13px] font-medium text-[#1A1A1A] outline-none focus:border-[#1A1A1A] disabled:opacity-50" data-testid={testid}>
+    <select value={value} disabled={disabled} onChange={(e) => onChange(e.target.value)} className="h-9 rounded-lg border border-[#D2D2D7] bg-white px-2 text-[13px] font-medium text-[#1D1D1F] outline-none focus:border-[#1D1D1F] disabled:opacity-50" data-testid={testid}>
       {!options.includes(value) && <option value={value}>{value || "-"}</option>}
       {options.map((o) => <option key={o}>{o}</option>)}
     </select>
@@ -87,14 +87,14 @@ function Dashboard({ user }: { user: User }) {
   const fOrders = useMemo(() => orders.filter(match), [orders, q, status]); // eslint-disable-line react-hooks/exhaustive-deps
   const orderRefs = useMemo(() => new Set(orders.map((o) => o.ref)), [orders]);
 
-  const th = "px-4 py-3 text-left text-[12px] font-semibold uppercase tracking-[0.1em] text-[#4A4A4A] whitespace-nowrap";
-  const td = "px-4 py-3 align-top text-[14px] text-[#1A1A1A]";
+  const th = "px-4 py-3 text-left text-[12px] font-semibold uppercase tracking-[0.1em] text-[#86868B] whitespace-nowrap";
+  const td = "px-4 py-3 align-top text-[14px] text-[#1D1D1F]";
 
   return (
-    <div className="min-h-[100dvh] bg-[#F2F2F2]">
-      <header className="sticky top-0 z-30 border-b border-[#E5E5E5] bg-white">
+    <div className="min-h-[100dvh] bg-[#F5F5F7]">
+      <header className="sticky top-0 z-30 border-b border-[#D2D2D7] bg-white">
         <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-5 sm:px-8">
-          <div className="flex items-center gap-3"><Logo /><span className="rounded-full border border-[#E5E5E5] px-2.5 py-0.5 text-[12px] font-semibold">Admin</span></div>
+          <div className="flex items-center gap-3"><Logo /><span className="rounded-full border border-[#D2D2D7] px-2.5 py-0.5 text-[12px] font-semibold">Admin</span></div>
           <div className="flex items-center gap-3">
             <span className="hidden text-[13px] sm:inline">{user.email}</span>
             <button onClick={() => requireSupabase().auth.signOut()} className={btnGhost} data-testid="button-admin-signout"><LogOut className="h-4 w-4" /> Sign out</button>
@@ -103,17 +103,17 @@ function Dashboard({ user }: { user: User }) {
       </header>
       <main className="mx-auto max-w-[1200px] px-5 py-8 sm:px-8">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="inline-flex rounded-xl bg-white p-1 border border-[#E5E5E5]">
+          <div className="inline-flex rounded-xl bg-white p-1 border border-[#D2D2D7]">
             {(["leads", "orders"] as const).map((t) => (
-              <button key={t} onClick={() => setTab(t)} className={`h-9 rounded-lg px-4 text-[14px] font-semibold capitalize transition ${tab === t ? "bg-[#1A1A1A] text-white" : "text-[#4A4A4A] hover:text-[#1A1A1A]"}`} data-testid={`tab-${t}`}>
+              <button key={t} onClick={() => setTab(t)} className={`h-9 rounded-lg px-4 text-[14px] font-semibold capitalize transition ${tab === t ? "bg-[#1D1D1F] text-white" : "text-[#6E6E73] hover:text-[#1D1D1F]"}`} data-testid={`tab-${t}`}>
                 {t} <span className="ml-1 opacity-70">{t === "leads" ? leads.length : orders.length}</span>
               </button>
             ))}
           </div>
           <div className="flex flex-col gap-2 sm:flex-row">
             <div className="relative"><Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
-              <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search ref or phone" className="h-10 w-full rounded-lg border border-[#E5E5E5] bg-white pl-9 pr-3 text-[14px] outline-none focus:border-[#1A1A1A] sm:w-60" data-testid="input-admin-search" /></div>
-            <select value={status} onChange={(e) => setStatus(e.target.value)} className="h-10 rounded-lg border border-[#E5E5E5] bg-white px-3 text-[14px] outline-none" data-testid="select-admin-status">
+              <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search ref or phone" className="h-10 w-full rounded-lg border border-[#D2D2D7] bg-[#F5F5F7] pl-9 pr-3 text-[14px] outline-none focus:border-[#1D1D1F] sm:w-60" data-testid="input-admin-search" /></div>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="h-10 rounded-lg border border-[#D2D2D7] bg-[#F5F5F7] px-3 text-[14px] outline-none" data-testid="select-admin-status">
               <option>All</option>{STATUSES.map((s) => <option key={s}>{s}</option>)}
             </select>
             <button onClick={load} className={`${btnGhost} !h-10`} data-testid="button-admin-refresh"><RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} /> Refresh</button>
@@ -125,25 +125,25 @@ function Dashboard({ user }: { user: User }) {
           {flash && <Notice>{flash}</Notice>}
         </div>
 
-        <div className="mt-5 overflow-x-auto rounded-2xl border border-[#E5E5E5] bg-white">
+        <div className="mt-5 overflow-x-auto rounded-2xl border border-[#D2D2D7] bg-white">
           {loading ? (
-            <div className="space-y-3 p-6">{[0, 1, 2, 3].map((i) => <div key={i} className="h-10 animate-pulse rounded bg-[#F2F2F2]" />)}</div>
+            <div className="space-y-3 p-6">{[0, 1, 2, 3].map((i) => <div key={i} className="h-10 animate-pulse rounded bg-[#F5F5F7]" />)}</div>
           ) : tab === "leads" ? (
             fLeads.length === 0 ? <p className="p-10 text-center text-[15px]">No leads match.</p> : (
               <table className="w-full min-w-[900px]">
-                <thead className="border-b border-[#E5E5E5]"><tr><th className={th}>Ref</th><th className={th}>Customer</th><th className={th}>Service</th><th className={th}>Message</th><th className={th}>Created</th><th className={th}>Status</th><th className={th}></th></tr></thead>
-                <tbody className="divide-y divide-[#E5E5E5]">
+                <thead className="border-b border-[#D2D2D7]"><tr><th className={th}>Ref</th><th className={th}>Customer</th><th className={th}>Service</th><th className={th}>Message</th><th className={th}>Created</th><th className={th}>Status</th><th className={th}></th></tr></thead>
+                <tbody className="divide-y divide-[#D2D2D7]">
                   {fLeads.map((l) => (
-                    <tr key={l.id} className="transition hover:bg-[#F2F2F2]/60" data-testid={`row-lead-${l.id}`}>
+                    <tr key={l.id} className="transition hover:bg-[#F5F5F7]/60" data-testid={`row-lead-${l.id}`}>
                       <td className={`${td} font-semibold whitespace-nowrap`}>{l.ref}</td>
-                      <td className={td}><div className="font-medium">{l.name}</div><div className="text-[13px] text-[#4A4A4A]">{l.phone}</div></td>
-                      <td className={td}>{l.service}<div className="text-[13px] text-[#4A4A4A]">Qty {l.quantity}</div></td>
-                      <td className={`${td} max-w-[240px] text-[13px] text-[#4A4A4A]`}>{l.message || "-"}</td>
+                      <td className={td}><div className="font-medium">{l.name}</div><div className="text-[13px] text-[#86868B]">{l.phone}</div></td>
+                      <td className={td}>{l.service}<div className="text-[13px] text-[#86868B]">Qty {l.quantity}</div></td>
+                      <td className={`${td} max-w-[240px] text-[13px] text-[#6E6E73]`}>{l.message || "-"}</td>
                       <td className={`${td} whitespace-nowrap text-[13px]`}>{when(l.created_at)}</td>
                       <td className={td}><Pill value={l.status} options={STATUSES} disabled={busyId === l.id} testid={`select-lead-status-${l.id}`} onChange={(v) => act(l.id, () => updateLeadStatus(l.id, v as Lead["status"]), `${l.ref} marked ${v}.`)} /></td>
                       <td className={td}>
-                        {orderRefs.has(l.ref) ? <span className="text-[13px] text-[#4A4A4A]">Order exists</span> : (
-                          <button disabled={busyId === l.id} onClick={() => act(l.id, () => createOrderFromLead(l), `Order created from ${l.ref}.`)} className="inline-flex h-9 items-center gap-1.5 whitespace-nowrap rounded-lg bg-[#1A1A1A] px-3 text-[13px] font-semibold text-white disabled:opacity-50" data-testid={`button-create-order-${l.id}`}>
+                        {orderRefs.has(l.ref) ? <span className="text-[13px] text-[#6E6E73]">Order exists</span> : (
+                          <button disabled={busyId === l.id} onClick={() => act(l.id, () => createOrderFromLead(l), `Order created from ${l.ref}.`)} className="inline-flex h-9 items-center gap-1.5 whitespace-nowrap rounded-lg bg-[#1D1D1F] px-3 text-[13px] font-semibold text-white disabled:opacity-50" data-testid={`button-create-order-${l.id}`}>
                             <PackagePlus className="h-4 w-4" /> Create order
                           </button>
                         )}
@@ -155,10 +155,10 @@ function Dashboard({ user }: { user: User }) {
             )
           ) : fOrders.length === 0 ? <p className="p-10 text-center text-[15px]">No orders yet. Create one from a lead.</p> : (
             <table className="w-full min-w-[760px]">
-              <thead className="border-b border-[#E5E5E5]"><tr><th className={th}>Ref</th><th className={th}>Phone</th><th className={th}>Service</th><th className={th}>Status</th><th className={th}>Stage</th><th className={th}>Updated</th></tr></thead>
-              <tbody className="divide-y divide-[#E5E5E5]">
+              <thead className="border-b border-[#D2D2D7]"><tr><th className={th}>Ref</th><th className={th}>Phone</th><th className={th}>Service</th><th className={th}>Status</th><th className={th}>Stage</th><th className={th}>Updated</th></tr></thead>
+              <tbody className="divide-y divide-[#D2D2D7]">
                 {fOrders.map((o) => (
-                  <tr key={o.id} className="transition hover:bg-[#F2F2F2]/60" data-testid={`row-order-${o.id}`}>
+                  <tr key={o.id} className="transition hover:bg-[#F5F5F7]/60" data-testid={`row-order-${o.id}`}>
                     <td className={`${td} font-semibold`}>{o.ref}</td>
                     <td className={td}>{o.phone}</td>
                     <td className={td}>{o.service}</td>
@@ -192,16 +192,16 @@ export default function Admin() {
   if (ready && user && isAdmin(user)) return <Dashboard user={user} />;
 
   return (
-    <div className="grid min-h-[100dvh] place-items-center bg-[#F2F2F2] px-5 py-10">
-      <div className="w-full max-w-[400px] rounded-2xl border border-[#E5E5E5] bg-white p-7 animate-in fade-in zoom-in-95 duration-300">
+    <div className="grid min-h-[100dvh] place-items-center bg-[#F5F5F7] px-5 py-10">
+      <div className="w-full max-w-[400px] rounded-2xl border border-[#D2D2D7] bg-white p-7 animate-in fade-in zoom-in-95 duration-300">
         <Logo />
         <h1 className="mt-6 text-[24px] font-bold">Admin sign in</h1>
         <div className="mt-6">
-          {!ready ? <div className="space-y-3">{[0, 1, 2].map((i) => <div key={i} className="h-12 animate-pulse rounded-xl bg-[#F2F2F2]" />)}</div>
+          {!ready ? <div className="space-y-3">{[0, 1, 2].map((i) => <div key={i} className="h-12 animate-pulse rounded-xl bg-[#F5F5F7]" />)}</div>
             : !supabase ? <Notice tone="error">Admin is not configured. Supabase connection settings are missing.</Notice>
             : user ? (
               <div className="space-y-4">
-                <div className="flex items-start gap-3 rounded-xl border border-[#E5E5E5] bg-[#F2F2F2] p-4 text-[14px] text-[#1A1A1A]"><ShieldAlert className="h-4 w-4 shrink-0" /> {user.email} does not have admin access.</div>
+                <div className="flex items-start gap-3 rounded-xl border border-[#D2D2D7] bg-[#F5F5F7] p-4 text-[14px] text-[#1D1D1F]"><ShieldAlert className="h-4 w-4 shrink-0" /> {user.email} does not have admin access.</div>
                 <button onClick={() => requireSupabase().auth.signOut()} className={`${btnDark} w-full`} data-testid="button-admin-signout-denied">Sign out</button>
               </div>
             ) : <Login />}

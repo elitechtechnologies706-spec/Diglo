@@ -68,77 +68,77 @@
 
 /* LIGHT MODE */
 :root {
-  --button-outline: rgba(0, 0, 0, 0.1);
-  --badge-outline: rgba(0, 0, 0, 0.05);
+  --button-outline: rgba(29, 29, 31, 0.1);
+  --badge-outline: rgba(29, 29, 31, 0.05);
 
   /* Automatic computation of border around primary / danger buttons */
   --opaque-button-border-intensity: -8; /* In terms of percentages */
 
   /* Backgrounds applied on top of other backgrounds when hovered/active */
-  --elevate-1: rgba(0, 0, 0, 0.03);
-  --elevate-2: rgba(0, 0, 0, 0.08);
+  --elevate-1: rgba(29, 29, 31, 0.03);
+  --elevate-2: rgba(29, 29, 31, 0.08);
 
   --background: 0 0% 100%;
 
-  --foreground: 0 0% 10%;
+  --foreground: 240 3.2% 11.8%;
 
-  --border: 0 0% 90%;
+  --border: 240 5.3% 83.3%;
 
   --card: 0 0% 100%;
 
-  --card-foreground: 0 0% 10%;
+  --card-foreground: 240 3.2% 11.8%;
 
-  --card-border: 0 0% 90%;
+  --card-border: 240 5.3% 83.3%;
 
-  --sidebar: 0 0% 95%;
+  --sidebar: 240 11.1% 96.7%;
 
-  --sidebar-foreground: 0 0% 10%;
+  --sidebar-foreground: 240 3.2% 11.8%;
 
-  --sidebar-border: 0 0% 90%;
+  --sidebar-border: 240 5.3% 83.3%;
 
   --sidebar-primary: 25 100% 50%;
 
   --sidebar-primary-foreground: 0 0% 100%;
 
-  --sidebar-accent: 0 0% 95%;
+  --sidebar-accent: 240 11.1% 96.7%;
 
-  --sidebar-accent-foreground: 0 0% 10%;
+  --sidebar-accent-foreground: 240 3.2% 11.8%;
 
   --sidebar-ring: 25 100% 50%;
 
   --popover: 0 0% 100%;
 
-  --popover-foreground: 0 0% 10%;
+  --popover-foreground: 240 3.2% 11.8%;
 
-  --popover-border: 0 0% 90%;
+  --popover-border: 240 5.3% 83.3%;
 
   --primary: 25 100% 50%;
 
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 0 0% 10%;
+  --secondary: 240 3.2% 11.8%;
 
   --secondary-foreground: 0 0% 100%;
 
-  --muted: 0 0% 95%;
+  --muted: 240 11.1% 96.7%;
 
-  --muted-foreground: 0 0% 29%;
+  --muted-foreground: 240 2.6% 44.1%;
 
-  --accent: 0 0% 95%;
+  --accent: 240 11.1% 96.7%;
 
-  --accent-foreground: 0 0% 10%;
+  --accent-foreground: 240 3.2% 11.8%;
 
   --destructive: 0 72% 45%;
 
   --destructive-foreground: 0 0% 100%;
 
-  --input: 0 0% 90%;
+  --input: 240 5.3% 83.3%;
   --ring: 25 100% 50%;
   --chart-1: 25 100% 50%;
-  --chart-2: 0 0% 10%;
-  --chart-3: 0 0% 29%;
+  --chart-2: 240 3.2% 11.8%;
+  --chart-3: 240 2.6% 44.1%;
   --chart-4: 0 0% 60%;
-  --chart-5: 0 0% 90%;
+  --chart-5: 240 5.3% 83.3%;
 
   --app-font-sans: 'Inter', sans-serif;
   --app-font-display: 'Sora', sans-serif;
@@ -230,66 +230,66 @@
 
   --background: 0 0% 100%;
 
-  --foreground: 0 0% 10%;
+  --foreground: 240 3.2% 11.8%;
 
-  --border: 0 0% 90%;
+  --border: 240 5.3% 83.3%;
 
   --card: 0 0% 100%;
 
-  --card-foreground: 0 0% 10%;
+  --card-foreground: 240 3.2% 11.8%;
 
-  --card-border: 0 0% 90%;
+  --card-border: 240 5.3% 83.3%;
 
-  --sidebar: 0 0% 95%;
+  --sidebar: 240 11.1% 96.7%;
 
-  --sidebar-foreground: 0 0% 10%;
+  --sidebar-foreground: 240 3.2% 11.8%;
 
-  --sidebar-border: 0 0% 90%;
+  --sidebar-border: 240 5.3% 83.3%;
 
   --sidebar-primary: 25 100% 50%;
 
   --sidebar-primary-foreground: 0 0% 100%;
 
-  --sidebar-accent: 0 0% 95%;
+  --sidebar-accent: 240 11.1% 96.7%;
 
-  --sidebar-accent-foreground: 0 0% 10%;
+  --sidebar-accent-foreground: 240 3.2% 11.8%;
 
   --sidebar-ring: 25 100% 50%;
 
   --popover: 0 0% 100%;
 
-  --popover-foreground: 0 0% 10%;
+  --popover-foreground: 240 3.2% 11.8%;
 
-  --popover-border: 0 0% 90%;
+  --popover-border: 240 5.3% 83.3%;
 
   --primary: 25 100% 50%;
 
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 0 0% 10%;
+  --secondary: 240 3.2% 11.8%;
 
   --secondary-foreground: 0 0% 100%;
 
-  --muted: 0 0% 95%;
+  --muted: 240 11.1% 96.7%;
 
-  --muted-foreground: 0 0% 29%;
+  --muted-foreground: 240 2.6% 44.1%;
 
-  --accent: 0 0% 95%;
+  --accent: 240 11.1% 96.7%;
 
-  --accent-foreground: 0 0% 10%;
+  --accent-foreground: 240 3.2% 11.8%;
 
   --destructive: 0 72% 45%;
 
   --destructive-foreground: 0 0% 100%;
 
   /* Used as the border around inputs. Dark mode: Should be a border that is light enough to have high contrast when rendered on a --card background. More contrast than standard --border */
-  --input: 0 0% 90%;
+  --input: 240 5.3% 83.3%;
   --ring: 25 100% 50%;
   --chart-1: 25 100% 50%;
-  --chart-2: 0 0% 10%;
-  --chart-3: 0 0% 29%;
+  --chart-2: 240 3.2% 11.8%;
+  --chart-3: 240 2.6% 44.1%;
   --chart-4: 0 0% 60%;
-  --chart-5: 0 0% 90%;
+  --chart-5: 240 5.3% 83.3%;
 
   --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0);
   --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0);
@@ -434,8 +434,8 @@
 }
 
 html { scroll-behavior: smooth; scroll-padding-top: 84px; }
-body { font-size: 16px; color: #4A4A4A; overflow-x: hidden; }
-h1,h2,h3,h4,.font-display { font-family: var(--app-font-display); color: #1A1A1A; letter-spacing: -0.02em; }
+body { font-size: 16px; color: #6E6E73; overflow-x: hidden; }
+h1,h2,h3,h4,.font-display { font-family: var(--app-font-display); color: #1D1D1F; letter-spacing: -0.02em; }
 .dark-zone h1,.dark-zone h2,.dark-zone h3,.dark-zone h4 { color: #FFFFFF; }
 @keyframes rise { from { opacity: 0; transform: translateY(18px);} to { opacity: 1; transform: none;} }
 .rise { opacity: 0; animation: rise .8s cubic-bezier(.2,.7,.2,1) forwards; }

@@ -57,9 +57,9 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
 
   if (result) {
     return result.sent ? (
-      <div className="rounded-2xl border border-[#E5E5E5] bg-white p-6 animate-in fade-in zoom-in-95 duration-300" data-testid="status-quote-sent">
-        <CheckCircle2 className="h-8 w-8 text-[#1A1A1A]" />
-        <p className="mt-4 text-[16px] leading-relaxed text-[#1A1A1A]">
+      <div className="rounded-2xl border border-[#D2D2D7] bg-white p-6 animate-in fade-in zoom-in-95 duration-300" data-testid="status-quote-sent">
+        <CheckCircle2 className="h-8 w-8 text-[#1D1D1F]" />
+        <p className="mt-4 text-[16px] leading-relaxed text-[#1D1D1F]">
           Thank you, {result.name}. Your quote request {result.ref} has been sent. We will reply within 5 minutes on WhatsApp.
         </p>
         {whatsappUrl(`Hello Diglo Ventures, I just sent quote request ${result.ref}.`) ? (
@@ -67,9 +67,9 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
         ) : <p className="mt-3 text-sm">The business WhatsApp number is not configured yet. Your saved request is available to Diglo in Supabase.</p>}
       </div>
     ) : (
-      <div className="rounded-2xl border border-[#E5E5E5] bg-[#F2F2F2] p-6 animate-in fade-in duration-300" data-testid="status-quote-pending">
-        <Clock className="h-7 w-7 text-[#1A1A1A]" />
-        <p className="mt-4 font-semibold text-[#1A1A1A]">Saved on this device. Not sent yet.</p>
+      <div className="rounded-2xl border border-[#D2D2D7] bg-[#F5F5F7] p-6 animate-in fade-in duration-300" data-testid="status-quote-pending">
+        <Clock className="h-7 w-7 text-[#1D1D1F]" />
+        <p className="mt-4 font-semibold text-[#1D1D1F]">Saved on this device. Not sent yet.</p>
         <p className="mt-2 text-[15px] leading-relaxed">
           Your request {result.ref} could not reach us right now. It is saved on this device for up to seven days and will be retried when this page is open and online. This message will update once it is delivered. Clearing browser data will remove the saved request.
         </p>
@@ -88,7 +88,7 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
           <input required value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} className={inputCls} placeholder="Full name" autoComplete="name" data-testid="input-quote-name" /></label>
         <label className="block"><span className={labelCls}>Phone</span>
           <div className="flex">
-            <span className="grid h-12 place-items-center rounded-l-xl border border-r-0 border-[#E5E5E5] bg-white px-3 text-[15px] font-medium text-[#1A1A1A]">+256</span>
+            <span className="grid h-12 place-items-center rounded-l-xl border border-r-0 border-[#D2D2D7] bg-white px-3 text-[15px] font-medium text-[#1D1D1F]">+256</span>
             <input required type="tel" inputMode="tel" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} className={`${inputCls} rounded-l-none`} placeholder="7XX XXX XXX" autoComplete="tel-national" data-testid="input-quote-phone" />
           </div>
         </label>
@@ -104,7 +104,7 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
       </div>
       <label className="block"><span className={labelCls}>Message</span>
         <textarea rows={compact ? 3 : 4} value={f.message} onChange={(e) => setF({ ...f, message: e.target.value })} className={`${inputCls} h-auto py-3`} placeholder="Business name, colours, deadline, delivery area" data-testid="input-quote-message" /></label>
-      {error && <p className="text-[14px] font-medium text-[#1A1A1A]" role="alert" data-testid="text-quote-error">{error}</p>}
+      {error && <p className="text-[14px] font-medium text-[#6E6E73]" role="alert" data-testid="text-quote-error">{error}</p>}
       <button type="submit" disabled={busy} className={`${btnOrange} w-full`} data-testid="button-quote-submit">
         <Send className="h-4 w-4" /> {busy ? "Sending" : "Send Quote Request"}
       </button>

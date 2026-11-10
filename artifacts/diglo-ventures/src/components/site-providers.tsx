@@ -60,19 +60,19 @@ export function SiteProviders({ children }: { children: ReactNode }) {
     <SiteCtx.Provider value={{ openWhatsApp, openQuote, showPhoneUnavailable }}>
       {children}
       <Dialog open={quoteOpen} onOpenChange={setQuoteOpen}>
-        <DialogContent className="max-h-[90dvh] overflow-y-auto rounded-2xl border-[#E5E5E5] bg-white sm:max-w-lg">
+        <DialogContent className="max-h-[90dvh] overflow-y-auto rounded-2xl border-[#D2D2D7] bg-white sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle className="font-display text-[22px] text-[#1A1A1A]">Get a Free Quote</DialogTitle>
-            <DialogDescription className="text-[#4A4A4A]">Tell us what you need. We reply on WhatsApp.</DialogDescription>
+            <DialogTitle className="font-display text-[22px] text-[#1D1D1F]">Get a Free Quote</DialogTitle>
+            <DialogDescription className="text-[#6E6E73]">Tell us what you need. We reply on WhatsApp.</DialogDescription>
           </DialogHeader>
           <QuoteForm key={quoteOpen ? `open-${quoteService}` : "closed"} initialService={quoteService} />
         </DialogContent>
       </Dialog>
       <Dialog open={!!waNotice} onOpenChange={(o) => !o && setWaNotice(null)}>
-        <DialogContent className="rounded-2xl border-[#E5E5E5] bg-white sm:max-w-md">
+        <DialogContent className="rounded-2xl border-[#D2D2D7] bg-white sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="font-display text-[#1A1A1A]">{noticeKind} number not configured yet</DialogTitle>
-            <DialogDescription className="text-[#4A4A4A]">
+            <DialogTitle className="font-display text-[#1D1D1F]">{noticeKind} number not configured yet</DialogTitle>
+            <DialogDescription className="text-[#6E6E73]">
               A {noticeKind === "WhatsApp" ? "WhatsApp" : "phone"} number has not been added to this website yet, so nothing was opened. You can reach Diglo Ventures by email instead.
             </DialogDescription>
           </DialogHeader>
