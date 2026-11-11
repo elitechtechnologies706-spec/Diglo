@@ -1,12 +1,22 @@
 import { useState } from "react";
 import { CheckCircle2, Copy, Send } from "lucide-react";
 import { buildQuoteMessage, makeQuoteRef, whatsappUrl } from "@/lib/diglo";
-import { SERVICE_NAMES } from "@/lib/site";
+import { COUNTRIES, CURRENCY_OPTIONS, SERVICE_NAMES, formatPrice } from "@/lib/site";
 import { btnDark, btnOrange, inputCls, labelCls } from "@/components/tokens";
+import { useSite } from "@/components/site-providers";
 
 type Result = { ref: string; name: string; service: string; quantity: number; details: string; whatsapp: string };
 
+const SERVICE_STARTING_PRICE: Record<string, number> = {
+  "Gift Packs": 45000,
+  "Corporate Uniforms": 45000,
+  PPE: 65000,
+  "Printing Services": 80000,
+  "Not sure yet": 0,
+};
+
 export function QuoteForm({ initialService = "", compact = false }: { initialService?: string; compact?: boolean }) {
+  const { currency, changeCurrency, country, chooseCountry } = useSite();
   const [f, setF] = useState({ name: "", service: initialService, quantity: "", details: "" });
   const [error, setError] = useState("");
   const [result, setResult] = useState<Result | null>(null);
@@ -19,6 +29,9 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
     const name = f.name.trim();
     const service = f.service.trim();
     const details = f.details.trim();
+    const startingPrice = SERVICE_STARTING_PRICE[service] ?? 0;
+    const estimateUGX = startingPrice * quantity;
+    const total = startingPrice ? `${formatPrice(estimateUGX, currency)} (${formatPrice(estimateUGX, "USD")} USD)` : "To confirm";
     if (name.length < 2 || !service) {
       setError("Please add your name and choose a service.");
       return;
@@ -28,7 +41,7 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
       return;
     }
     const ref = makeQuoteRef();
-    const message = buildQuoteMessage({ ref, service, quantity, details, name });
+    const message = buildQuoteMessage({ ref, service, quantity, details, name, currency, country, total });
     const whatsapp = whatsappUrl(message);
     if (!whatsapp) {
       setError("WhatsApp is unavailable right now. Please try again.");
@@ -74,6 +87,24 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
 
   return (
     <form onSubmit={submit} className="space-y-4" noValidate>
+      <fieldset>
+        <legend className={labelCls}>1. Choose Your Currency *</legend>
+        <div className="grid gap-2 sm:grid-cols-3">
+          {CURRENCY_OPTIONS.map(({ code, country: optionCountry, flag }) => (
+            <button
+              key={code}
+              type="button"
+              aria-pressed={currency === code}
+              onClick={() => changeCurrency(code)}
+              className={`min-h-11 rounded-lg border px-2 text-[12px] font-semibold transition-colors ${currency === code ? "border-[#FF6B00] bg-[#FF6B00] text-white" : "border-[#3A3A3C] bg-[#1D1D1F] text-white hover:border-[#A1A1A6]"}`}
+              data-testid={`button-quote-currency-${code.toLowerCase()}`}
+            >
+              {flag} {code} - {optionCountry}
+            </button>
+          ))}
+        </div>
+        <p className="mt-2 text-[13px] text-[#D4D4D4]" data-testid="text-quote-currency">You are requesting quote in: {currency} - {CURRENCY_OPTIONS.find((option) => option.code === currency)?.label}</p>
+      </fieldset>
       <div className={`grid gap-4 ${compact ? "" : "md:grid-cols-2"}`}>
         <label className="block"><span className={labelCls}>Name</span>
           <input required value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} className={`${inputCls} !h-[52px] md:!h-12`} placeholder="Full name" autoComplete="name" data-testid="input-quote-name" /></label>
@@ -83,11 +114,24 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
             {SERVICE_NAMES.map((s) => <option key={s}>{s}</option>)}
           </select></label>
       </div>
+      <label className="block"><span className={labelCls}>Country</span>
+        <select value={country} onChange={(e) => chooseCountry(e.target.value as typeof country)} className={`${inputCls} !h-[52px] md:!h-12`} data-testid="select-quote-country">
+          {COUNTRIES.map((option) => <option key={option} value={option}>{option}</option>)}
+        </select>
+      </label>
       <div className={`grid gap-4 ${compact ? "" : "md:grid-cols-[1fr_2fr]"}`}>
         <label className="block"><span className={labelCls}>Quantity</span>
           <input required type="number" min={1} inputMode="numeric" value={f.quantity} onChange={(e) => setF({ ...f, quantity: e.target.value })} className={`${inputCls} !h-[52px] md:!h-12`} placeholder="100" data-testid="input-quote-quantity" /></label>
         <label className="block"><span className={labelCls}>Details</span>
           <input value={f.details} onChange={(e) => setF({ ...f, details: e.target.value })} className={`${inputCls} !h-[52px] md:!h-12`} placeholder="Colours, deadline, delivery area" data-testid="input-quote-details" /></label>
+      </div>
+      <div className="rounded-lg border border-[#3A3A3C] bg-[#1D1D1F] p-3">
+        <p className="text-[14px] font-semibold text-white" data-testid="text-quote-estimate">
+          Total: {Number(f.quantity) > 0 && f.service && SERVICE_STARTING_PRICE[f.service]
+            ? `${formatPrice(SERVICE_STARTING_PRICE[f.service] * Number(f.quantity), currency)} ( ${formatPrice(SERVICE_STARTING_PRICE[f.service] * Number(f.quantity), "USD")} USD )`
+            : "Quote confirmed on WhatsApp"}
+        </p>
+        <p className="mt-1 text-[12px] text-[#A1A1A6]">Delivery across East Africa - Quote includes delivery estimate for your country</p>
       </div>
       {error && <p className="text-[14px] font-medium text-[#A1A1A6]" role="alert" data-testid="text-quote-error">{error}</p>}
       <button type="submit" className={`${btnOrange} w-full`} data-testid="button-quote-submit">

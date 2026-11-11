@@ -48,8 +48,19 @@ export function makeQuoteRef() {
   return "DG-" + [...bytes].map((b) => alphabet[b % alphabet.length]).join("");
 }
 
-export function buildQuoteMessage(input: { ref: string; service: string; quantity: number; details: string; name: string }) {
-  return `Hello Diglo Ventures, I would like a quote - Code ${input.ref} - Service: ${input.service} - Qty: ${input.quantity} - Details: ${input.details || "-"} - Name: ${input.name}`;
+export function buildQuoteMessage(input: {
+  ref: string;
+  service: string;
+  quantity: number;
+  details: string;
+  name: string;
+  currency?: "UGX" | "KSH" | "USD";
+  country?: string;
+  total?: string;
+}) {
+  const currency = input.currency ?? "UGX";
+  const country = input.country ?? "Uganda";
+  return `Hello Diglo Ventures, I want a quote in ${currency} - ${country} - Code: ${input.ref} - Service: ${input.service} - Qty: ${input.quantity} - Estimated Total: ${input.total ?? "To confirm"} - Details: ${input.details || "-"} - Name: ${input.name}`;
 }
 
 export async function lookupOrders(query: string): Promise<TrackedOrder[]> {

@@ -1,50 +1,26 @@
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { PageShell } from "@/components/site-shell";
+import { CompanyProfileSections } from "@/components/company-profile-sections";
 import { btnDark, btnOrange, homeHash, wrap } from "@/components/tokens";
 import { useSite } from "@/components/site-providers";
 import { useSeo } from "@/lib/seo";
 
-const VALUES = [
-  {
-    title: "OUR MISSION",
-    text: "To make every team in Uganda look professional, feel proud, and be remembered - with affordable branding, uniforms and printing, delivered fast.",
-  },
-  {
-    title: "OUR VISION",
-    text: "To be Uganda's most trusted branding partner - the first name businesses call when they want gift packs, uniforms, PPE and printing done right.",
-  },
-];
-
 export default function About() {
   const { openQuote } = useSite();
   useSeo({
-    title: "About Diglo Ventures | Kampala Branding and Printing",
-    description: "Meet Diglo Ventures, a Kampala branding partner for gift packs, uniforms, PPE and printing.",
+    title: "About Diglo Ventures | Serving East Africa",
+    description: "Meet Diglo Ventures, a corporate supply partner based in Kampala and serving East Africa.",
     path: "/about",
   });
 
   return (
     <PageShell active="about">
+      <CompanyProfileSections />
       <section className="bg-[#1D1D1F] py-10 md:py-16">
         <div className={wrap}>
-          <div className="max-w-[720px]">
-            <p className="mb-3 text-[13px] font-semibold uppercase tracking-[0.14em] text-[#A1A1A6]">About Us</p>
-            <h1 className="text-[28px] font-bold leading-[1.3] text-white">About Diglo Ventures</h1>
-            <p className="mt-3 max-w-[60ch] text-[15px] leading-relaxed text-[#D4D4D4]">We help teams in Kampala look professional. Designed today. Delivered tomorrow.</p>
-          </div>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {VALUES.map(({ title, text }) => (
-              <article key={title} className="rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5 md:p-6">
-                <h2 className="text-[14px] font-semibold tracking-[0.08em] text-white">{title}</h2>
-                <p className="mt-3 max-w-[60ch] text-[15px] leading-relaxed text-[#D4D4D4]">{text}</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-            {["500+ Teams Served", "24 Hour Express", "Kampala Based"].map((item) => (
+          <div className="grid gap-4 sm:grid-cols-3">
+            {["500+ Teams Served", "24 Hour Express", "Based in Kampala, Serving East Africa"].map((item) => (
               <div key={item} className="rounded-lg border border-[#3A3A3C] px-4 py-4 text-center text-[14px] font-medium text-white">{item}</div>
             ))}
           </div>

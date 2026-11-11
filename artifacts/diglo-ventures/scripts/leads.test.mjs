@@ -60,7 +60,11 @@ test("generates a local quote code and includes it with details in the WhatsApp 
   const { api } = load();
   const ref = api.makeQuoteRef();
   assert.match(ref, /^DG-[A-Z0-9]{4}$/);
-  const message = api.buildQuoteMessage({ ref, service: "Printing Services", quantity: 100, details: "Matte finish", name: "QA Test" });
+  const message = api.buildQuoteMessage({
+    ref, service: "Printing Services", quantity: 100, details: "Matte finish", name: "QA Test",
+    currency: "KSH", country: "Kenya", total: "2,730 KSH ($21 USD)",
+  });
+  assert.match(message, new RegExp(`^Hello Diglo Ventures, I want a quote in KSH - Kenya - Code: ${ref}`));
   const url = new URL(api.whatsappUrl(message));
   assert.equal(url.hostname, "wa.me");
   assert.equal(url.pathname, "/254721928484");

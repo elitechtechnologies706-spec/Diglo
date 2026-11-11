@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ArrowRight, MessageCircle, Plus } from "lucide-react";
 import seo from "@/lib/seo-data.json";
-import { formatUGX } from "@/lib/site";
+import { formatPrice } from "@/lib/site";
 import { useSeo } from "@/lib/seo";
 import { PageShell } from "@/components/site-shell";
 import { useSite } from "@/components/site-providers";
@@ -9,6 +9,7 @@ import { btnDark, btnOrange, wrap } from "@/components/tokens";
 import NotFound from "@/pages/not-found";
 import { ProductPhoto } from "@/components/product-photo";
 import { DIGLO_IMAGES } from "@/lib/images";
+import { CardCurrencyPicker } from "@/components/currency-controls";
 
 function seoPhoto(slug: string) {
   if (slug === "logo-design-kampala" || slug === "business-cards-kampala" || slug === "banner-printing-kampala") return DIGLO_IMAGES.printing;
@@ -19,7 +20,7 @@ function seoPhoto(slug: string) {
 export default function SeoPage({ slug }: { slug: string }) {
   const page = seo.pages.find((p) => p.slug === slug);
   useSeo({ title: page?.title ?? seo.homeTitle, description: page?.description, path: `/${slug}` });
-  const { openQuote, openWhatsApp } = useSite();
+  const { openQuote, openWhatsApp, currency } = useSite();
   const [open, setOpen] = useState<number | null>(0);
   if (!page) return <NotFound />;
   return (
@@ -52,7 +53,9 @@ export default function SeoPage({ slug }: { slug: string }) {
             <p className="text-[13px] font-semibold uppercase tracking-[0.14em]">Price</p>
             <h3 className="mt-2 text-[22px] font-semibold">{page.productName}</h3>
             <p className="text-[15px] text-[#F5F5F7]">{page.priceNote}</p>
-            <p className="font-display mt-4 text-[22px] font-bold text-[#FF6B00]" style={{ fontFamily: "Sora" }}>From {formatUGX(page.price)}</p>
+            <p className="font-display mt-4 text-[22px] font-bold text-[#FF6B00] transition-opacity duration-150" style={{ fontFamily: "Sora" }}>From {formatPrice(page.price, currency)}</p>
+            <CardCurrencyPicker />
+            <p className="mt-1 text-[11px] text-[#A1A1A6]">Prices in your currency. Final quote confirmed on WhatsApp.</p>
             <p className="mt-3 text-[14px] text-[#A1A1A6]">All prices include design proof. Payment by Mobile Money or Bank Transfer.</p>
             <button onClick={() => openQuote(page.service)} className={`${btnOrange} mt-6 w-full`} data-testid="button-seo-order">Order This</button>
           </div>

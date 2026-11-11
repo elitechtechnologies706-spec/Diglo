@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { Calculator, MessageCircle } from "lucide-react";
 import { PRODUCTS, calculateEstimate } from "@/lib/calculator";
-import { formatUGX } from "@/lib/site";
+import { formatPrice } from "@/lib/site";
 import { inputCls, labelCls } from "@/components/tokens";
 import { useSite } from "@/components/site-providers";
+import { CardCurrencyPicker } from "@/components/currency-controls";
 
 type Paper = "standard" | "premium";
 type Delivery = "pickup" | "kampala" | "upcountry";
@@ -25,7 +26,7 @@ function Seg<T extends string>({ value, options, onChange, name }: { value: T; o
 }
 
 export function PriceCalculator() {
-  const { openWhatsApp } = useSite();
+  const { openWhatsApp, currency } = useSite();
   const [productId, setProductId] = useState<string>(PRODUCTS[0]?.id ?? "");
   const [quantity, setQuantity] = useState(100);
   const [qtyText, setQtyText] = useState("100");
@@ -41,9 +42,9 @@ export function PriceCalculator() {
     setQuantity(c); setQtyText(String(c));
   };
 
-  const totalText = est.total !== null ? fmt(est.total) : `${fmt(known)} plus items to confirm`;
+  const totalText = est.total !== null ? formatPrice(est.total, currency) : `${formatPrice(known, currency)} plus items to confirm`;
   const send = () => {
-    openWhatsApp(`Hello Diglo Ventures, I would like a quote for ${product?.name ?? "printing"}, Quantity ${quantity}, Estimated Price ${totalText} UGX. Please confirm.`);
+    openWhatsApp(`Hello Diglo Ventures, I would like a quote for ${product?.name ?? "printing"}, Quantity ${quantity}, Estimated Price ${totalText}. Please confirm.`);
   };
 
   const Row = ({ label, value, testid, muted = false }: { label: string; value: string; testid: string; muted?: boolean }) => (
@@ -59,13 +60,13 @@ export function PriceCalculator() {
         <div className="flex items-center gap-3">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#1D1D1F] text-white"><Calculator className="h-5 w-5" /></span>
           <div>
-            <h3 className="text-[18px] font-semibold">Price Calculator</h3>
+            <h3 className="text-[18px] font-semibold">Live Quote Calculator</h3>
             <p className="text-[14px] text-[#A1A1A6]">We confirm the final price.</p>
           </div>
         </div>
 
         <div className="mt-7 space-y-6">
-          <label className="block"><span className={labelCls}>Product</span>
+          <label className="block"><span className={labelCls}>Service</span>
             <select value={productId} onChange={(e) => setProductId(e.target.value)} className={inputCls} data-testid="select-calc-product">
               {PRODUCTS.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
             </select>
@@ -95,21 +96,24 @@ export function PriceCalculator() {
       <div className="sticky bottom-[144px] z-10 flex flex-col border-t border-[#3A3A3C] bg-[#242426] p-5 shadow-[0_4px_20px_rgba(0,0,0,.30)] md:static md:p-8 lg:sticky lg:top-24 lg:h-fit lg:border-l lg:border-t-0">
         <p className="text-[13px] font-semibold uppercase tracking-[0.14em]">Your estimate</p>
         <dl className="mt-3 divide-y divide-[#3A3A3C]">
-          <Row label={`Base (${product?.name ?? "-"} x ${fmt(quantity)})`} value={`${fmt(est.base + est.discount)} UGX`} testid="text-calc-base" />
-          <Row label={`Paper (${paper === "premium" ? "Premium" : "Standard"})`} value={est.paper === null ? "To confirm" : `${fmt(est.paper)} UGX`} muted={est.paper === null} testid="text-calc-paper" />
-          <Row label="Delivery" value={est.delivery === null ? "To confirm" : `${fmt(est.delivery)} UGX`} muted={est.delivery === null} testid="text-calc-delivery" />
-          {est.discount > 0 && <Row label="500+ saving (10%)" value={`- ${fmt(est.discount)} UGX`} testid="text-calc-discount" />}
+          <Row label={`Base (${product?.name ?? "-"} x ${fmt(quantity)})`} value={formatPrice(est.base + est.discount, currency)} testid="text-calc-base" />
+          <Row label={`Paper (${paper === "premium" ? "Premium" : "Standard"})`} value={est.paper === null ? "To confirm" : formatPrice(est.paper, currency)} muted={est.paper === null} testid="text-calc-paper" />
+          <Row label="Delivery" value={est.delivery === null ? "To confirm" : formatPrice(est.delivery, currency)} muted={est.delivery === null} testid="text-calc-delivery" />
+          {est.discount > 0 && <Row label="500+ saving (10%)" value={`- ${formatPrice(est.discount, currency)}`} testid="text-calc-discount" />}
         </dl>
         <div className="mt-4 border-t-2 border-[#3A3A3C] pt-4">
           <p className="text-[14px]">Estimated total</p>
           <p className="font-display text-[24px] font-bold leading-tight text-[#FF6B00] transition-all" style={{ fontFamily: "Sora" }} data-testid="text-calc-total">
-            {est.total !== null ? formatUGX(est.total) : `${formatUGX(known)} +`}
+            {est.total !== null ? formatPrice(est.total, currency) : `${formatPrice(known, currency)} +`}
           </p>
-          {est.discount > 0 && <p className="mt-1 text-[14px] font-semibold text-[#F5F5F7]" data-testid="text-calc-saving">You save 10% ({fmt(est.discount)} UGX) on the base price for 500+.</p>}
+          {est.total !== null && <p className="mt-1 text-[12px] text-[#A1A1A6]">{formatPrice(est.total, "USD")} USD</p>}
+          <CardCurrencyPicker />
+          <p className="mt-1 text-[11px] text-[#A1A1A6]">Prices in your currency. Final quote confirmed on WhatsApp.</p>
+          {est.discount > 0 && <p className="mt-1 text-[14px] font-semibold text-[#F5F5F7]" data-testid="text-calc-saving">You save 10% ({formatPrice(est.discount, currency)}) on the base price for 500+.</p>}
           {(est.needsConfirmation || est.total === null) && <p className="mt-2 text-[13px]" data-testid="text-calc-confirm">Some charges are not set yet and will be confirmed with your quote. They are not counted as zero.</p>}
         </div>
         <button onClick={send} className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#FF6B00] px-[18px] text-[15px] font-semibold text-white transition-colors hover:brightness-105 md:text-[14px] lg:max-w-[220px]" data-testid="button-calc-whatsapp">
-          <MessageCircle className="h-4 w-4" /> Send This Quote to WhatsApp
+          <MessageCircle className="h-4 w-4" /> Get Exact Quote on WhatsApp
         </button>
       </div>
     </div>

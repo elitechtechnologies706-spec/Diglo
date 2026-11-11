@@ -6,6 +6,7 @@ import seo from "@/lib/seo-data.json";
 import { btnOrange, homeHash, wrap } from "@/components/tokens";
 import { useSite } from "@/components/site-providers";
 import { DesktopProductsMenu, MobileProductsAccordion } from "@/components/products-menu";
+import { CurrencyPicker } from "@/components/currency-controls";
 
 const SERVICE_LIST = ["Gift Packs", "Corporate Uniforms", "PPE", "Printing Services"];
 
@@ -31,8 +32,16 @@ export function Nav({ active = "", menuOpen, setMenuOpen }: { active?: string; m
   const linkCls = (id: string) => `relative whitespace-nowrap py-1 text-[11px] font-medium text-white transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-[2px] after:scale-x-0 after:bg-[#FF6B00] after:transition-transform hover:text-[#FF6B00] hover:after:scale-x-100 xl:text-[12px] ${active === id ? "text-[#FF6B00] after:scale-x-100" : ""}`;
   return (
     <header className={`sticky top-0 z-40 border-b border-[#3A3A3C] bg-[#1D1D1F]/95 backdrop-blur-md transition-shadow ${scrolled ? "shadow-[0_4px_20px_rgba(0,0,0,.30)]" : ""}`}>
+      <div className="border-b border-[#3A3A3C] bg-[#242426]">
+        <p className="overflow-x-auto whitespace-nowrap px-3 py-1.5 text-center text-[10px] font-medium text-[#F5F5F7] sm:text-[11px]">
+          🇺🇬 Uganda | 🇰🇪 Kenya | 🇹🇿 Tanzania | 🇷🇼 Rwanda | 🇧🇮 Burundi | 🇸🇸 South Sudan - We Deliver Across East Africa
+        </p>
+      </div>
       <div className={`${wrap} flex h-16 items-center justify-between`}>
-        <a href={homeHash("home")} aria-label="Diglo Ventures home" data-testid="link-logo"><Logo /></a>
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <a href={homeHash("home")} aria-label="Diglo Ventures home" data-testid="link-logo"><Logo /></a>
+          <CurrencyPicker compact />
+        </div>
         <nav aria-label="Main navigation" className="hidden min-w-0 flex-1 items-center justify-center gap-2 lg:flex xl:gap-3">
           <a href={homeHash("home")} className={linkCls("home")} data-testid="link-nav-home">Home</a>
           <DesktopProductsMenu active={active === "products"} linkClassName={linkCls("products")} />
@@ -105,7 +114,7 @@ export function Footer() {
       <div className={`${wrap} grid gap-10 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]`}>
         <div>
           <Logo />
-          <p className="mt-4 max-w-[280px] text-[15px] leading-relaxed">Gift packs, uniforms, PPE and printing for teams in Kampala.</p>
+          <p className="mt-4 max-w-[280px] text-[15px] leading-relaxed">Gift packs, uniforms, PPE and printing. Based in Kampala, serving East Africa.</p>
           <ul className="mt-6 space-y-2 text-[14px]">
             {seo.pages.map((p) => <li key={p.slug}><Link href={`/${p.slug}`} className="transition hover:text-white" data-testid={`link-footer-${p.slug}`}>{p.h1}</Link></li>)}
           </ul>
@@ -131,13 +140,13 @@ export function Footer() {
             <li><a href={`tel:${CONTACT.phone.replace(/[^\d+]/g, "")}`} className="inline-flex items-center gap-2 transition hover:text-white" data-testid="link-footer-phone"><Phone className="h-4 w-4" /> {CONTACT.phone}</a></li>
             <li><a href={`mailto:${CONTACT.email}`} className="inline-flex items-center gap-2 break-all transition hover:text-white" data-testid="link-footer-email"><Mail className="h-4 w-4 shrink-0" /> {CONTACT.email}</a></li>
             <li className="pt-4 text-[#A1A1A6]">Mon–Sat · 8AM–7PM EAT</li>
-            <li className="text-[#A1A1A6]">Kampala, Uganda</li>
+            <li className="text-[#A1A1A6]">Based in Kampala, Serving East Africa</li>
           </ul>
         </div>
       </div>
       <div className={`${wrap} mt-14 flex flex-col justify-between gap-2 border-t border-[#3A3A3C] pt-6 text-[13px] sm:flex-row`}>
         <p>© {new Date().getFullYear()} Diglo Ventures</p>
-        <p>Kampala, Uganda</p>
+        <p>Diglo Ventures Ltd - Kampala, Uganda - Serving East Africa</p>
       </div>
     </footer>
   );

@@ -4,6 +4,7 @@ import { Mail, MessageCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { whatsappUrl } from "@/lib/diglo";
 import { CONTACT } from "@/lib/site";
+import { COUNTRIES, suggestedCurrency, type Country, type Currency } from "@/lib/site";
 import { btnDark } from "@/components/tokens";
 import { QuoteForm } from "@/components/quote-form";
 
@@ -13,6 +14,10 @@ type Ctx = {
   openWhatsApp: (message?: string) => void;
   openQuote: (service?: string) => void;
   showPhoneUnavailable: () => void;
+  currency: Currency;
+  changeCurrency: (currency: Currency) => void;
+  country: Country;
+  chooseCountry: (country: Country) => void;
 };
 const SiteCtx = createContext<Ctx | null>(null);
 
@@ -35,13 +40,34 @@ export function SiteProviders({ children }: { children: ReactNode }) {
   const [waNotice, setWaNotice] = useState<null | { kind: "whatsapp" | "phone"; message: string }>(null);
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [quoteService, setQuoteService] = useState("");
+  const [currency, setCurrency] = useState<Currency>(() => {
+    try {
+      if (typeof window === "undefined") return "UGX";
+      const saved = window.localStorage.getItem("diglo_currency");
+      return saved === "KSH" || saved === "USD" ? saved : "UGX";
+    } catch {
+      return "UGX";
+    }
+  });
+  const [country, setCountry] = useState<Country>(() => {
+    try {
+      if (typeof window === "undefined") return "Uganda";
+      const saved = window.localStorage.getItem("diglo_country");
+      return COUNTRIES.includes(saved as Country) ? saved as Country : "Uganda";
+    } catch {
+      return "Uganda";
+    }
+  });
+  const [currencyManuallyChosen, setCurrencyManuallyChosen] = useState(false);
   useEffect(() => {
     try {
       window.localStorage.removeItem("diglo_pending_leads_v1");
+      window.localStorage.setItem("diglo_currency", currency);
+      window.localStorage.setItem("diglo_country", country);
     } catch {
       // The retired quote queue is not used by this flow.
     }
-  }, []);
+  }, [currency, country]);
 
   const openWhatsApp = useCallback((message: string = DEFAULT_WA_MESSAGE) => {
     const url = getWhatsAppLink(message);
@@ -49,6 +75,14 @@ export function SiteProviders({ children }: { children: ReactNode }) {
     else setWaNotice({ kind: "whatsapp", message });
   }, []);
   const openQuote = useCallback((service = "") => { setQuoteService(service); setQuoteOpen(true); }, []);
+  const changeCurrency = useCallback((nextCurrency: Currency) => {
+    setCurrencyManuallyChosen(true);
+    setCurrency(nextCurrency);
+  }, []);
+  const chooseCountry = useCallback((nextCountry: Country) => {
+    setCountry(nextCountry);
+    if (!currencyManuallyChosen) setCurrency(suggestedCurrency(nextCountry));
+  }, [currencyManuallyChosen]);
   const showPhoneUnavailable = useCallback(() => {
     if (CONTACT.phone) window.location.href = `tel:${CONTACT.phone}`;
     else setWaNotice({ kind: "phone", message: DEFAULT_WA_MESSAGE });
@@ -56,7 +90,7 @@ export function SiteProviders({ children }: { children: ReactNode }) {
 
   const noticeKind = waNotice?.kind === "phone" ? "Phone" : "WhatsApp";
   return (
-    <SiteCtx.Provider value={{ openWhatsApp, openQuote, showPhoneUnavailable }}>
+    <SiteCtx.Provider value={{ openWhatsApp, openQuote, showPhoneUnavailable, currency, changeCurrency, country, chooseCountry }}>
       {children}
       <Dialog open={quoteOpen} onOpenChange={setQuoteOpen}>
         <DialogContent className="max-h-[90dvh] overflow-y-auto rounded-xl border-[#3A3A3C] bg-[#2D2D2F] text-[#F5F5F7] sm:max-w-lg">

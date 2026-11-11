@@ -15,8 +15,36 @@ export const SERVICE_NAMES = [
   "Not sure yet",
 ];
 
+export const COUNTRIES = ["Uganda", "Kenya", "Tanzania", "Rwanda", "Burundi", "South Sudan", "Other"] as const;
+export type Country = typeof COUNTRIES[number];
+export type Currency = "UGX" | "KSH" | "USD";
+
+export const CURRENCY_OPTIONS: { code: Currency; label: string; country: string; flag: string }[] = [
+  { code: "UGX", label: "Uganda Shilling", country: "Uganda", flag: "🇺🇬" },
+  { code: "KSH", label: "Kenya Shilling", country: "Kenya", flag: "🇰🇪" },
+  { code: "USD", label: "US Dollar", country: "International", flag: "💵" },
+];
+
+export function suggestedCurrency(country: Country): Currency {
+  if (country === "Uganda") return "UGX";
+  if (country === "Kenya") return "KSH";
+  return "USD";
+}
+
+export function convertUGX(ugx: number, currency: Currency): number {
+  if (currency === "UGX") return Math.round(ugx);
+  if (currency === "KSH") return Math.round(ugx / 29.23);
+  return Math.round(ugx / 3800);
+}
+
+export function formatPrice(ugx: number, currency: Currency): string {
+  const amount = convertUGX(ugx, currency).toLocaleString("en-US");
+  if (currency === "USD") return `$${amount}`;
+  return `${amount} ${currency}`;
+}
+
 export function formatUGX(n: number) {
-  return n.toLocaleString("en-US") + " UGX";
+  return formatPrice(n, "UGX");
 }
 
 export function quoteMailto(o: { service: string; name: string; quantity: string; details: string }) {

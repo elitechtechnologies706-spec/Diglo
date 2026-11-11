@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { ArrowRight, Check, FileCheck2, MessageCircle, Plus, ShieldCheck, Truck, Zap, Printer, Shirt, Package } from "lucide-react";
-import { CONTACT, formatUGX } from "@/lib/site";
+import { CONTACT, formatPrice } from "@/lib/site";
 import seo from "@/lib/seo-data.json";
 import { useSeo } from "@/lib/seo";
 import { btnDark, btnOrange, wrap } from "@/components/tokens";
@@ -11,13 +11,15 @@ import { QuoteForm } from "@/components/quote-form";
 import { UniformIndustry } from "@/components/uniform-industry";
 import { ProductPhoto } from "@/components/product-photo";
 import { DIGLO_IMAGES } from "@/lib/images";
+import { CardCurrencyPicker } from "@/components/currency-controls";
+import { CompanyProfileSections } from "@/components/company-profile-sections";
 
 /* ---------- data ---------- */
 const SERVICES = [
-  { name: "Gift Packs", icon: Package, line: "Ready to give. Branded for you." },
-  { name: "Corporate Uniforms", icon: Shirt, line: "Your team, looking sharp." },
-  { name: "PPE", icon: ShieldCheck, line: "Safe. Compliant. On site." },
-  { name: "Printing Services", icon: Printer, line: "Print that sells." },
+  { name: "Gift Packs", icon: Package, line: "Ready to give. Branded for you.", price: 45000 },
+  { name: "Corporate Uniforms", icon: Shirt, line: "Your team, looking sharp.", price: 45000 },
+  { name: "PPE", icon: ShieldCheck, line: "Safe. Compliant. On site.", price: 65000 },
+  { name: "Printing Services", icon: Printer, line: "Print that sells.", price: 80000 },
 ];
 
 const PRICES = [
@@ -84,13 +86,20 @@ export default function Home() {
       <Nav active={active} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <main>
         <Hero onQuote={() => openQuote()} onWhatsApp={() => openWhatsApp()} />
+        <div className="sticky top-[94px] z-30 border-y border-[#3A3A3C] bg-[#2D2D2F] py-2 text-center text-[13px] font-semibold text-white" data-testid="badge-one-vendor">
+          One Vendor. One Quote. One Delivery.
+        </div>
+        <TrustBar />
+        <WhyWins />
         <WhatIs />
         <Services onOrder={openQuote} />
+        <CompanyProfileSections />
         <UniformIndustry />
         <HowItWorks />
         <Why />
         <Pricing onOrder={openQuote} onWhatsApp={() => openWhatsApp()} />
         <Work onOrder={openQuote} />
+        <Testimonials />
         <QuoteSection />
         <Faq />
         <FinalCta onQuote={() => openQuote()} />
@@ -113,6 +122,40 @@ function WhatIs() {
   );
 }
 
+function TrustBar() {
+  return (
+    <div className="border-b border-[#3A3A3C] bg-[#242426] py-3" data-testid="trust-bar">
+      <div className={`${wrap} grid grid-cols-2 gap-2 text-center text-[12px] font-semibold text-[#F5F5F7] sm:grid-cols-4 sm:text-[13px]`}>
+        {["500+ Orders", "100% Quality Checked", "48hr Dispatch", "East Africa Delivery"].map((item) => <span key={item}>{item}</span>)}
+      </div>
+    </div>
+  );
+}
+
+function WhyWins() {
+  const points = [
+    "Same-Day Quote on WhatsApp",
+    "Branding + Safety in One Order",
+    "Bulk Discounts",
+    "East Africa Delivery",
+    "Quality Checked Before Dispatch",
+  ];
+  return (
+    <section className="bg-[#1D1D1F] py-8" aria-label="Why Diglo Wins">
+      <div className={wrap}>
+        <p className="mb-4 text-[13px] font-semibold uppercase tracking-[0.14em] text-[#A1A1A6]">Why Diglo Wins</p>
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
+          {points.map((point, index) => (
+            <div key={point} className="rounded-lg border border-[#3A3A3C] bg-[#2D2D2F] px-3 py-3 text-[13px] font-medium text-white">
+              <span className="mr-2 text-[#A1A1A6]">{index + 1}.</span>{point}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- sections ---------- */
 function Hero({ onQuote, onWhatsApp }: { onQuote: () => void; onWhatsApp: () => void }) {
   return (
@@ -123,13 +166,13 @@ function Hero({ onQuote, onWhatsApp }: { onQuote: () => void; onWhatsApp: () => 
             Gift Packs. Uniforms. PPE. Printing.
           </h1>
           <p className="mt-3 max-w-[48ch] text-[15px] leading-relaxed text-[#D4D4D4]">
-            For teams that want to look professional. Designed today. Delivered in Kampala.
+            Based in Kampala, Uganda | Serving Uganda, Kenya, Tanzania, Rwanda, Burundi &amp; South Sudan
           </p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <button onClick={onQuote} className={`${btnOrange} w-full sm:w-auto sm:max-w-[220px]`} data-testid="button-hero-quote">Get a Quote</button>
             <button onClick={onWhatsApp} className={`${btnDark} w-full sm:w-auto sm:max-w-[220px]`} data-testid="button-hero-whatsapp">WhatsApp Us <MessageCircle className="h-4 w-4" /></button>
           </div>
-          <p className="mt-5 text-[13px] text-[#A1A1A6]">Kampala · Mon–Sat, 8AM–7PM</p>
+          <p className="mt-5 text-[13px] text-[#A1A1A6]">For teams that want to look professional. Designed today. Delivered across East Africa.</p>
         </div>
         <div className="grid h-[280px] grid-cols-2 grid-rows-2 gap-3 md:h-[360px] lg:h-[420px]">
           <ProductPhoto src={DIGLO_IMAGES.giftPacks} alt="Diglo Ventures - Gift Packs in Kampala" label="Gift Packs" loading="eager" className="col-span-2 row-span-2 min-h-0 rounded-xl border border-[#3A3A3C] md:hidden" />
@@ -142,11 +185,11 @@ function Hero({ onQuote, onWhatsApp }: { onQuote: () => void; onWhatsApp: () => 
   );
 }
 
-function SectionHead({ eyebrow, title, sub, center = false }: { eyebrow: string; title: string; sub?: string; center?: boolean }) {
+function SectionHead({ eyebrow, title, sub, center = false, id }: { eyebrow: string; title: string; sub?: string; center?: boolean; id?: string }) {
   return (
     <div className={`reveal mb-7 max-w-[680px] md:mb-10 ${center ? "mx-auto text-center" : ""}`}>
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="text-[24px] font-bold leading-[1.3] md:text-[28px]">{title}</h2>
+      <h2 id={id} className="text-[24px] font-bold leading-[1.3] md:text-[28px]">{title}</h2>
       {sub && <p className="mt-3 max-w-[60ch] text-[15px] leading-relaxed text-[#D4D4D4]">{sub}</p>}
     </div>
   );
@@ -169,7 +212,7 @@ function Services({ onOrder }: { onOrder: (s: string) => void }) {
   return (
     <section id="services" className="bg-[#1D1D1F] py-10 md:py-16">
       <div className={wrap}>
-        <SectionHead eyebrow="Services" title="Four services. One dependable team." sub="Designed today. Delivered in Kampala." />
+        <SectionHead eyebrow="Services" title="Four services. One dependable team." sub="Based in Kampala, serving East Africa." />
         <div className="sticky top-16 z-30 -mx-4 mb-5 flex flex-wrap gap-2 border-y border-[#3A3A3C] bg-[#1D1D1F]/95 px-4 py-2 backdrop-blur md:hidden">
           {filters.map((f) => (
             <button key={f} onClick={() => { setFilter(f); setSelectedProduct(null); }} aria-pressed={filter === f} className={`min-h-10 rounded-full border px-3 text-[12px] font-semibold ${filter === f ? "border-[#A1A1A6] bg-[#2D2D2F] text-white" : "border-[#3A3A3C] text-[#A1A1A6]"}`} data-testid={`button-service-filter-${f.toLowerCase().replaceAll(" ", "-")}`}>{f}</button>
@@ -180,8 +223,8 @@ function Services({ onOrder }: { onOrder: (s: string) => void }) {
           {visibleServices.map((s, i) => <ServiceCard key={s.name} service={s} index={i} onOrder={onOrder} />)}
         </div>
         <div className="mt-8 flex flex-col gap-4 border-t border-[#3A3A3C] pt-5 md:flex-row md:items-center md:justify-between">
-          <p className="text-[14px] font-medium text-[#D4D4D4]">Trusted by Hotels, Schools, Banks &amp; Churches in Kampala</p>
-          <p className="text-[14px] text-[#A1A1A6]">See what we made for 500+ teams in Kampala <a href="#work" className="ml-1 font-semibold text-white underline underline-offset-4">View Our Work <ArrowRight className="inline h-4 w-4" /></a></p>
+          <p className="text-[14px] font-medium text-[#D4D4D4]">Trusted by Hotels, Schools, Banks &amp; Churches across East Africa</p>
+          <p className="text-[14px] text-[#A1A1A6]">See what we made for 500+ teams <a href="#work" className="ml-1 font-semibold text-white underline underline-offset-4">View Our Work <ArrowRight className="inline h-4 w-4" /></a></p>
         </div>
       </div>
     </section>
@@ -189,16 +232,19 @@ function Services({ onOrder }: { onOrder: (s: string) => void }) {
 }
 
 function ServiceCard({ service, index, onOrder }: { service: typeof SERVICES[number]; index: number; onOrder: (s: string) => void }) {
+  const { currency } = useSite();
   return (
     <article id={`service-${service.name.toLowerCase().replaceAll(" ", "-")}`} className="reveal group flex flex-col rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5 transition-colors duration-200 hover:border-[#A1A1A6]" data-testid={`card-service-${index}`}>
       <div className="flex items-start gap-3">
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-[#1D1D1F] text-[#F5F5F7]"><service.icon className="h-5 w-5" /></span>
         <div className="min-w-0 flex-1">
           <h3 className="text-[18px] font-semibold leading-tight">{service.name}</h3>
-          <p className="mt-1 text-[13px] font-semibold text-[#FF6B00]">Custom quote</p>
+          <p className="mt-1 text-[13px] font-semibold text-[#FF6B00]">From {formatPrice(service.price, currency)}</p>
         </div>
       </div>
       <p className="mt-3 min-h-6 text-[15px] leading-relaxed text-[#D4D4D4]">{service.line}</p>
+      <CardCurrencyPicker />
+      <p className="mt-1 text-[11px] text-[#A1A1A6]">Prices in your currency. Final quote confirmed on WhatsApp.</p>
       <div className="mt-5 border-t border-[#3A3A3C] pt-4">
         <button onClick={() => onOrder(service.name)} className={`${btnOrange} min-h-11 !h-11 w-full !px-4 text-[14px] lg:max-w-[220px]`} data-testid={`button-order-service-${index}`}>Order This</button>
       </div>
@@ -210,7 +256,7 @@ function HowItWorks() {
   const steps: [typeof MessageCircle | typeof FileCheck2 | typeof Truck, string, string][] = [
     [MessageCircle, "Tell us what you need.", "Choose a product, quantity and deadline."],
     [FileCheck2, "Approve the proof.", "Review the artwork before production."],
-    [Truck, "Get your order.", "We arrange delivery in Kampala."],
+    [Truck, "Get your order.", "We arrange delivery across East Africa."],
   ];
   return (
     <section className="bg-[#1D1D1F] py-10 md:py-16">
@@ -254,17 +300,20 @@ function Why() {
 }
 
 function Pricing({ onOrder, onWhatsApp }: { onOrder: (s: string) => void; onWhatsApp: () => void }) {
+  const { currency } = useSite();
   return (
     <section id="pricing" className="bg-[#1D1D1F] py-10 md:py-16">
       <div className={wrap}>
-        <SectionHead eyebrow="Pricing" title="Clear prices. No surprises." sub="Popular orders with transparent starting prices in Ugandan shillings." />
+        <SectionHead eyebrow="Pricing" title="Clear prices. No surprises." sub="Popular orders with starting prices shown in your selected currency." />
         <div className="grid gap-4 md:grid-cols-2 lg:hidden">
           {PRICES.map((p, i) => (
             <div key={p.name} className="reveal flex flex-col rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5" data-testid={`card-price-${i}`}>
               <div>
                 <h3 className="text-[18px] font-semibold">{p.name}</h3>
                 <p className="mt-1 text-[14px] text-[#A1A1A6]">{p.qty}</p>
-                <p className="font-display mt-3 text-[24px] font-bold text-[#FF6B00]" style={{ fontFamily: "Sora" }} data-testid={`text-price-${i}`}>{formatUGX(p.price)}</p>
+                <p className="font-display mt-3 text-[24px] font-bold text-[#FF6B00] transition-opacity duration-150" style={{ fontFamily: "Sora" }} data-testid={`text-price-${i}`}>{formatPrice(p.price, currency)}</p>
+                <CardCurrencyPicker />
+                <p className="mt-1 text-[11px] text-[#A1A1A6]">Prices in your currency. Final quote confirmed on WhatsApp.</p>
               </div>
               <button onClick={() => onOrder(p.service)} className={`${btnOrange} mt-5 w-full`} data-testid={`button-order-price-${i}`}>Order This</button>
             </div>
@@ -280,7 +329,10 @@ function Pricing({ onOrder, onWhatsApp }: { onOrder: (s: string) => void; onWhat
                 <tr key={p.name} data-testid={`row-price-${i}`}>
                   <th scope="row" className="px-5 py-4 text-[15px] font-semibold text-white">{p.name}</th>
                   <td className="px-5 py-4 text-[14px] text-[#F5F5F7]">{p.qty}</td>
-                  <td className="px-5 py-4 text-[16px] font-bold text-[#FF6B00]">{formatUGX(p.price)}</td>
+                  <td className="px-5 py-4 text-[16px] font-bold text-[#FF6B00]">
+                    {formatPrice(p.price, currency)}
+                    <CardCurrencyPicker />
+                  </td>
                   <td className="px-5 py-4 text-right"><button onClick={() => onOrder(p.service)} className={`${btnOrange} !h-10 !px-5 text-[13px]`} data-testid={`button-order-table-${i}`}>Order This</button></td>
                 </tr>
               ))}
@@ -298,6 +350,7 @@ function Pricing({ onOrder, onWhatsApp }: { onOrder: (s: string) => void; onWhat
 }
 
 function Work({ onOrder }: { onOrder: (s: string) => void }) {
+  const { currency } = useSite();
   const [filter, setFilter] = useState<"All" | Cat>("All");
   const cats = ["All", "Branding", "Print", "Merch", "Signage"] as const;
   const list = WORK.filter((w) => filter === "All" || w.cat === filter);
@@ -305,7 +358,7 @@ function Work({ onOrder }: { onOrder: (s: string) => void }) {
     <section id="work" className="bg-[#1D1D1F] py-10 md:py-16">
       <div className={wrap}>
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHead eyebrow="Our work" title="Made for teams in Kampala." sub="Gift packs, uniforms and print pieces for local teams." />
+          <SectionHead eyebrow="Our work" title="Made for teams across East Africa." sub="Gift packs, uniforms and print pieces for local teams." />
         </div>
         <div className="mb-6" role="tablist">
           <div className="flex flex-wrap gap-2">
@@ -323,12 +376,41 @@ function Work({ onOrder }: { onOrder: (s: string) => void }) {
                 <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-[14px]">
                   <dt className="text-[#A1A1A6]">For</dt><dd className="text-right font-medium text-[#D4D4D4]">{w.client}</dd>
                   <dt className="text-[#A1A1A6]">Includes</dt><dd className="text-right font-medium text-[#D4D4D4]">{w.ordered}</dd>
-                  <dt>Price From</dt><dd className="text-right font-semibold text-[#FF6B00]">{formatUGX(w.from)}</dd>
+                  <dt>Price From</dt>
+                  <dd className="text-right font-semibold text-[#FF6B00]">
+                    {formatPrice(w.from, currency)}
+                    <CardCurrencyPicker />
+                    <span className="mt-1 block text-[10px] font-normal text-[#A1A1A6]">Prices in your currency.</span>
+                  </dd>
                   <dt className="text-[#A1A1A6]">Delivery</dt><dd className="text-right font-medium text-[#D4D4D4]">{w.time}</dd>
                 </dl>
                 <button onClick={() => onOrder(w.service)} className={`${btnOrange} mt-5 w-full lg:max-w-[220px]`} data-testid={`button-order-work-${i}`}>Order Like This</button>
               </div>
             </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Testimonials() {
+  const stories = [
+    ["Corporate Client, Kampala", "Client story to be confirmed."],
+    ["Security Firm, Nairobi", "Client story to be confirmed."],
+    ["Construction Co., Dar es Salaam", "Client story to be confirmed."],
+  ];
+  return (
+    <section className="bg-[#242426] py-10 md:py-16" aria-labelledby="client-stories-heading">
+      <div className={wrap}>
+        <SectionHead eyebrow="Client stories - to be confirmed" title="What our partners say." id="client-stories-heading" />
+        <div className="grid gap-4 md:grid-cols-3">
+          {stories.map(([source, text]) => (
+            <blockquote key={source} className="rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5">
+              <p className="text-[15px] leading-relaxed text-[#D4D4D4]">“{text}”</p>
+              <footer className="mt-4 text-[13px] font-semibold text-white">{source}</footer>
+              <p className="mt-1 text-[11px] text-[#A1A1A6]">Client stories - to be confirmed</p>
+            </blockquote>
           ))}
         </div>
       </div>
@@ -356,7 +438,7 @@ function QuoteSection() {
           </ul>
           <div className="mt-7 border-t border-[#3A3A3C] pt-5">
             <h4 className="text-[15px] font-semibold text-white">Contact and hours</h4>
-            <p className="mt-3 text-[14px] text-[#A1A1A6]">Kampala, Uganda · Mon–Sat, 8AM–7PM EAT</p>
+            <p className="mt-3 text-[14px] text-[#A1A1A6]">Based in Kampala, Uganda · Serving East Africa · Mon–Sat, 8AM–7PM EAT</p>
             <a href={`mailto:${CONTACT.email}`} className="mt-3 block break-all text-[14px] text-[#F5F5F7] underline underline-offset-4">{CONTACT.email}</a>
           </div>
         </aside>
