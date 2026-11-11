@@ -5,6 +5,7 @@ import { CompanyProfileSections } from "@/components/company-profile-sections";
 import { btnDark, btnOrange, homeHash, wrap } from "@/components/tokens";
 import { useSite } from "@/components/site-providers";
 import { useSeo } from "@/lib/seo";
+import { DIGLO_IMAGES } from "@/lib/images";
 
 export default function About() {
   const { openQuote } = useSite();
@@ -27,6 +28,16 @@ export default function About() {
 
           <section className="mt-10 md:mt-14" aria-labelledby="team-heading">
             <h2 id="team-heading" className="text-[24px] font-bold leading-[1.3] text-white md:text-[28px]">Meet the Team</h2>
+            <figure className="mt-5 overflow-hidden rounded-xl border border-[#3A3A3C] bg-[#2D2D2F]">
+              <img
+                src={DIGLO_IMAGES.officeTeam}
+                alt="Illustrative stock photo of colleagues collaborating around a table"
+                className="h-52 w-full object-cover sm:h-64"
+              />
+              <figcaption className="px-4 py-3 text-[12px] text-[#A1A1A6]">
+                Illustrative Unsplash stock photo; not a photo of Diglo Ventures staff.
+              </figcaption>
+            </figure>
             <div className="mt-5 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
               <TeamCard initials="UF" label="Founder - Uncle Fred" />
               <TeamCard initials="PT" label="Our Production Team" />
