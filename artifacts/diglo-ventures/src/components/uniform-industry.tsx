@@ -11,7 +11,8 @@ import {
 import { useSite } from "@/components/site-providers";
 import { formatPrice } from "@/lib/site";
 import { ProductPhoto } from "@/components/product-photo";
-import { CardCurrencyPicker } from "@/components/currency-controls";
+import { CardCurrencyPicker, CurrencyAmount } from "@/components/currency-controls";
+import { wrap } from "@/components/tokens";
 
 type Industry = {
   name: string;
@@ -128,7 +129,7 @@ export function UniformIndustry() {
 
   return (
     <section aria-labelledby="uniform-industry-title" className="overflow-hidden bg-[#1D1D1F] py-10 text-[#F5F5F7] md:py-16">
-      <div className="mx-auto w-full max-w-[1200px] px-4 md:px-6">
+      <div className={wrap}>
         <header className="mb-8 grid gap-4 md:mb-10 md:grid-cols-[1fr_0.55fr] md:items-end">
           <div>
             <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#A1A1A6]">Workwear, made specific</p>
@@ -149,13 +150,13 @@ export function UniformIndustry() {
             </div>
             <p className="hidden text-[13px] text-[#A1A1A6] sm:block">Swipe to explore</p>
           </div>
-          <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 md:mx-0 md:grid md:grid-cols-2 md:gap-4 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3">
+          <div className="flex w-full min-w-0 snap-x snap-mandatory gap-4 overflow-x-auto pb-3 md:grid md:grid-cols-2 md:gap-4 md:overflow-visible md:pb-0 lg:grid-cols-3">
             {INDUSTRIES.map((item) => {
               const isSelected = industry.name === item.name;
               return (
                 <article
                   key={item.name}
-                  className={`w-[min(84vw,330px)] shrink-0 snap-start overflow-hidden rounded-xl border bg-[#2D2D2F] transition-colors md:w-auto md:shrink ${isSelected ? "border-[#A1A1A6]" : "border-[#3A3A3C] hover:border-[#A1A1A6]"}`}
+                  className={`w-[min(84vw,330px)] min-w-0 shrink-0 snap-start overflow-hidden rounded-xl border bg-[#2D2D2F] transition-colors md:w-auto md:shrink ${isSelected ? "border-[#A1A1A6]" : "border-[#3A3A3C] hover:border-[#A1A1A6]"}`}
                 >
                   <ProductPhoto
                     src={item.photo}
@@ -164,9 +165,9 @@ export function UniformIndustry() {
                     className="h-[160px] border-b border-[#3A3A3C] md:h-[180px]"
                     imageClassName="object-[center_28%]"
                   />
-                  <div className="flex min-h-[238px] flex-col p-5">
+                  <div className="flex min-w-0 flex-1 flex-col p-5">
                     <h4 className="text-[18px] font-semibold leading-snug text-white">{item.name}</h4>
-                    <p className="mt-1.5 min-h-[42px] text-[15px] leading-relaxed text-[#A1A1A6]">{item.summary}</p>
+                    <p className="mt-1.5 text-[15px] leading-relaxed text-[#A1A1A6]">{item.summary}</p>
                     <ul className="mt-4 flex flex-wrap gap-1.5" aria-label={`${item.name} outfit items`}>
                       {item.items.map((piece) => (
                         <li key={piece} className="rounded-full border border-[#3A3A3C] px-2.5 py-1 text-[11px] text-[#D4D4D6]">{piece}</li>
@@ -175,7 +176,7 @@ export function UniformIndustry() {
                     <div className="mt-auto flex items-end justify-between gap-3 border-t border-[#3A3A3C] pt-4">
                       <div className="leading-tight">
                         <span className="block text-[10px] uppercase tracking-[0.12em] text-[#A1A1A6]">From / piece</span>
-                        <span className="mt-1 block text-[16px] font-bold text-[#FF6B00] transition-opacity duration-150">{formatPrice(45000, currency)}</span>
+                        <span className="mt-1 block text-[16px] font-bold text-[#FF6B00]"><CurrencyAmount amount={45000} /></span>
                         <CardCurrencyPicker />
                         <span className="mt-1 block text-[10px] text-[#A1A1A6]">Prices in your currency.</span>
                       </div>
@@ -228,7 +229,7 @@ export function UniformIndustry() {
                 <span className="h-9 w-9 rounded-full border border-white/30" style={{ backgroundColor: selectedColor }} aria-label={`${color} colour preview`} />
               </div>
               <p className="relative mt-5 border-t border-[#3A3A3C] pt-4 pr-14 text-[12px] leading-relaxed text-[#A1A1A6] sm:pr-0">
-                From <span className="font-semibold text-[#FF6B00]">{formatPrice(45000, currency)}</span> per piece · final pricing depends on fabric and branding.
+                From <span className="font-semibold text-[#FF6B00]"><CurrencyAmount amount={45000} /></span> per piece · final pricing depends on fabric and branding.
               </p>
             </aside>
 
@@ -322,7 +323,7 @@ export function UniformIndustry() {
                     <div className="mt-5 rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-4">
                       <div className="flex items-center justify-between gap-3 text-[13px]">
                         <span className="text-[#A1A1A6]">Starting estimate</span>
-                        <span className="font-semibold text-[#FF6B00]">{formatPrice(estimate, currency)}</span>
+                        <span className="font-semibold text-[#FF6B00]"><CurrencyAmount amount={estimate} /></span>
                       </div>
                       <p className="mt-2 text-[11px] leading-relaxed text-[#A1A1A6]">Estimate uses the starting price of {formatPrice(45000, currency)} per piece. Final quote depends on style, fabric and branding.</p>
                     </div>

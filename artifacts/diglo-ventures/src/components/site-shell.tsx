@@ -13,7 +13,7 @@ const SERVICE_LIST = ["Gift Packs", "Corporate Uniforms", "PPE", "Printing Servi
 export function Logo() {
   return (
     <span className="flex flex-col items-start leading-none" aria-label="Diglo Ventures" style={{ fontFamily: "Sora" }}>
-      <span className="font-display text-[20px] font-extrabold tracking-tight text-white md:text-[22px]">
+      <span className="font-display text-[18px] font-extrabold tracking-tight text-white md:text-[22px]">
         DIGLO<span className="ml-0.5 inline-block h-2 w-2 rounded-full bg-[#FF6B00] align-baseline" />
       </span>
       <span className="mt-1 text-[9px] font-semibold uppercase tracking-[4px] text-[#A1A1A6] md:text-[10px]">VENTURES</span>
@@ -33,16 +33,16 @@ export function Nav({ active = "", menuOpen, setMenuOpen }: { active?: string; m
   return (
     <header className={`sticky top-0 z-40 border-b border-[#3A3A3C] bg-[#1D1D1F]/95 backdrop-blur-md transition-shadow ${scrolled ? "shadow-[0_4px_20px_rgba(0,0,0,.30)]" : ""}`}>
       <div className="border-b border-[#3A3A3C] bg-[#242426]">
-        <p className="overflow-x-auto whitespace-nowrap px-3 py-1.5 text-center text-[10px] font-medium text-[#F5F5F7] sm:text-[11px]">
+        <p className="px-3 py-1.5 text-center text-[10px] font-medium leading-4 text-[#F5F5F7] sm:text-[11px]">
           🇺🇬 Uganda | 🇰🇪 Kenya | 🇹🇿 Tanzania | 🇷🇼 Rwanda | 🇧🇮 Burundi | 🇸🇸 South Sudan - We Deliver Across East Africa
         </p>
       </div>
-      <div className={`${wrap} flex h-16 items-center justify-between`}>
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+      <div className={`${wrap} flex min-h-16 flex-wrap items-center justify-between gap-x-2 gap-y-1 py-2 lg:h-16 lg:flex-nowrap lg:py-0`}>
+        <div className="flex min-w-0 shrink-0 items-center gap-1.5 sm:gap-2 lg:gap-1 xl:gap-2">
           <a href={homeHash("home")} aria-label="Diglo Ventures home" data-testid="link-logo"><Logo /></a>
           <CurrencyPicker compact />
         </div>
-        <nav aria-label="Main navigation" className="hidden min-w-0 flex-1 items-center justify-center gap-2 lg:flex xl:gap-3">
+        <nav aria-label="Main navigation" className="hidden min-w-0 flex-1 items-center justify-center gap-[3px] lg:flex xl:gap-3">
           <a href={homeHash("home")} className={linkCls("home")} data-testid="link-nav-home">Home</a>
           <DesktopProductsMenu active={active === "products"} linkClassName={linkCls("products")} />
           {links.filter(([id]) => id.startsWith("service-")).map(([id, l]) => (
@@ -54,15 +54,15 @@ export function Nav({ active = "", menuOpen, setMenuOpen }: { active?: string; m
           ))}
           <Link href="/track" className={linkCls("track")} data-testid="link-nav-track">Track Order</Link>
         </nav>
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1 lg:gap-2">
           <a href={`tel:${CONTACT.phone.replace(/[^\d+]/g, "")}`} className="hidden items-center gap-2 whitespace-nowrap text-[14px] font-medium text-white lg:flex" aria-label={`Call ${CONTACT.phone}`} data-testid="link-nav-phone">
             <Phone className="h-4 w-4" />{CONTACT.phone}
           </a>
-          <button onClick={() => openWhatsApp()} className="grid h-9 w-9 place-items-center rounded-lg text-white lg:hidden" aria-label="WhatsApp Diglo Ventures" data-testid="button-nav-whatsapp">
+          <button onClick={() => openWhatsApp()} className="grid h-8 w-8 place-items-center rounded-lg text-white lg:hidden" aria-label="WhatsApp Diglo Ventures" data-testid="button-nav-whatsapp">
             <MessageCircle className="h-5 w-5" />
           </button>
-          <button onClick={() => openQuote()} className={`${btnOrange} !h-9 !px-4 !text-[13px]`} data-testid="button-nav-quote">Get a Quote</button>
-          <button onClick={() => setMenuOpen(!menuOpen)} className="grid h-9 w-9 place-items-center rounded-lg text-white lg:hidden" aria-label="Menu" data-testid="button-menu">
+          <button onClick={() => openQuote()} className={`${btnOrange} !h-8 !px-2 !text-[12px] sm:!px-3 lg:!h-9 lg:!px-4 lg:!text-[13px]`} data-testid="button-nav-quote">Get a Quote</button>
+          <button onClick={() => setMenuOpen(!menuOpen)} className="grid h-8 w-8 place-items-center rounded-lg text-white lg:hidden" aria-label="Menu" data-testid="button-menu">
             {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
@@ -89,8 +89,8 @@ export function MobileBar({ active = "" }: { active?: string }) {
   const { openQuote } = useSite();
   const items = [["home", "Home", HomeIcon], ["services", "Services", LayoutGrid], ["work", "Work", ImageIcon], ["pricing", "Pricing", Tag]] as const;
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-[#3A3A3C] bg-[#1D1D1F]/95 text-[#F5F5F7] backdrop-blur md:hidden" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
-      <div className="grid h-16 grid-cols-5">
+    <nav className="fixed inset-x-0 bottom-0 z-40 w-full max-w-[100vw] border-t border-[#3A3A3C] bg-[#1D1D1F]/95 text-[#F5F5F7] backdrop-blur md:hidden" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
+      <div className="grid h-16 grid-cols-5 [&>*]:min-w-0">
         {items.map(([id, l, Icon]) => (
           <a key={id} href={homeHash(id)} className="relative flex flex-col items-center justify-center gap-1 text-[11px] font-medium text-white" data-testid={`link-bottom-${id}`}>
             <Icon className={`h-5 w-5 ${active === id ? "text-white" : "text-[#A1A1A6]"}`} strokeWidth={active === id ? 2.2 : 1.8} />
@@ -169,10 +169,10 @@ export function PageShell({ children, active = "" }: { children: ReactNode; acti
 export function MobileCtaBar() {
   const { openQuote, openWhatsApp } = useSite();
   return (
-    <div className="fixed inset-x-0 bottom-16 z-40 h-16 border-t border-[#3A3A3C] bg-[#2D2D2F] px-3 py-2 md:hidden">
-      <div className="grid h-full grid-cols-[3fr_2fr] gap-2">
+    <div className="fixed inset-x-0 bottom-16 z-40 h-16 w-full max-w-[100vw] border-t border-[#3A3A3C] bg-[#2D2D2F] px-3 py-2 md:hidden">
+      <div className="grid h-full min-w-0 grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-2">
         <button onClick={() => openQuote()} className={`${btnOrange} !h-12 w-full !px-2 text-[13px]`} data-testid="button-mobile-sticky-quote">Get a Quote</button>
-        <button onClick={() => openWhatsApp()} className="inline-flex h-12 items-center justify-center gap-1.5 rounded-lg border border-[#A1A1A6] bg-[#2D2D2F] px-2 text-[14px] font-semibold text-white" data-testid="button-mobile-sticky-whatsapp"><MessageCircle className="h-4 w-4" /> WhatsApp</button>
+        <button onClick={() => openWhatsApp()} className="inline-flex h-12 min-w-0 items-center justify-center gap-1 rounded-lg border border-[#A1A1A6] bg-[#2D2D2F] px-1.5 text-[12px] font-semibold text-white sm:px-2 sm:text-[14px]" data-testid="button-mobile-sticky-whatsapp"><MessageCircle className="h-4 w-4 shrink-0" /> WhatsApp</button>
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { Calculator, MessageCircle } from "lucide-react";
 import { PRODUCTS, calculateEstimate } from "@/lib/calculator";
 import { formatPrice } from "@/lib/site";
 import { inputCls, labelCls } from "@/components/tokens";
 import { useSite } from "@/components/site-providers";
-import { CardCurrencyPicker } from "@/components/currency-controls";
+import { CardCurrencyPicker, CurrencyAmount } from "@/components/currency-controls";
 
 type Paper = "standard" | "premium";
 type Delivery = "pickup" | "kampala" | "upcountry";
@@ -47,7 +47,7 @@ export function PriceCalculator() {
     openWhatsApp(`Hello Diglo Ventures, I would like a quote for ${product?.name ?? "printing"}, Quantity ${quantity}, Estimated Price ${totalText}. Please confirm.`);
   };
 
-  const Row = ({ label, value, testid, muted = false }: { label: string; value: string; testid: string; muted?: boolean }) => (
+  const Row = ({ label, value, testid, muted = false }: { label: string; value: ReactNode; testid: string; muted?: boolean }) => (
     <div className="flex items-baseline justify-between gap-4 py-2.5">
       <dt className="text-[15px]">{label}</dt>
       <dd className={`text-right text-[15px] font-semibold ${muted ? "text-[#A1A1A6] italic" : "text-white"}`} data-testid={testid}>{value}</dd>
@@ -96,20 +96,20 @@ export function PriceCalculator() {
       <div className="sticky bottom-[144px] z-10 flex flex-col border-t border-[#3A3A3C] bg-[#242426] p-5 shadow-[0_4px_20px_rgba(0,0,0,.30)] md:static md:p-8 lg:sticky lg:top-24 lg:h-fit lg:border-l lg:border-t-0">
         <p className="text-[13px] font-semibold uppercase tracking-[0.14em]">Your estimate</p>
         <dl className="mt-3 divide-y divide-[#3A3A3C]">
-          <Row label={`Base (${product?.name ?? "-"} x ${fmt(quantity)})`} value={formatPrice(est.base + est.discount, currency)} testid="text-calc-base" />
-          <Row label={`Paper (${paper === "premium" ? "Premium" : "Standard"})`} value={est.paper === null ? "To confirm" : formatPrice(est.paper, currency)} muted={est.paper === null} testid="text-calc-paper" />
-          <Row label="Delivery" value={est.delivery === null ? "To confirm" : formatPrice(est.delivery, currency)} muted={est.delivery === null} testid="text-calc-delivery" />
-          {est.discount > 0 && <Row label="500+ saving (10%)" value={`- ${formatPrice(est.discount, currency)}`} testid="text-calc-discount" />}
+          <Row label={`Base (${product?.name ?? "-"} x ${fmt(quantity)})`} value={<CurrencyAmount amount={est.base + est.discount} />} testid="text-calc-base" />
+          <Row label={`Paper (${paper === "premium" ? "Premium" : "Standard"})`} value={est.paper === null ? "To confirm" : <CurrencyAmount amount={est.paper} />} muted={est.paper === null} testid="text-calc-paper" />
+          <Row label="Delivery" value={est.delivery === null ? "To confirm" : <CurrencyAmount amount={est.delivery} />} muted={est.delivery === null} testid="text-calc-delivery" />
+          {est.discount > 0 && <Row label="500+ saving (10%)" value={<>- <CurrencyAmount amount={est.discount} /></>} testid="text-calc-discount" />}
         </dl>
         <div className="mt-4 border-t-2 border-[#3A3A3C] pt-4">
           <p className="text-[14px]">Estimated total</p>
           <p className="font-display text-[24px] font-bold leading-tight text-[#FF6B00] transition-all" style={{ fontFamily: "Sora" }} data-testid="text-calc-total">
-            {est.total !== null ? formatPrice(est.total, currency) : `${formatPrice(known, currency)} +`}
+            {est.total !== null ? <CurrencyAmount amount={est.total} /> : <><CurrencyAmount amount={known} /> +</>}
           </p>
           {est.total !== null && <p className="mt-1 text-[12px] text-[#A1A1A6]">{formatPrice(est.total, "USD")} USD</p>}
           <CardCurrencyPicker />
           <p className="mt-1 text-[11px] text-[#A1A1A6]">Prices in your currency. Final quote confirmed on WhatsApp.</p>
-          {est.discount > 0 && <p className="mt-1 text-[14px] font-semibold text-[#F5F5F7]" data-testid="text-calc-saving">You save 10% ({formatPrice(est.discount, currency)}) on the base price for 500+.</p>}
+          {est.discount > 0 && <p className="mt-1 text-[14px] font-semibold text-[#F5F5F7]" data-testid="text-calc-saving">You save 10% (<CurrencyAmount amount={est.discount} />) on the base price for 500+.</p>}
           {(est.needsConfirmation || est.total === null) && <p className="mt-2 text-[13px]" data-testid="text-calc-confirm">Some charges are not set yet and will be confirmed with your quote. They are not counted as zero.</p>}
         </div>
         <button onClick={send} className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#FF6B00] px-[18px] text-[15px] font-semibold text-white transition-colors hover:brightness-105 md:text-[14px] lg:max-w-[220px]" data-testid="button-calc-whatsapp">

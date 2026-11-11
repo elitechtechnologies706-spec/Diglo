@@ -1,4 +1,4 @@
-import { CURRENCY_OPTIONS, type Currency } from "@/lib/site";
+import { CURRENCY_OPTIONS, formatPrice, type Currency } from "@/lib/site";
 import { useSite } from "@/components/site-providers";
 
 export function CurrencyPicker({ compact = false }: { compact?: boolean }) {
@@ -12,7 +12,7 @@ export function CurrencyPicker({ compact = false }: { compact?: boolean }) {
             type="button"
             aria-pressed={currency === code}
             onClick={() => changeCurrency(code)}
-            className={`rounded-md border px-2 py-1 text-[11px] font-semibold transition-colors ${compact ? "px-1.5 text-[10px]" : ""} ${currency === code ? "border-[#FF6B00] bg-[#FF6B00] text-white" : "border-[#3A3A3C] bg-[#2D2D2F] text-white hover:border-[#A1A1A6]"}`}
+            className={`rounded-md border px-2 py-1 text-[11px] font-semibold transition-colors ${compact ? "px-1 text-[10px]" : ""} ${currency === code ? "border-[#FF6B00] bg-[#FF6B00] text-white" : "border-[#3A3A3C] bg-[#2D2D2F] text-white hover:border-[#A1A1A6]"}`}
             data-testid={`button-currency-${code.toLowerCase()}`}
           >
             {code}
@@ -25,7 +25,7 @@ export function CurrencyPicker({ compact = false }: { compact?: boolean }) {
           aria-label="Choose display currency"
           value={currency}
           onChange={(event) => changeCurrency(event.target.value as Currency)}
-          className="h-8 rounded-md border border-[#3A3A3C] bg-[#2D2D2F] px-2 text-[12px] font-semibold text-white"
+          className={`h-8 rounded-md border border-[#3A3A3C] bg-[#2D2D2F] text-[12px] font-semibold text-white ${compact ? "w-[64px] px-1 text-[11px]" : "px-2"}`}
           data-testid="select-currency-mobile"
         >
           {CURRENCY_OPTIONS.map(({ code }) => <option key={code} value={code}>{code} ▼</option>)}
@@ -53,5 +53,14 @@ export function CardCurrencyPicker() {
         </button>
       ))}
     </div>
+  );
+}
+
+export function CurrencyAmount({ amount, className = "" }: { amount: number; className?: string }) {
+  const { currency } = useSite();
+  return (
+    <span key={currency} className={`diglo-currency-fade ${className}`}>
+      {formatPrice(amount, currency)}
+    </span>
   );
 }

@@ -1,4 +1,4 @@
-export const wrap = "mx-auto w-full max-w-[1200px] px-4 md:px-6";
+export const wrap = "mx-auto w-full max-w-[1280px] px-[14px] sm:px-4 md:px-5 lg:px-6";
 export const btnOrange =
   "inline-flex items-center justify-center gap-2 rounded-lg bg-[#FF6B00] px-[18px] h-11 text-[15px] font-semibold text-white transition-colors duration-200 hover:brightness-105 active:translate-y-0 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B00] focus-visible:ring-offset-2 md:h-10 md:text-[14px]";
 export const btnDark =

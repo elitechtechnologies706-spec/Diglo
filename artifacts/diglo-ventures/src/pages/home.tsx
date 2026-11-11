@@ -11,7 +11,7 @@ import { QuoteForm } from "@/components/quote-form";
 import { UniformIndustry } from "@/components/uniform-industry";
 import { ProductPhoto } from "@/components/product-photo";
 import { DIGLO_IMAGES } from "@/lib/images";
-import { CardCurrencyPicker } from "@/components/currency-controls";
+import { CardCurrencyPicker, CurrencyAmount } from "@/components/currency-controls";
 import { CompanyProfileSections } from "@/components/company-profile-sections";
 
 /* ---------- data ---------- */
@@ -86,7 +86,7 @@ export default function Home() {
       <Nav active={active} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <main>
         <Hero onQuote={() => openQuote()} onWhatsApp={() => openWhatsApp()} />
-        <div className="sticky top-[94px] z-30 border-y border-[#3A3A3C] bg-[#2D2D2F] py-2 text-center text-[13px] font-semibold text-white" data-testid="badge-one-vendor">
+        <div className="sticky top-[104px] z-30 border-y border-[#3A3A3C] bg-[#2D2D2F] py-2 text-center text-[13px] font-semibold text-white lg:top-[94px]" data-testid="badge-one-vendor">
           One Vendor. One Quote. One Delivery.
         </div>
         <TrustBar />
@@ -125,7 +125,7 @@ function WhatIs() {
 function TrustBar() {
   return (
     <div className="border-b border-[#3A3A3C] bg-[#242426] py-3" data-testid="trust-bar">
-      <div className={`${wrap} grid grid-cols-2 gap-2 text-center text-[12px] font-semibold text-[#F5F5F7] sm:grid-cols-4 sm:text-[13px]`}>
+      <div className={`${wrap} grid grid-cols-1 gap-2 text-center text-[12px] font-semibold text-[#F5F5F7] sm:grid-cols-2 lg:grid-cols-4 sm:text-[13px]`}>
         {["500+ Orders", "100% Quality Checked", "48hr Dispatch", "East Africa Delivery"].map((item) => <span key={item}>{item}</span>)}
       </div>
     </div>
@@ -213,13 +213,13 @@ function Services({ onOrder }: { onOrder: (s: string) => void }) {
     <section id="services" className="bg-[#1D1D1F] py-10 md:py-16">
       <div className={wrap}>
         <SectionHead eyebrow="Services" title="Four services. One dependable team." sub="Based in Kampala, serving East Africa." />
-        <div className="sticky top-16 z-30 -mx-4 mb-5 flex flex-wrap gap-2 border-y border-[#3A3A3C] bg-[#1D1D1F]/95 px-4 py-2 backdrop-blur md:hidden">
+        <div className="sticky top-16 z-30 mb-5 flex flex-wrap gap-2 border-y border-[#3A3A3C] bg-[#1D1D1F]/95 py-2 backdrop-blur md:hidden">
           {filters.map((f) => (
             <button key={f} onClick={() => { setFilter(f); setSelectedProduct(null); }} aria-pressed={filter === f} className={`min-h-10 rounded-full border px-3 text-[12px] font-semibold ${filter === f ? "border-[#A1A1A6] bg-[#2D2D2F] text-white" : "border-[#3A3A3C] text-[#A1A1A6]"}`} data-testid={`button-service-filter-${f.toLowerCase().replaceAll(" ", "-")}`}>{f}</button>
           ))}
         </div>
         {selectedProduct && <p className="mb-4 text-[13px] text-[#A1A1A6]" data-testid="text-selected-product">Showing service for <span className="font-semibold text-white">{selectedProduct}</span></p>}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {visibleServices.map((s, i) => <ServiceCard key={s.name} service={s} index={i} onOrder={onOrder} />)}
         </div>
         <div className="mt-8 flex flex-col gap-4 border-t border-[#3A3A3C] pt-5 md:flex-row md:items-center md:justify-between">
@@ -239,7 +239,7 @@ function ServiceCard({ service, index, onOrder }: { service: typeof SERVICES[num
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-[#1D1D1F] text-[#F5F5F7]"><service.icon className="h-5 w-5" /></span>
         <div className="min-w-0 flex-1">
           <h3 className="text-[18px] font-semibold leading-tight">{service.name}</h3>
-          <p className="mt-1 text-[13px] font-semibold text-[#FF6B00]">From {formatPrice(service.price, currency)}</p>
+          <p className="mt-1 text-[13px] font-semibold text-[#FF6B00]">From <CurrencyAmount amount={service.price} /></p>
         </div>
       </div>
       <p className="mt-3 min-h-6 text-[15px] leading-relaxed text-[#D4D4D4]">{service.line}</p>
@@ -262,7 +262,7 @@ function HowItWorks() {
     <section className="bg-[#1D1D1F] py-10 md:py-16">
       <div className={wrap}>
         <SectionHead eyebrow="How it works" title="Three steps from idea to your door." />
-        <ol className="grid gap-4 md:grid-cols-3">
+        <ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {steps.map(([Icon, t, d], i) => (
             <li key={t as string} className="reveal rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5" data-testid={`step-${i}`}>
               <Icon className="h-5 w-5 text-[#A1A1A6]" aria-hidden="true" />
@@ -286,7 +286,7 @@ function Why() {
     <section id="why" className="bg-[#242426] py-10 md:py-16">
       <div className={wrap}>
         <SectionHead eyebrow="Why Diglo Ventures" title="Good work. Ready when you need it." />
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {reasons.map(([Icon, title], i) => (
             <div key={title} className="reveal flex items-center gap-4 rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5" data-testid={`card-why-${i}`}>
               <Icon className="h-5 w-5 shrink-0 text-white" />
@@ -311,7 +311,7 @@ function Pricing({ onOrder, onWhatsApp }: { onOrder: (s: string) => void; onWhat
               <div>
                 <h3 className="text-[18px] font-semibold">{p.name}</h3>
                 <p className="mt-1 text-[14px] text-[#A1A1A6]">{p.qty}</p>
-                <p className="font-display mt-3 text-[24px] font-bold text-[#FF6B00] transition-opacity duration-150" style={{ fontFamily: "Sora" }} data-testid={`text-price-${i}`}>{formatPrice(p.price, currency)}</p>
+                <p className="font-display mt-3 text-[24px] font-bold text-[#FF6B00]" style={{ fontFamily: "Sora" }} data-testid={`text-price-${i}`}><CurrencyAmount amount={p.price} /></p>
                 <CardCurrencyPicker />
                 <p className="mt-1 text-[11px] text-[#A1A1A6]">Prices in your currency. Final quote confirmed on WhatsApp.</p>
               </div>
@@ -330,7 +330,7 @@ function Pricing({ onOrder, onWhatsApp }: { onOrder: (s: string) => void; onWhat
                   <th scope="row" className="px-5 py-4 text-[15px] font-semibold text-white">{p.name}</th>
                   <td className="px-5 py-4 text-[14px] text-[#F5F5F7]">{p.qty}</td>
                   <td className="px-5 py-4 text-[16px] font-bold text-[#FF6B00]">
-                    {formatPrice(p.price, currency)}
+                    <CurrencyAmount amount={p.price} />
                     <CardCurrencyPicker />
                   </td>
                   <td className="px-5 py-4 text-right"><button onClick={() => onOrder(p.service)} className={`${btnOrange} !h-10 !px-5 text-[13px]`} data-testid={`button-order-table-${i}`}>Order This</button></td>
@@ -378,7 +378,7 @@ function Work({ onOrder }: { onOrder: (s: string) => void }) {
                   <dt className="text-[#A1A1A6]">Includes</dt><dd className="text-right font-medium text-[#D4D4D4]">{w.ordered}</dd>
                   <dt>Price From</dt>
                   <dd className="text-right font-semibold text-[#FF6B00]">
-                    {formatPrice(w.from, currency)}
+                    <CurrencyAmount amount={w.from} />
                     <CardCurrencyPicker />
                     <span className="mt-1 block text-[10px] font-normal text-[#A1A1A6]">Prices in your currency.</span>
                   </dd>
@@ -404,7 +404,7 @@ function Testimonials() {
     <section className="bg-[#242426] py-10 md:py-16" aria-labelledby="client-stories-heading">
       <div className={wrap}>
         <SectionHead eyebrow="Client stories - to be confirmed" title="What our partners say." id="client-stories-heading" />
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {stories.map(([source, text]) => (
             <blockquote key={source} className="rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5">
               <p className="text-[15px] leading-relaxed text-[#D4D4D4]">“{text}”</p>

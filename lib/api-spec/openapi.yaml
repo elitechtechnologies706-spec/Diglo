@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: diglo-admin
+    description: Diglo Ventures quote administration
 paths:
   /healthz:
     get:
@@ -24,6 +26,96 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /diglo/admin/login:
+    post:
+      operationId: digloAdminLogin
+      tags: [diglo-admin]
+      summary: Sign in to the Diglo quote dashboard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminLoginInput"
+      responses:
+        "200":
+          description: Signed in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminLoginResponse"
+        "400":
+          description: Invalid request
+        "401":
+          description: Password was rejected
+        "429":
+          description: Too many attempts
+        "503":
+          description: Admin authentication is not configured
+  /diglo/admin/logout:
+    post:
+      operationId: digloAdminLogout
+      tags: [diglo-admin]
+      summary: End the Diglo admin session
+      responses:
+        "200":
+          description: Signed out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminLogoutResponse"
+  /diglo/admin/quotes:
+    get:
+      operationId: listDigloQuotes
+      tags: [diglo-admin]
+      summary: List the newest quotes
+      responses:
+        "200":
+          description: Newest quotes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DigloQuote"
+        "401":
+          description: Admin session required
+        "503":
+          description: Supabase is not configured
+  /diglo/admin/quotes/{id}:
+    patch:
+      operationId: markDigloQuoteDone
+      tags: [diglo-admin]
+      summary: Mark a quote as done
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 100
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DigloQuoteStatusUpdate"
+      responses:
+        "200":
+          description: Updated quote
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DigloQuote"
+        "400":
+          description: Invalid request
+        "401":
+          description: Admin session required
+        "404":
+          description: Quote not found
+        "503":
+          description: Supabase is not configured
 components:
   schemas:
     HealthStatus:
@@ -33,4 +125,60 @@ components:
           type: string
       required:
         - status
+    AdminLoginInput:
+      type: object
+      required: [password]
+      properties:
+        password:
+          type: string
+          minLength: 1
+          maxLength: 256
+    AdminLoginResponse:
+      type: object
+      required: [authenticated]
+      properties:
+        authenticated:
+          type: boolean
+    AdminLogoutResponse:
+      type: object
+      required: [signedOut]
+      properties:
+        signedOut:
+          type: boolean
+    DigloQuote:
+      type: object
+      required: [id, code, name, phone, country, currency, service, quantity, total_text, status, created_at]
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+        country:
+          type: string
+        currency:
+          type: string
+          enum: [UGX, KSH, USD]
+        service:
+          type: string
+        quantity:
+          type: integer
+          minimum: 1
+        total_text:
+          type: string
+        status:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    DigloQuoteStatusUpdate:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [Done]
 

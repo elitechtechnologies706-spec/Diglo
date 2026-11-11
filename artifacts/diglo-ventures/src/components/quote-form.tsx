@@ -4,6 +4,8 @@ import { buildQuoteMessage, makeQuoteRef, whatsappUrl } from "@/lib/diglo";
 import { COUNTRIES, CURRENCY_OPTIONS, SERVICE_NAMES, formatPrice } from "@/lib/site";
 import { btnDark, btnOrange, inputCls, labelCls } from "@/components/tokens";
 import { useSite } from "@/components/site-providers";
+import { supabase } from "@/lib/supabase";
+import { toast } from "@/hooks/use-toast";
 
 type Result = { ref: string; name: string; service: string; quantity: number; details: string; whatsapp: string };
 
@@ -11,29 +13,35 @@ const SERVICE_STARTING_PRICE: Record<string, number> = {
   "Gift Packs": 45000,
   "Corporate Uniforms": 45000,
   PPE: 65000,
-  "Printing Services": 80000,
+  "Printing Services": 800,
   "Not sure yet": 0,
 };
 
 export function QuoteForm({ initialService = "", compact = false }: { initialService?: string; compact?: boolean }) {
   const { currency, changeCurrency, country, chooseCountry } = useSite();
-  const [f, setF] = useState({ name: "", service: initialService, quantity: "", details: "" });
+  const [f, setF] = useState({ name: "", phone: "", service: initialService, quantity: "", details: "" });
   const [error, setError] = useState("");
   const [result, setResult] = useState<Result | null>(null);
+  const [saveFailed, setSaveFailed] = useState(false);
   const [copied, setCopied] = useState(false);
+  const estimateUGXForDisplay = SERVICE_STARTING_PRICE[f.service] && Number(f.quantity) > 0
+    ? SERVICE_STARTING_PRICE[f.service] * Number(f.quantity)
+    : null;
 
-  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     const quantity = Number(f.quantity);
     const name = f.name.trim();
+    const phone = f.phone.trim();
     const service = f.service.trim();
     const details = f.details.trim();
     const startingPrice = SERVICE_STARTING_PRICE[service] ?? 0;
     const estimateUGX = startingPrice * quantity;
     const total = startingPrice ? `${formatPrice(estimateUGX, currency)} (${formatPrice(estimateUGX, "USD")} USD)` : "To confirm";
-    if (name.length < 2 || !service) {
-      setError("Please add your name and choose a service.");
+    const phoneDigits = phone.replace(/\D/g, "");
+    if (name.length < 2 || !service || phoneDigits.length < 8 || phoneDigits.length > 15) {
+      setError("Please add your name, a valid phone number, and choose a service.");
       return;
     }
     if (!Number.isInteger(quantity) || quantity < 1) {
@@ -49,6 +57,29 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
     }
     setResult({ ref, name, service, quantity, details, whatsapp });
     window.open(whatsapp, "_blank", "noopener,noreferrer");
+
+    if (!supabase) {
+      setSaveFailed(true);
+      return;
+    }
+    try {
+      const { error: saveError } = await supabase.from("quotes").insert([{
+        code: ref,
+        name,
+        phone,
+        country,
+        currency,
+        service,
+        quantity,
+        total_text: total,
+        status: "New",
+      }]);
+      if (saveError) setSaveFailed(true);
+      else toast({ title: "Quote saved ✅" });
+    } catch {
+      // Keep the WhatsApp quote flow available if Supabase is temporarily unreachable.
+      setSaveFailed(true);
+    }
   };
 
   const copyCode = async () => {
@@ -75,6 +106,7 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
         <CheckCircle2 className="h-8 w-8 text-white" />
         <h3 className="mt-4 font-display text-[24px] font-bold leading-tight text-white" style={{ fontFamily: "Sora" }}>Quote ready!</h3>
         <p className="mt-2 text-[15px] leading-relaxed text-[#F5F5F7]">Tap to send on WhatsApp - Code <span className="font-semibold text-white">{result.ref}</span></p>
+        {saveFailed && <p className="mt-2 text-[13px] text-[#A1A1A6]" role="status">This quote is ready for WhatsApp, but could not be saved online.</p>}
         <button type="button" onClick={() => window.open(result.whatsapp, "_blank", "noopener,noreferrer")} className={`${btnOrange} mt-4 w-full md:w-auto`} data-testid="button-quote-open-whatsapp">
           <Send className="h-4 w-4" /> Open WhatsApp
         </button>
@@ -89,7 +121,7 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
     <form onSubmit={submit} className="space-y-4" noValidate>
       <fieldset>
         <legend className={labelCls}>1. Choose Your Currency *</legend>
-        <div className="grid gap-2 sm:grid-cols-3">
+        <div className="mobile-currency-grid grid min-w-0 gap-2 sm:grid-cols-2 md:grid-cols-3">
           {CURRENCY_OPTIONS.map(({ code, country: optionCountry, flag }) => (
             <button
               key={code}
@@ -108,6 +140,8 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
       <div className={`grid gap-4 ${compact ? "" : "md:grid-cols-2"}`}>
         <label className="block"><span className={labelCls}>Name</span>
           <input required value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} className={`${inputCls} !h-[52px] md:!h-12`} placeholder="Full name" autoComplete="name" data-testid="input-quote-name" /></label>
+        <label className="block"><span className={labelCls}>Phone</span>
+          <input required type="tel" inputMode="tel" autoComplete="tel" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} className={`${inputCls} !h-[52px] md:!h-12`} placeholder="+254 721 928 484" data-testid="input-quote-phone" /></label>
         <label className="block"><span className={labelCls}>Service</span>
           <select required value={f.service} onChange={(e) => setF({ ...f, service: e.target.value })} className={`${inputCls} !h-[52px] md:!h-12`} data-testid="select-quote-service">
             <option value="">Choose a service</option>
@@ -125,11 +159,16 @@ export function QuoteForm({ initialService = "", compact = false }: { initialSer
         <label className="block"><span className={labelCls}>Details</span>
           <input value={f.details} onChange={(e) => setF({ ...f, details: e.target.value })} className={`${inputCls} !h-[52px] md:!h-12`} placeholder="Colours, deadline, delivery area" data-testid="input-quote-details" /></label>
       </div>
-      <div className="rounded-lg border border-[#3A3A3C] bg-[#1D1D1F] p-3">
+      <div className="w-full min-w-0 break-words rounded-lg border border-[#3A3A3C] bg-[#1D1D1F] p-3.5">
         <p className="text-[14px] font-semibold text-white" data-testid="text-quote-estimate">
-          Total: {Number(f.quantity) > 0 && f.service && SERVICE_STARTING_PRICE[f.service]
-            ? `${formatPrice(SERVICE_STARTING_PRICE[f.service] * Number(f.quantity), currency)} ( ${formatPrice(SERVICE_STARTING_PRICE[f.service] * Number(f.quantity), "USD")} USD )`
-            : "Quote confirmed on WhatsApp"}
+          <span key={currency} className="diglo-currency-fade">
+            Total: {estimateUGXForDisplay ? (
+              <>
+                {formatPrice(estimateUGXForDisplay, currency)}{" "}
+                <span className="text-[11px] font-normal text-[#A1A1A6]">({formatPrice(estimateUGXForDisplay, "USD")} USD)</span>
+              </>
+            ) : "Quote confirmed on WhatsApp"}
+          </span>
         </p>
         <p className="mt-1 text-[12px] text-[#A1A1A6]">Delivery across East Africa - Quote includes delivery estimate for your country</p>
       </div>

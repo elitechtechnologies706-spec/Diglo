@@ -1,9 +1,8 @@
-import { createClient, type User } from "@supabase/supabase-js";
+import type { User } from "@supabase/supabase-js";
 import { CONTACT } from "@/lib/site";
+import { supabase } from "@/lib/supabase";
 
-const url = import.meta.env.VITE_SUPABASE_URL?.trim();
-const key = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim();
-export const supabase = url && key ? createClient(url, key) : null;
+export { supabase } from "@/lib/supabase";
 export const STATUSES = ["New", "Contacted", "Quoted", "Paid", "Delivered"] as const;
 export const STAGES = ["Received", "Designing", "Awaiting Approval", "Printing", "Ready", "Delivered"] as const;
 export type LeadStatus = typeof STATUSES[number];

@@ -1,8 +1,7 @@
 import { Check, Clock3, Gift, Heart, Printer, Shield, ShieldCheck, BadgeCheck } from "lucide-react";
 import { btnOrange, wrap } from "@/components/tokens";
 import { useSite } from "@/components/site-providers";
-import { CardCurrencyPicker } from "@/components/currency-controls";
-import { formatPrice } from "@/lib/site";
+import { CardCurrencyPicker, CurrencyAmount } from "@/components/currency-controls";
 
 const SERVICES = [
   {
@@ -76,7 +75,7 @@ function Heading({ eyebrow, title, id }: { eyebrow: string; title: string; id?: 
 }
 
 export function CompanyProfileSections() {
-  const { openQuote, currency } = useSite();
+  const { openQuote } = useSite();
   return (
     <div className="bg-[#1D1D1F] text-[#F5F5F7]">
       <section id="about" className="scroll-mt-24 py-10 md:py-16">
@@ -111,13 +110,13 @@ export function CompanyProfileSections() {
       <section id="company-services" className="bg-[#242426] py-10 md:py-16">
         <div className={wrap}>
           <Heading eyebrow="Our Services" title="One partner for print, promotion and protection." />
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {SERVICES.map(({ title, description, icon: Icon, price, service }) => (
               <article key={title} className="flex flex-col rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5" data-testid={`card-company-service-${service.toLowerCase().replaceAll(" ", "-")}`}>
                 <Icon className="h-5 w-5 text-white" aria-hidden="true" />
                 <h3 className="mt-4 text-[18px] font-semibold leading-snug text-white">{title}</h3>
                 <p className="mt-3 flex-1 text-[15px] leading-relaxed text-[#D4D4D4]">{description}</p>
-                <p className="mt-4 text-[18px] font-bold text-[#FF6B00]" data-testid={`text-company-price-${service.toLowerCase().replaceAll(" ", "-")}`}>From {formatPrice(price, currency)}</p>
+                <p className="mt-4 text-[18px] font-bold text-[#FF6B00]" data-testid={`text-company-price-${service.toLowerCase().replaceAll(" ", "-")}`}>From <CurrencyAmount amount={price} /></p>
                 <CardCurrencyPicker />
                 <p className="mt-2 text-[11px] text-[#A1A1A6]">Prices in your currency. Final quote confirmed on WhatsApp.</p>
                 <button onClick={() => openQuote(service)} className={`${btnOrange} mt-4 w-full`} data-testid={`button-company-service-${service.toLowerCase().replaceAll(" ", "-")}`}>Get Quote</button>
@@ -130,7 +129,7 @@ export function CompanyProfileSections() {
       <section className="py-10 md:py-16">
         <div className={wrap}>
           <Heading eyebrow="Core Values" title="What we stand for." />
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {VALUES.map(({ title, description, icon: Icon }) => (
               <article key={title} className="rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5" data-testid={`card-value-${title.toLowerCase().replaceAll(" ", "-")}`}>
                 <Icon className="h-5 w-5 text-white" aria-hidden="true" />
@@ -145,7 +144,7 @@ export function CompanyProfileSections() {
       <section className="bg-[#242426] py-10 md:py-16">
         <div className={wrap}>
           <Heading eyebrow="Why Partner With Us?" title="One dependable point of contact." />
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {PARTNER_REASONS.map(({ title, description }) => (
               <article key={title} className="rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5" data-testid={`card-partner-${title.toLowerCase().replaceAll(" ", "-")}`}>
                 <Check className="h-5 w-5 text-white" aria-hidden="true" />

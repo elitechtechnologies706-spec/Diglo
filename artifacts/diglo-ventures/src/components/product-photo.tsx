@@ -31,7 +31,7 @@ export function ProductPhoto({
           loading={loading}
           decoding="async"
           onError={() => setFailed(true)}
-          className={`h-full w-full object-cover ${imageClassName}`}
+          className={`diglo-product-photo h-full w-full object-cover ${imageClassName}`}
         />
       )}
     </div>
