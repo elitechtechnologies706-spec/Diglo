@@ -30,7 +30,8 @@ export function Nav({ active = "", menuOpen, setMenuOpen }: { active?: string; m
   const selectedProduct = new URLSearchParams(query).get("product") ?? "";
   const currentCategory = productDetails(selectedProduct).category;
   const homeIsCurrent = route === "/";
-  const linkCls = (id: string) => `relative whitespace-nowrap py-1 text-[13px] font-medium text-black transition-colors hover:text-[#FF6A00] hover:underline hover:underline-offset-4 ${id === "home" && homeIsCurrent ? "text-[#FF6A00] underline underline-offset-4" : active === id ? "text-[#FF6A00] underline underline-offset-4" : ""}`;
+  const contactIsCurrent = route === "/quote" || (route === "/" && window.location.hash === "#quote");
+  const linkCls = (id: string) => `relative whitespace-nowrap py-1 text-[13px] font-medium text-black transition-colors hover:text-[#FF6A00] hover:underline hover:underline-offset-4 ${id === "home" && homeIsCurrent || id === "about" && route === "/about" || active === id ? "text-[#FF6A00] underline underline-offset-4" : ""}`;
   return (
     <header className={`sticky top-0 z-40 border-b border-[#E5E5E5] bg-white/95 backdrop-blur-md transition-shadow ${scrolled ? "shadow-[0_4px_20px_rgba(0,0,0,.06)]" : ""}`}>
       <div className={`${wrap} flex min-h-16 flex-wrap items-center justify-between gap-x-2 gap-y-1 py-2 lg:h-16 lg:flex-nowrap lg:py-0`}>
@@ -39,11 +40,12 @@ export function Nav({ active = "", menuOpen, setMenuOpen }: { active?: string; m
         </div>
         <nav aria-label="Main navigation" className="hidden min-w-0 flex-1 items-center justify-center gap-3 lg:flex xl:gap-5">
           <a href={homeHash("home")} aria-current={homeIsCurrent ? "page" : undefined} className={linkCls("home")} data-testid="link-nav-home">Home</a>
+          <Link href="/about" aria-current={route === "/about" ? "page" : undefined} className={linkCls("about")} data-testid="link-nav-about">About Us</Link>
           <DesktopProductsMenus currentCategory={currentCategory} />
+          <a href={homeHash("quote")} aria-current={contactIsCurrent ? "page" : undefined} className={linkCls("contact")} data-testid="link-nav-contact">Contact Us</a>
         </nav>
         <div className="flex shrink-0 items-center gap-1 lg:gap-2">
-          <Link href="/quote" aria-current={route === "/quote" ? "page" : undefined} className={`${btnOrange} !h-9 !px-3 !text-[13px] lg:!h-10 lg:!px-4`} data-testid="link-nav-quote">Get Quote</Link>
-          <Link href="/admin" aria-current={route === "/admin" ? "page" : undefined} className="hidden min-h-9 items-center gap-1.5 rounded-lg px-2 text-[13px] font-medium text-black hover:text-[#FF6A00] hover:underline lg:inline-flex" data-testid="link-nav-admin"><Shield className="h-4 w-4" />Admin</Link>
+          <Link href="/quote" aria-current={route === "/quote" ? "page" : undefined} className={`${btnOrange} !h-9 !px-3 !text-[13px] lg:!h-10 lg:!px-4`} data-testid="link-nav-quote">Get Custom Quote</Link>
           <button onClick={() => setMenuOpen(!menuOpen)} className="nav-link grid h-8 w-8 place-items-center rounded-lg text-black lg:hidden" aria-label="Menu" data-testid="button-menu">
             {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -52,9 +54,10 @@ export function Nav({ active = "", menuOpen, setMenuOpen }: { active?: string; m
       <div className={`overflow-hidden border-t bg-white transition-all duration-300 lg:hidden ${menuOpen ? "max-h-[70vh] border-[#E5E5E5] opacity-100" : "max-h-0 border-transparent opacity-0"}`}>
         <nav aria-label="Mobile navigation" className={`${wrap} flex max-h-[70vh] flex-col overflow-y-auto py-3`}>
           <a href={homeHash("home")} onClick={() => setMenuOpen(false)} aria-current={homeIsCurrent ? "page" : undefined} className="py-3 text-base font-medium text-black" data-testid="link-menu-home">Home</a>
+          <Link href="/about" onClick={() => setMenuOpen(false)} aria-current={route === "/about" ? "page" : undefined} className="py-3 text-base font-medium text-black" data-testid="link-menu-about">About Us</Link>
           <MobileProductsAccordion onNavigate={() => setMenuOpen(false)} />
-          <Link href="/quote" onClick={() => setMenuOpen(false)} aria-current={route === "/quote" ? "page" : undefined} className="py-3 text-base font-medium text-black" data-testid="link-menu-quote">Get Quote</Link>
-          <Link href="/admin" onClick={() => setMenuOpen(false)} aria-current={route === "/admin" ? "page" : undefined} className="py-3 text-base font-medium text-black" data-testid="link-menu-admin">Admin</Link>
+          <a href={homeHash("quote")} onClick={() => setMenuOpen(false)} aria-current={contactIsCurrent ? "page" : undefined} className="py-3 text-base font-medium text-black" data-testid="link-menu-contact">Contact Us</a>
+          <Link href="/quote" onClick={() => setMenuOpen(false)} aria-current={route === "/quote" ? "page" : undefined} className="py-3 text-base font-medium text-black" data-testid="link-menu-quote">Get Custom Quote</Link>
         </nav>
       </div>
     </header>
