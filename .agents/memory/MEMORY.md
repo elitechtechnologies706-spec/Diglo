@@ -1,1 +1,1 @@
-- [Diglo scope and imagery](diglo-scope-and-imagery.md) — keep the four-service catalog and use only exact, no-cost imagery.
+- [Diglo scope and quote-only pricing](diglo-scope-and-imagery.md) — keep four services, exact free imagery, customized quotes, and link-only orange.

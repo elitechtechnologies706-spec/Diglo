@@ -16,7 +16,7 @@ function load(env = {}, rpc = null) {
     localStorage: { getItem: (k) => store.get(k) ?? null, setItem: (k, v) => store.set(k, v) },
     require: (specifier) => specifier === "@/lib/site"
       ? { CONTACT: { whatsapp: "254721928484" } }
-      : { createClient: () => ({ rpc }) },
+      : { supabase: rpc ? { rpc } : null },
   };
   vm.runInNewContext(code, context);
   return { api: context.exports };
@@ -61,10 +61,15 @@ test("generates a local quote code and includes it with details in the WhatsApp 
   const ref = api.makeQuoteRef();
   assert.match(ref, /^DG-[A-Z0-9]{4}$/);
   const message = api.buildQuoteMessage({
-    ref, service: "Printing Services", quantity: 100, details: "Matte finish", name: "QA Test",
-    currency: "KSH", country: "Kenya", total: "2,730 KSH ($21 USD)",
+    ref, product: "Business Cards", category: "Printing & Branding", service: "Printing Services",
+    quantity: 100, brandingDetails: "Matte finish", deliveryArea: "Kampala",
+    message: "Please include our logo", name: "QA Test", phone: "+256700000000",
   });
-  assert.match(message, new RegExp(`^Hello Diglo Ventures, I want a quote in KSH - Kenya - Code: ${ref}`));
+  assert.match(message, new RegExp(`^Hello Diglo Ventures, I would like a customized quote\\.\\nCode: ${ref}`));
+  assert.match(message, /Product: Business Cards/);
+  assert.match(message, /Quantity: 100/);
+  assert.match(message, /Branding Details: Matte finish/);
+  assert.doesNotMatch(message, /(?:UGX|KSH|USD|\\$|Estimated Price)/);
   const url = new URL(api.whatsappUrl(message));
   assert.equal(url.hostname, "wa.me");
   assert.equal(url.pathname, "/254721928484");

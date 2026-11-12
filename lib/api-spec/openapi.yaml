@@ -147,7 +147,7 @@ components:
           type: boolean
     DigloQuote:
       type: object
-      required: [id, code, name, phone, country, currency, service, quantity, total_text, status, created_at]
+      required: [id, code, name, phone, product, category, service, quantity, branding_details, delivery_area, message, status, created_at]
       properties:
         id:
           type: string
@@ -157,18 +157,21 @@ components:
           type: string
         phone:
           type: string
-        country:
-          type: string
-        currency:
-          type: string
-          enum: [UGX, KSH, USD]
+        product:
+          type: ["string", "null"]
+        category:
+          type: ["string", "null"]
         service:
-          type: string
+          type: ["string", "null"]
         quantity:
           type: integer
           minimum: 1
-        total_text:
-          type: string
+        branding_details:
+          type: ["string", "null"]
+        delivery_area:
+          type: ["string", "null"]
+        message:
+          type: ["string", "null"]
         status:
           type: string
         created_at:

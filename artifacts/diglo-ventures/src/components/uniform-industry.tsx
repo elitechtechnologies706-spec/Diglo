@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -9,9 +9,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useSite } from "@/components/site-providers";
-import { formatPrice } from "@/lib/site";
 import { ProductPhoto } from "@/components/product-photo";
-import { CardCurrencyPicker, CurrencyAmount } from "@/components/currency-controls";
 import { wrap } from "@/components/tokens";
 
 type Industry = {
@@ -90,7 +88,7 @@ function makeReference() {
 }
 
 export function UniformIndustry() {
-  const { openWhatsApp, currency } = useSite();
+  const { openWhatsApp } = useSite();
   const [industry, setIndustry] = useState<Industry>(INDUSTRIES[0]);
   const [role, setRole] = useState<(typeof ROLES)[number]>("Chef");
   const [color, setColor] = useState("Navy");
@@ -100,7 +98,6 @@ export function UniformIndustry() {
   const [quantity, setQuantity] = useState(10);
   const [step, setStep] = useState(0);
   const selectedColor = color === "Your Brand Colour" ? customColor : COLORS.find((swatch) => swatch.name === color)?.value ?? "#253954";
-  const estimate = useMemo(() => quantity * 45000, [quantity]);
 
   const chooseIndustry = (nextIndustry: Industry, moveToBuilder = false) => {
     setIndustry(nextIndustry);
@@ -120,7 +117,6 @@ export function UniformIndustry() {
       `Brand logo: ${includeLogo ? "Yes" : "No"}`,
       `Staff name: ${includeStaffName ? "Yes" : "No"}`,
       `Quantity: ${quantity} pieces`,
-      `Starting estimate: ${formatPrice(estimate, currency)}`,
       "",
       "Please confirm availability, sizing and a final quote.",
     ].join("\n");
@@ -175,15 +171,12 @@ export function UniformIndustry() {
                     </ul>
                     <div className="mt-auto flex items-end justify-between gap-3 border-t border-[#3A3A3C] pt-4">
                       <div className="leading-tight">
-                        <span className="block text-[10px] uppercase tracking-[0.12em] text-[#A1A1A6]">From / piece</span>
-                        <span className="mt-1 block text-[16px] font-bold text-[#FF6B00]"><CurrencyAmount amount={45000} /></span>
-                        <CardCurrencyPicker />
-                        <span className="mt-1 block text-[10px] text-[#A1A1A6]">Prices in your currency.</span>
+                        <span className="block max-w-[190px] text-[12px] leading-relaxed text-[#4A4A4A]">Customized Quote - Price Depends on Quantity &amp; Branding</span>
                       </div>
                       <button
                         type="button"
                         onClick={() => chooseIndustry(item, true)}
-                        className="inline-flex min-h-10 items-center gap-2 rounded-lg bg-[#FF6B00] px-3.5 text-[12px] font-semibold text-white transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2F]"
+                        className="inline-flex min-h-10 items-center gap-2 rounded-lg bg-black px-3.5 text-[12px] font-semibold text-white transition hover:bg-[#333333] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
                         aria-label={`Build this outfit for ${item.name}`}
                       >
                         Build This Outfit <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -229,7 +222,7 @@ export function UniformIndustry() {
                 <span className="h-9 w-9 rounded-full border border-white/30" style={{ backgroundColor: selectedColor }} aria-label={`${color} colour preview`} />
               </div>
               <p className="relative mt-5 border-t border-[#3A3A3C] pt-4 pr-14 text-[12px] leading-relaxed text-[#A1A1A6] sm:pr-0">
-                From <span className="font-semibold text-[#FF6B00]"><CurrencyAmount amount={45000} /></span> per piece · final pricing depends on fabric and branding.
+                Customized outfit details are confirmed with your quote.
               </p>
             </aside>
 
@@ -320,27 +313,21 @@ export function UniformIndustry() {
                       <input id="uniform-quantity" type="number" min={1} max={9999} value={quantity} onChange={(event) => setQuantity(Math.max(1, Math.min(9999, Number(event.target.value) || 1)))} className="h-12 min-w-0 flex-1 rounded-lg border border-[#3A3A3C] bg-[#2D2D2F] px-4 text-center text-[18px] font-semibold text-white outline-none focus:border-[#A1A1A6] focus-visible:ring-2 focus-visible:ring-white" />
                       <button type="button" onClick={() => setQuantity((current) => Math.min(9999, current + 1))} className="grid h-12 w-12 shrink-0 place-items-center rounded-lg border border-[#3A3A3C] bg-[#2D2D2F] text-[22px] text-white hover:border-[#A1A1A6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white" aria-label="Increase quantity">+</button>
                     </div>
-                    <div className="mt-5 rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-4">
-                      <div className="flex items-center justify-between gap-3 text-[13px]">
-                        <span className="text-[#A1A1A6]">Starting estimate</span>
-                        <span className="font-semibold text-[#FF6B00]"><CurrencyAmount amount={estimate} /></span>
-                      </div>
-                      <p className="mt-2 text-[11px] leading-relaxed text-[#A1A1A6]">Estimate uses the starting price of {formatPrice(45000, currency)} per piece. Final quote depends on style, fabric and branding.</p>
-                    </div>
+                    <p className="mt-5 rounded-xl border border-[#E5E5E5] bg-white p-4 text-[13px] leading-relaxed text-[#4A4A4A]">We’ll confirm garment details and delivery in your customized quote.</p>
                   </div>
                 )}
               </div>
 
               <div className="mt-7 flex flex-col-reverse gap-2 border-t border-[#3A3A3C] pt-4 sm:flex-row sm:items-center sm:justify-between">
-                <button type="button" onClick={() => setStep((current) => Math.max(0, current - 1))} disabled={step === 0} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#3A3A3C] px-5 text-[13px] font-semibold text-[#D4D4D6] transition hover:border-[#77777A] disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B00]">
+                <button type="button" onClick={() => setStep((current) => Math.max(0, current - 1))} disabled={step === 0} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-black bg-black px-5 text-[13px] font-semibold text-white transition hover:border-[#333333] hover:bg-[#333333] disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black">
                   <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Back
                 </button>
                 {step < STEPS.length - 1 ? (
-                  <button type="button" onClick={() => setStep((current) => Math.min(STEPS.length - 1, current + 1))} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-[#FF6B00] px-6 text-[14px] font-semibold text-white transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2F]">
+                  <button type="button" onClick={() => setStep((current) => Math.min(STEPS.length - 1, current + 1))} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-black px-6 text-[14px] font-semibold text-white transition hover:bg-[#333333] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
                     Continue <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </button>
                 ) : (
-                  <button type="button" onClick={sendQuote} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-[#FF6B00] px-6 text-[14px] font-semibold text-white transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2F]">
+                  <button type="button" onClick={sendQuote} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-black px-6 text-[14px] font-semibold text-white transition hover:bg-[#333333] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
                     <Sparkles className="h-4 w-4" aria-hidden="true" /> Get a WhatsApp Quote
                   </button>
                 )}

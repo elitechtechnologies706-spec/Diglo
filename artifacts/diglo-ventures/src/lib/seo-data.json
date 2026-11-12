@@ -1,114 +1,164 @@
 {
   "siteName": "Diglo Ventures",
   "homeTitle": "Diglo Ventures | Branding and Printing Services in Kampala, Uganda",
-  "homeDescription": "Gift packs, corporate uniforms, PPE and printing services. Based in Kampala, Uganda, serving Uganda, Kenya, Tanzania, Rwanda, Burundi and South Sudan.",
+  "homeDescription": "Corporate gifts, uniforms, PPE and commercial printing from a Kampala-based partner serving East Africa.",
   "homeQuestion": "What Is Diglo Ventures?",
-  "homeAnswer": "Diglo Ventures is a corporate branding and supply partner based in Kampala, Uganda. We supply branded gift packs, corporate uniforms, personal protective equipment, and business printing, with delivery serving Uganda, Kenya, Tanzania, Rwanda, Burundi and South Sudan.",
+  "homeAnswer": "Diglo Ventures is a corporate branding and supply partner based in Kampala, Uganda. We provide branded gift packs, uniforms, personal protective equipment, and commercial printing, with delivery serving Uganda and East Africa.",
   "homeFaqs": [
-    { "q": "How fast can you deliver?", "a": "Our 24 Hour Express option covers many standard print jobs once your design proof is approved. Larger or custom orders take longer, and we confirm the exact timeline with your quote." },
-    { "q": "Which countries do you serve?", "a": "We are based in Kampala and serve Uganda, Kenya, Tanzania, Rwanda, Burundi and South Sudan. Your quote includes a delivery estimate for your country." },
-    { "q": "Do you design, or do I need my own artwork?", "a": "We design for you. Every order includes a free design proof. If you already have artwork, send it and we will check it is ready for print." },
-    { "q": "Is there a minimum order?", "a": "Minimums depend on the product. Our listed prices show common quantities, such as 100 business cards. Tell us what you need and we will advise." },
-    { "q": "How do I pay?", "a": "Payment is by Mobile Money or Bank Transfer. Payment details are shared with your confirmed quote." },
-    { "q": "What if I do not like the design?", "a": "You approve a design proof before anything is printed. Tell us what to change and we revise it. Our Quality Guarantee covers a free reprint if a print fault is our mistake." }
-  ],
-  "homeProducts": [
-    { "name": "Business Cards (100)", "price": 80000 },
-    { "name": "Flyers (100)", "price": 120000 },
-    { "name": "Logo Complete", "price": 250000 },
-    { "name": "Banner 3x2", "price": 150000 },
-    { "name": "T-Shirt", "price": 35000 },
-    { "name": "Stickers (100)", "price": 60000 }
+    {
+      "q": "How fast can you deliver?",
+      "a": "Many standard print jobs can be prepared within 24 hours after the design proof is approved. Custom and bulk orders take longer, and we confirm the delivery schedule with your quote."
+    },
+    {
+      "q": "Which areas do you serve?",
+      "a": "We are based in Kampala and serve customers across Uganda and East Africa. Share your delivery area in the quote form so we can confirm the route."
+    },
+    {
+      "q": "Do you design, or do I need my own artwork?",
+      "a": "We can prepare artwork for you. Every order includes a design proof for your approval before production begins."
+    },
+    {
+      "q": "Is there a minimum order?",
+      "a": "Minimum quantities depend on the product and branding method. Tell us what you need and we will confirm the right quantity for your request."
+    },
+    {
+      "q": "How do I pay?",
+      "a": "Payment options are confirmed with your customized quote before production."
+    },
+    {
+      "q": "What if I do not like the design?",
+      "a": "You approve a design proof before anything is printed. Tell us what to change and we will revise it before production."
+    }
   ],
   "pages": [
     {
       "slug": "logo-design-kampala",
       "service": "Printing Services",
+      "category": "Printing & Branding",
       "eyebrow": "Logo Design",
       "title": "Logo Design in Kampala | Diglo Ventures",
       "h1": "Logo Design in Kampala",
-      "description": "Professional logo design from 250,000 UGX. Based in Kampala, Diglo Ventures serves Uganda and East Africa with a free design proof.",
-      "question": "How much does logo design cost in Kampala?",
-      "answer": "At Diglo Ventures, a complete logo package starts from 250,000 UGX. It includes your logo, colour palette, font guide and brand book. We are based in Kampala and serve East Africa. You approve a free design proof before production.",
-      "productName": "Logo Complete",
-      "price": 250000,
-      "priceNote": "Logo, colour palette, font guide and brand book",
+      "description": "Custom logo design and brand identity support from Diglo Ventures in Kampala, serving East Africa.",
+      "question": "What is included in a logo design request?",
+      "answer": "Share your business name, audience, and design direction. Diglo Ventures can prepare a logo, colour palette, and supporting brand assets for your approval.",
+      "productName": "Logo Design",
       "faqs": [
-        { "q": "What do I receive with a logo package?", "a": "Your logo, a colour palette, a font guide and a brand book that shows how to use them consistently." },
-        { "q": "Can I request changes?", "a": "Yes. You receive a free design proof and can request changes before the design is finalised." },
-        { "q": "Can you refresh an existing logo?", "a": "Yes. Our Brand Refresh service starts from 180,000 UGX and modernises your logo without losing your customers." }
+        {
+          "q": "What do I receive with a logo request?",
+          "a": "Your request can include a logo, colour palette, font guide, and a short brand-use guide."
+        },
+        {
+          "q": "Can I request changes?",
+          "a": "Yes. You review a design proof and can request changes before the artwork is finalized."
+        },
+        {
+          "q": "Can you refresh an existing logo?",
+          "a": "Yes. Share your current logo and describe what you want to keep or change."
+        }
       ]
     },
     {
       "slug": "business-cards-kampala",
       "service": "Printing Services",
+      "category": "Printing & Branding",
       "eyebrow": "Business Cards",
       "title": "Business Card Printing in Kampala | Diglo Ventures",
       "h1": "Business Card Printing in Kampala",
-      "description": "Business card printing from 80,000 UGX for 100 cards, including a free design proof. Based in Kampala, serving East Africa.",
-      "question": "How much does business card printing cost in Kampala?",
-      "answer": "Diglo Ventures prints 100 business cards from 80,000 UGX, including a free design proof. Many standard card orders can be ready through our 24 hour express option after approval. Based in Kampala, we serve East Africa.",
-      "productName": "Business Cards (100)",
-      "price": 80000,
-      "priceNote": "100 cards, design proof included",
+      "description": "Custom business card printing with artwork proofing in Kampala, serving teams across East Africa.",
+      "question": "How do I request business cards?",
+      "answer": "Tell us the quantity, card finish, and whether you already have artwork. We prepare a proof for approval before printing.",
+      "productName": "Business Cards",
       "faqs": [
-        { "q": "Do you design the card for me?", "a": "Yes. We design your card and send a free proof for approval before printing." },
-        { "q": "Can I order more than 100 cards?", "a": "Yes. Use the price calculator or request a quote for larger quantities." },
-        { "q": "How do I pay?", "a": "Payment is by Mobile Money or Bank Transfer." }
+        {
+          "q": "Do you design the card for me?",
+          "a": "Yes. We can prepare a design and send a proof for approval before printing."
+        },
+        {
+          "q": "Can I order a different quantity?",
+          "a": "Yes. Add your preferred quantity in the quote form and we will confirm the options."
+        },
+        {
+          "q": "Can you print my supplied design?",
+          "a": "Yes. Send your artwork and we will check that it is ready for print."
+        }
       ]
     },
     {
       "slug": "tshirt-printing-kampala",
       "service": "Corporate Uniforms",
+      "category": "Uniforms & Apparel",
       "eyebrow": "T-Shirt Printing",
       "title": "T-Shirt Printing in Kampala | Diglo Ventures",
       "h1": "T-Shirt Printing in Kampala",
-      "description": "Branded T-shirt printing from 35,000 UGX per shirt. Hoodies, caps and uniforms also available. Based in Kampala, serving East Africa.",
-      "question": "How much does T-shirt printing cost in Kampala?",
-      "answer": "Diglo Ventures prints branded T-shirts from 35,000 UGX per shirt, including a free design proof. We also print hoodies, caps and staff uniforms. Based in Kampala, we serve East Africa.",
-      "productName": "Printed T-Shirt",
-      "price": 35000,
-      "priceNote": "Per printed shirt",
+      "description": "Branded T-shirt printing and team apparel from Diglo Ventures in Kampala, serving East Africa.",
+      "question": "What apparel can I customize?",
+      "answer": "Request branded T-shirts, polos, workwear, or team uniforms. Include your logo, preferred colours, and quantity so we can prepare the right options.",
+      "productName": "Branded T-Shirt",
       "faqs": [
-        { "q": "Do you print hoodies and caps?", "a": "Yes. We print T-shirts, hoodies, caps and uniforms." },
-        { "q": "Can you add my logo?", "a": "Yes. Send your logo or let us design one, and we will send a proof before printing." },
-        { "q": "Is there a minimum quantity?", "a": "Minimums depend on the garment and print method. Tell us your quantity and we will advise." }
+        {
+          "q": "Do you print hoodies and caps?",
+          "a": "Yes. Add the apparel items you need to your quote request."
+        },
+        {
+          "q": "Can you add my logo?",
+          "a": "Yes. Send your logo or ask us to prepare artwork, then approve the proof before production."
+        },
+        {
+          "q": "What sizes can I request?",
+          "a": "Share the size range and quantity split in your message so we can confirm availability."
+        }
       ]
     },
     {
       "slug": "banner-printing-kampala",
       "service": "Printing Services",
+      "category": "Printing & Branding",
       "eyebrow": "Banner Printing",
       "title": "Banner Printing in Kampala | Diglo Ventures",
       "h1": "Banner Printing in Kampala",
-      "description": "Banner printing from 150,000 UGX for a 3 x 2 metre banner. Roll-ups, posters, stickers and signage. Based in Kampala, serving East Africa.",
-      "question": "How much does banner printing cost in Kampala?",
-      "answer": "Diglo Ventures prints a 3 x 2 metre banner from 150,000 UGX, including a free design proof. We also produce roll-up banners, posters, stickers and signage. Based in Kampala, we serve East Africa.",
-      "productName": "Banner 3x2",
-      "price": 150000,
-      "priceNote": "3 x 2 metres, design proof included",
+      "description": "Custom banners, posters, stickers, and large-format printing in Kampala, serving East Africa.",
+      "question": "What details should I include in a banner request?",
+      "answer": "Tell us the banner dimensions, quantity, where it will be used, and whether you have artwork. We will confirm the material and delivery details with your quote.",
+      "productName": "Printed Banner",
       "faqs": [
-        { "q": "Can you print other sizes?", "a": "Yes. Request a quote with your size and we will confirm the price." },
-        { "q": "Do you make roll-up banners?", "a": "Yes. Roll-ups, posters, stickers and signage are part of our Large Format service." },
-        { "q": "Do you design the banner?", "a": "Yes. Every order includes a free design proof." }
+        {
+          "q": "Can you print other sizes?",
+          "a": "Yes. Include the finished dimensions and intended use in your request."
+        },
+        {
+          "q": "Do you make roll-up banners?",
+          "a": "Yes. Ask for roll-up banners, posters, stickers, or other large-format products."
+        },
+        {
+          "q": "Do you design the banner?",
+          "a": "Yes. We can prepare a design proof for your approval before printing."
+        }
       ]
     },
     {
       "slug": "packaging-uganda",
       "service": "Gift Packs",
+      "category": "Promotional Gifts",
       "eyebrow": "Packaging",
       "title": "Packaging and Label Printing in Uganda | Diglo Ventures",
       "h1": "Packaging and Label Printing in Uganda",
-      "description": "Product packaging, labels, boxes and paper bags in Uganda from 60,000 UGX. Based in Kampala, Diglo Ventures serves East Africa.",
-      "question": "How much does packaging printing cost in Uganda?",
-      "answer": "Diglo Ventures designs and prints product packaging from our Kampala studio, starting from 60,000 UGX. We produce labels, boxes, paper bags and stickers with a free design proof. We serve East Africa.",
-      "productName": "Stickers and Labels (100)",
-      "price": 60000,
-      "priceNote": "From 100 stickers or labels",
+      "description": "Custom product packaging, labels, boxes, and branded bags from Diglo Ventures in Uganda.",
+      "question": "What packaging can I request?",
+      "answer": "Tell us about your product, packaging format, dimensions, and branding. We can help with labels, boxes, paper bags, and related printed pieces.",
+      "productName": "Branded Packaging",
       "faqs": [
-        { "q": "What packaging do you print?", "a": "Labels, boxes, paper bags and stickers." },
-        { "q": "Which countries do you serve?", "a": "We are based in Kampala and serve Uganda, Kenya, Tanzania, Rwanda, Burundi and South Sudan. Ask for a delivery estimate in your quote." },
-        { "q": "Can you design my packaging?", "a": "Yes. We design it and send a free proof for approval before printing." }
+        {
+          "q": "What packaging do you print?",
+          "a": "We can discuss labels, boxes, paper bags, and stickers for your product."
+        },
+        {
+          "q": "Which areas do you serve?",
+          "a": "We are based in Kampala and serve customers in Uganda and East Africa. Include your location in the quote request."
+        },
+        {
+          "q": "Can you design my packaging?",
+          "a": "Yes. We prepare a proof for approval before production."
+        }
       ]
     }
   ]

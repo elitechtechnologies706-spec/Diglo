@@ -49,17 +49,29 @@ export function makeQuoteRef() {
 
 export function buildQuoteMessage(input: {
   ref: string;
+  product: string;
+  category: string;
   service: string;
   quantity: number;
-  details: string;
+  brandingDetails: string;
+  deliveryArea: string;
+  message: string;
   name: string;
-  currency?: "UGX" | "KSH" | "USD";
-  country?: string;
-  total?: string;
+  phone: string;
 }) {
-  const currency = input.currency ?? "UGX";
-  const country = input.country ?? "Uganda";
-  return `Hello Diglo Ventures, I want a quote in ${currency} - ${country} - Code: ${input.ref} - Service: ${input.service} - Qty: ${input.quantity} - Estimated Total: ${input.total ?? "To confirm"} - Details: ${input.details || "-"} - Name: ${input.name}`;
+  return [
+    "Hello Diglo Ventures, I would like a customized quote.",
+    `Code: ${input.ref}`,
+    `Product: ${input.product}`,
+    `Category: ${input.category || "General"}`,
+    `Diglo Service: ${input.service || "General"}`,
+    `Quantity: ${input.quantity}`,
+    `Branding Details: ${input.brandingDetails || "-"}`,
+    `Delivery Area: ${input.deliveryArea || "-"}`,
+    `Message: ${input.message || "-"}`,
+    `Name: ${input.name}`,
+    `Phone / WhatsApp: ${input.phone}`,
+  ].join("\n");
 }
 
 export async function lookupOrders(query: string): Promise<TrackedOrder[]> {

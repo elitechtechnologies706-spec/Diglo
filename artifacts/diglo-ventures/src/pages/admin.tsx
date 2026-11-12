@@ -116,16 +116,16 @@ export default function Admin() {
     }
   };
 
-  const tableCell = "px-3 py-3 text-left align-top text-[13px] text-[#F5F5F7]";
-  const tableHead = "whitespace-nowrap px-3 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-[#A1A1A6]";
+  const tableCell = "px-3 py-3 text-left align-top text-[13px] text-[#4A4A4A]";
+  const tableHead = "whitespace-nowrap px-3 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-[#4A4A4A]";
 
   return (
-    <main className="min-h-[100dvh] bg-[#1D1D1F] text-white">
-      <header className="border-b border-[#3A3A3C] bg-[#1D1D1F]">
+    <main className="diglo-white-theme min-h-[100dvh] bg-white text-black">
+      <header className="border-b border-[#E5E5E5] bg-white">
         <div className={`${wrap} flex min-h-16 items-center justify-between gap-3 py-3`}>
           <div className="flex items-center gap-3">
             <Logo />
-            <span className="border-l border-[#3A3A3C] pl-3 text-sm font-medium text-[#A1A1A6]">Quote Admin</span>
+            <span className="border-l border-[#E5E5E5] pl-3 text-sm font-medium text-[#4A4A4A]">Quote Admin</span>
           </div>
           {authenticated && (
             <button onClick={signOut} className={btnGhost} data-testid="button-admin-signout">
@@ -137,10 +137,10 @@ export default function Admin() {
 
       {!authenticated ? (
         <section className="mx-auto grid min-h-[70vh] w-full max-w-[440px] content-center px-[14px] py-10">
-          <div className="rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5 sm:p-6">
-            <ShieldCheck className="h-6 w-6 text-[#A1A1A6]" aria-hidden="true" />
+          <div className="rounded-xl border border-[#E5E5E5] bg-white p-5 shadow-[0_4px_20px_rgba(0,0,0,.06)] sm:p-6">
+            <ShieldCheck className="h-6 w-6 text-black" aria-hidden="true" />
             <h1 className="mt-4 text-xl font-bold">Admin sign in</h1>
-            <p className="mt-2 text-sm text-[#A1A1A6]">Enter the private Diglo Ventures admin password.</p>
+            <p className="mt-2 text-sm text-[#4A4A4A]">Enter the private Diglo Ventures admin password.</p>
             <form onSubmit={signIn} className="mt-5 space-y-4">
               <label className="block">
                 <span className={labelCls}>Admin password</span>
@@ -177,32 +177,26 @@ export default function Admin() {
           {error && <p className="mb-4 rounded-lg border border-[#3A3A3C] bg-[#2D2D2F] p-3 text-sm" role="alert">{error}</p>}
           {notice && <p className="mb-4 rounded-lg border border-[#3A3A3C] bg-[#2D2D2F] p-3 text-sm" role="status">{notice}</p>}
 
-          <div className="overflow-x-auto rounded-xl border border-[#3A3A3C] bg-[#2D2D2F]">
-            <table className="w-full min-w-[1120px] border-collapse">
-              <thead className="border-b border-[#3A3A3C]">
+          <div className="overflow-x-auto rounded-xl border border-[#E5E5E5] bg-white">
+            <table className="w-full min-w-[680px] border-collapse">
+              <thead className="border-b border-[#E5E5E5]">
                 <tr>
-                  {["Code", "Name", "Phone", "Country", "Currency", "Service", "Qty", "Total", "Status", "Date", "Actions"].map((label) => (
+                  {["Product", "Quantity", "Status", "Date", "Actions"].map((label) => (
                     <th key={label} className={tableHead}>{label}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#3A3A3C]">
+              <tbody className="divide-y divide-[#E5E5E5]">
                 {loading && quotes.length === 0 ? (
-                  <tr><td colSpan={11} className={`${tableCell} py-8 text-center text-[#A1A1A6]`}>Loading quotes…</td></tr>
+                  <tr><td colSpan={5} className={`${tableCell} py-8 text-center text-[#4A4A4A]`}>Loading quotes…</td></tr>
                 ) : quotes.length === 0 ? (
-                  <tr><td colSpan={11} className={`${tableCell} py-8 text-center text-[#A1A1A6]`}>No quotes saved yet.</td></tr>
+                  <tr><td colSpan={5} className={`${tableCell} py-8 text-center text-[#4A4A4A]`}>No quotes saved yet.</td></tr>
                 ) : quotes.map((quote) => {
                   const whatsapp = customerWhatsApp(quote);
                   return (
                     <tr key={quote.id} data-testid={`row-quote-${quote.id}`}>
-                      <td className={`${tableCell} whitespace-nowrap font-semibold`}>{quote.code}</td>
-                      <td className={tableCell}>{quote.name}</td>
-                      <td className={`${tableCell} whitespace-nowrap`}>{quote.phone}</td>
-                      <td className={tableCell}>{quote.country}</td>
-                      <td className={tableCell}>{quote.currency}</td>
-                      <td className={tableCell}>{quote.service}</td>
+                      <td className={`${tableCell} font-semibold`}>{quote.product || "Legacy quote"}</td>
                       <td className={tableCell}>{quote.quantity.toLocaleString()}</td>
-                      <td className={`${tableCell} whitespace-nowrap`}>{quote.total_text}</td>
                       <td className={tableCell}>{quote.status}</td>
                       <td className={`${tableCell} whitespace-nowrap`}>{dateText(quote.created_at)}</td>
                       <td className={`${tableCell} whitespace-nowrap`}>

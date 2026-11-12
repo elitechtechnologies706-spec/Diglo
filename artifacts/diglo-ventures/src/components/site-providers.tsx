@@ -1,23 +1,17 @@
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
 import { useLocation } from "wouter";
 import { Mail, MessageCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { whatsappUrl } from "@/lib/diglo";
 import { CONTACT } from "@/lib/site";
-import { COUNTRIES, suggestedCurrency, type Country, type Currency } from "@/lib/site";
 import { btnDark } from "@/components/tokens";
-import { QuoteForm } from "@/components/quote-form";
 
 export const DEFAULT_WA_MESSAGE = "Hello Diglo Ventures, I would like a quote for branding and printing.";
 
 type Ctx = {
   openWhatsApp: (message?: string) => void;
-  openQuote: (service?: string) => void;
+  openQuote: (product?: string, category?: string, service?: string) => void;
   showPhoneUnavailable: () => void;
-  currency: Currency;
-  changeCurrency: (currency: Currency) => void;
-  country: Country;
-  chooseCountry: (country: Country) => void;
 };
 const SiteCtx = createContext<Ctx | null>(null);
 
@@ -37,52 +31,22 @@ export function getWhatsAppLink(message: string): string | null {
 }
 
 export function SiteProviders({ children }: { children: ReactNode }) {
+  const [, setLocation] = useLocation();
   const [waNotice, setWaNotice] = useState<null | { kind: "whatsapp" | "phone"; message: string }>(null);
-  const [quoteOpen, setQuoteOpen] = useState(false);
-  const [quoteService, setQuoteService] = useState("");
-  const [currency, setCurrency] = useState<Currency>(() => {
-    try {
-      if (typeof window === "undefined") return "UGX";
-      const saved = window.localStorage.getItem("diglo_currency");
-      return saved === "KSH" || saved === "USD" ? saved : "UGX";
-    } catch {
-      return "UGX";
-    }
-  });
-  const [country, setCountry] = useState<Country>(() => {
-    try {
-      if (typeof window === "undefined") return "Uganda";
-      const saved = window.localStorage.getItem("diglo_country");
-      return COUNTRIES.includes(saved as Country) ? saved as Country : "Uganda";
-    } catch {
-      return "Uganda";
-    }
-  });
-  const [currencyManuallyChosen, setCurrencyManuallyChosen] = useState(false);
-  useEffect(() => {
-    try {
-      window.localStorage.removeItem("diglo_pending_leads_v1");
-      window.localStorage.setItem("diglo_currency", currency);
-      window.localStorage.setItem("diglo_country", country);
-    } catch {
-      // The retired quote queue is not used by this flow.
-    }
-  }, [currency, country]);
 
   const openWhatsApp = useCallback((message: string = DEFAULT_WA_MESSAGE) => {
     const url = getWhatsAppLink(message);
     if (url) window.open(url, "_blank", "noopener,noreferrer");
     else setWaNotice({ kind: "whatsapp", message });
   }, []);
-  const openQuote = useCallback((service = "") => { setQuoteService(service); setQuoteOpen(true); }, []);
-  const changeCurrency = useCallback((nextCurrency: Currency) => {
-    setCurrencyManuallyChosen(true);
-    setCurrency(nextCurrency);
-  }, []);
-  const chooseCountry = useCallback((nextCountry: Country) => {
-    setCountry(nextCountry);
-    if (!currencyManuallyChosen) setCurrency(suggestedCurrency(nextCountry));
-  }, [currencyManuallyChosen]);
+  const openQuote = useCallback((product = "", category = "", service = "") => {
+    const params = new URLSearchParams();
+    if (product) params.set("product", product);
+    if (category) params.set("category", category);
+    if (service) params.set("service", service);
+    const query = params.toString();
+    setLocation(query ? `/quote?${query}` : "/quote");
+  }, [setLocation]);
   const showPhoneUnavailable = useCallback(() => {
     if (CONTACT.phone) window.location.href = `tel:${CONTACT.phone}`;
     else setWaNotice({ kind: "phone", message: DEFAULT_WA_MESSAGE });
@@ -90,22 +54,13 @@ export function SiteProviders({ children }: { children: ReactNode }) {
 
   const noticeKind = waNotice?.kind === "phone" ? "Phone" : "WhatsApp";
   return (
-    <SiteCtx.Provider value={{ openWhatsApp, openQuote, showPhoneUnavailable, currency, changeCurrency, country, chooseCountry }}>
+    <SiteCtx.Provider value={{ openWhatsApp, openQuote, showPhoneUnavailable }}>
       {children}
-      <Dialog open={quoteOpen} onOpenChange={setQuoteOpen}>
-        <DialogContent className="max-h-[90dvh] overflow-y-auto rounded-xl border-[#3A3A3C] bg-[#2D2D2F] text-[#F5F5F7] sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle className="font-display text-[18px] text-white">Get a Quote</DialogTitle>
-            <DialogDescription className="text-[#A1A1A6]">Tell us what you need. We’ll reply on WhatsApp.</DialogDescription>
-          </DialogHeader>
-          <QuoteForm key={quoteOpen ? `open-${quoteService}` : "closed"} initialService={quoteService} />
-        </DialogContent>
-      </Dialog>
       <Dialog open={!!waNotice} onOpenChange={(o) => !o && setWaNotice(null)}>
-        <DialogContent className="rounded-xl border-[#3A3A3C] bg-[#2D2D2F] text-[#F5F5F7] sm:max-w-md">
+        <DialogContent className="rounded-xl border-[#E5E5E5] bg-white text-[#4A4A4A] sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="font-display text-white">{noticeKind} is unavailable</DialogTitle>
-            <DialogDescription className="text-[#A1A1A6]">
+            <DialogTitle className="font-display text-black">{noticeKind} is unavailable</DialogTitle>
+            <DialogDescription className="text-[#4A4A4A]">
               Your message could not be opened. You can reach Diglo Ventures by email instead.
             </DialogDescription>
           </DialogHeader>
@@ -132,7 +87,7 @@ export function FloatingWhatsApp() {
     <button
       onClick={() => openWhatsApp(DEFAULT_WA_MESSAGE)}
       aria-label="Get a quote on WhatsApp"
-      className="group fixed bottom-[140px] right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#FF6B00] text-white shadow-[0_14px_30px_-12px_rgba(255,107,0,.8)] transition-transform duration-200 hover:-translate-y-1 hover:scale-105 md:bottom-6 md:right-6"
+      className="group fixed bottom-[140px] right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-black text-white shadow-[0_4px_20px_rgba(0,0,0,.06)] transition-transform duration-200 hover:-translate-y-1 hover:scale-105 hover:bg-[#333333] md:bottom-6 md:right-6"
       data-testid="button-floating-whatsapp"
     >
       <MessageCircle className="h-6 w-6 transition-transform group-hover:rotate-[-8deg]" />

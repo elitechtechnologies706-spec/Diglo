@@ -37,25 +37,25 @@ function toError(value: unknown): Error {
 
 function DefaultFallback({ error, resetError }: ErrorFallbackProps) {
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[#1D1D1F] p-6 text-[#F5F5F7]">
+    <div className="min-h-screen w-full flex items-center justify-center bg-white p-6 text-[#4A4A4A]">
       <div className="max-w-lg w-full text-center">
-        <h1 className="text-xl font-semibold text-white">
+        <h1 className="text-xl font-semibold text-black">
           Something went wrong
         </h1>
-        <p className="mt-2 text-sm text-[#A1A1A6]">
+        <p className="mt-2 text-sm text-[#4A4A4A]">
           This part of the app hit an error. The rest of the app is still
           running.
         </p>
         {/* Dev only: messages can carry API responses and other internals. */}
         {import.meta.env.DEV ? (
-          <pre className="mt-4 max-w-full overflow-x-auto rounded border border-[#3A3A3C] bg-[#2D2D2F] p-3 text-left text-xs text-[#F5F5F7]">
+          <pre className="mt-4 max-w-full overflow-x-auto rounded border border-[#E5E5E5] bg-white p-3 text-left text-xs text-[#4A4A4A]">
             {error.message || String(error)}
           </pre>
         ) : null}
         <button
           type="button"
           onClick={resetError}
-          className="mt-4 rounded border border-white/60 bg-[#1D1D1F] px-4 py-2 text-sm text-white hover:bg-[#2D2D2F]"
+          className="mt-4 rounded border border-black bg-black px-4 py-2 text-sm text-white hover:bg-[#333333]"
         >
           Try again
         </button>

@@ -20,7 +20,7 @@ const router: IRouter = Router();
 const failedLogins = new Map<string, { count: number; resetAt: number }>();
 const MAX_FAILED_LOGINS = 10;
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
-const quoteColumns = "id,code,name,phone,country,currency,service,quantity,total_text,status,created_at";
+const quoteColumns = "id,code,name,phone,product,category,service,quantity,branding_details,delivery_area,message,status,created_at";
 
 function loginKey(req: Parameters<Parameters<typeof router.post>[1]>[0]): string {
   return req.ip || req.socket.remoteAddress || "unknown";

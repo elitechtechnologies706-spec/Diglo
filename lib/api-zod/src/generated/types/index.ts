@@ -10,7 +10,6 @@ export * from './adminLoginInput';
 export * from './adminLoginResponse';
 export * from './adminLogoutResponse';
 export * from './digloQuote';
-export * from './digloQuoteCurrency';
 export * from './digloQuoteStatusUpdate';
 export * from './digloQuoteStatusUpdateStatus';
 export * from './healthStatus';

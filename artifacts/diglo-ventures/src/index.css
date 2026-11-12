@@ -452,7 +452,6 @@ form { width: 100%; max-width: 100%; min-width: 0; }
 form input, form select, form textarea { width: 100%; max-width: 100%; min-width: 0; font-size: 16px; }
 @media (max-width: 767px) {
   form input, form select, form textarea { font-size: 16px !important; }
-  .mobile-currency-grid { grid-template-columns: minmax(0, 1fr) !important; }
   footer .grid > div { text-align: center; }
 }
 h1,h2,h3,h4,.font-display { font-family: var(--app-font-display); color: #FFFFFF; letter-spacing: -0.02em; }
@@ -463,10 +462,95 @@ h1,h2,h3,h4,.font-display { font-family: var(--app-font-display); color: #FFFFFF
 .reveal.in { opacity: 1; transform: none; }
 @keyframes pulse-dot { 0%,100% { transform: scale(1); opacity: 1;} 50% { transform: scale(1.35); opacity: .7;} }
 .pulse-dot { animation: pulse-dot 2.4s ease-in-out infinite; }
-@keyframes diglo-price-fade { from { opacity: .45; } to { opacity: 1; } }
-.diglo-currency-fade { animation: diglo-price-fade 150ms ease-out; }
-@media (prefers-reduced-motion: reduce) { .rise,.reveal,.diglo-currency-fade { animation: none; opacity: 1; transform: none; transition: none; } }
+@media (prefers-reduced-motion: reduce) { .rise,.reveal { animation: none; opacity: 1; transform: none; transition: none; } }
 @media (max-width: 767px) {
   html { scroll-padding-top: 64px; }
   .rise,.reveal { animation: none; opacity: 1; transform: none; transition: none; }
 }
+
+/* Diglo white theme and link-only orange interaction state. */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --border: 0 0% 90%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --card-border: 0 0% 90%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+  --popover-border: 0 0% 90%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 100%;
+  --secondary-foreground: 0 0% 0%;
+  --muted: 0 0% 97%;
+  --muted-foreground: 0 0% 29%;
+  --accent: 0 0% 97%;
+  --accent-foreground: 0 0% 0%;
+  --input: 0 0% 90%;
+  --ring: 0 0% 0%;
+}
+
+html, body { background: #FFFFFF !important; color: #4A4A4A; }
+h1, h2, h3, h4 { color: #000000 !important; }
+.diglo-white-theme { background: #FFFFFF !important; color: #4A4A4A; }
+.diglo-white-theme .font-display { color: #000000 !important; }
+.diglo-white-theme .dark-zone,
+.diglo-white-theme [class*="bg-[#1D1D1F]"],
+.diglo-white-theme [class*="bg-[#242426]"],
+.diglo-white-theme [class*="bg-[#2D2D2F]"],
+.diglo-white-theme [class*="bg-[#3A3A3C]"],
+.diglo-white-theme [class*="bg-[#FF6B00]"] {
+  background-color: #FFFFFF !important;
+}
+.diglo-white-theme [class*="border-[#3A3A3C]"],
+.diglo-white-theme [class*="border-[#242426]"],
+.diglo-white-theme [class*="border-[#2D2D2F]"] {
+  border-color: #E5E5E5 !important;
+}
+.diglo-white-theme [class*="border-[#FF6B00]"] { border-color: #000000 !important; }
+.diglo-white-theme [class*="divide-[#3A3A3C]"] { --tw-divide-opacity: 1; border-color: #E5E5E5 !important; }
+.diglo-white-theme [class*="text-white"],
+.diglo-white-theme [class*="text-[#F5F5F7]"] { color: #000000 !important; }
+.diglo-white-theme [class*="text-[#D4D4D4]"],
+.diglo-white-theme [class*="text-[#D4D4D6]"],
+.diglo-white-theme [class*="text-[#A1A1A6]"],
+.diglo-white-theme [class*="text-[#FF6B00]"] { color: #4A4A4A !important; }
+.diglo-white-theme button:not(.nav-link) {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+.diglo-white-theme button:not(.nav-link):hover:not(:disabled) {
+  background-color: #333333 !important;
+  border-color: #333333 !important;
+}
+.diglo-white-theme .nav-link {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: #000000 !important;
+  text-decoration: none !important;
+}
+.diglo-white-theme .nav-link:hover,
+.diglo-white-theme .nav-link[aria-current],
+.diglo-white-theme .nav-link[aria-expanded="true"] {
+  color: #FF6A00 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+}
+.diglo-white-theme a:not([class*="bg-black"]):not([class*="bg-[#FF6B00]"]) {
+  color: #000000 !important;
+  text-decoration: none;
+}
+.diglo-white-theme a:not([class*="bg-black"]):not([class*="bg-[#FF6B00]"]):hover,
+.diglo-white-theme a:not([class*="bg-black"]):not([class*="bg-[#FF6B00]"]):focus-visible,
+.diglo-white-theme a[aria-current]:not([class*="bg-black"]):not([class*="bg-[#FF6B00]"]) {
+  color: #FF6A00 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+}
+.diglo-white-theme a[class*="bg-black"],
+.diglo-white-theme a[class*="bg-[#FF6B00]"] { color: #FFFFFF !important; }
+.diglo-white-theme a[class*="bg-black"]:hover,
+.diglo-white-theme a[class*="bg-[#FF6B00]"]:hover { background-color: #333333 !important; }
+.diglo-white-theme [class*="shadow-["] { box-shadow: 0 4px 20px rgba(0,0,0,.06) !important; }

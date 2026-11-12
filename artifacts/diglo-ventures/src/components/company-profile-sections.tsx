@@ -1,29 +1,29 @@
 import { Check, Clock3, Gift, Heart, Printer, Shield, ShieldCheck, BadgeCheck } from "lucide-react";
+import { Link } from "wouter";
 import { btnOrange, wrap } from "@/components/tokens";
-import { useSite } from "@/components/site-providers";
-import { CardCurrencyPicker, CurrencyAmount } from "@/components/currency-controls";
+import { quotePath } from "@/lib/products";
 
 const SERVICES = [
   {
     title: "Commercial Printing Services",
     description: "High-resolution digital and offset printing for corporate stationery, marketing collateral, banners, and bespoke business publications.",
     icon: Printer,
-    price: 80000,
     service: "Printing Services",
+    product: "Large Format Printing",
   },
   {
     title: "Branded Promotional Merchandise",
     description: "Premium corporate gifts, apparel, and promotional items tailored to amplify brand visibility and client loyalty.",
     icon: Gift,
-    price: 45000,
     service: "Gift Packs",
+    product: "Branded Mug",
   },
   {
     title: "Personal Protective Equipment (PPE)",
     description: "Certified, high-durability safety gear—including high-visibility uniforms, safety boots, helmets, and specialized protective wear engineered for the construction and security sectors.",
     icon: Shield,
-    price: 65000,
     service: "PPE",
+    product: "Full Construction PPE Kit",
   },
 ];
 
@@ -75,7 +75,6 @@ function Heading({ eyebrow, title, id }: { eyebrow: string; title: string; id?: 
 }
 
 export function CompanyProfileSections() {
-  const { openQuote } = useSite();
   return (
     <div className="bg-[#1D1D1F] text-[#F5F5F7]">
       <section id="about" className="scroll-mt-24 py-10 md:py-16">
@@ -111,15 +110,13 @@ export function CompanyProfileSections() {
         <div className={wrap}>
           <Heading eyebrow="Our Services" title="One partner for print, promotion and protection." />
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {SERVICES.map(({ title, description, icon: Icon, price, service }) => (
+            {SERVICES.map(({ title, description, icon: Icon, service, product }) => (
               <article key={title} className="flex flex-col rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5" data-testid={`card-company-service-${service.toLowerCase().replaceAll(" ", "-")}`}>
                 <Icon className="h-5 w-5 text-white" aria-hidden="true" />
                 <h3 className="mt-4 text-[18px] font-semibold leading-snug text-white">{title}</h3>
                 <p className="mt-3 flex-1 text-[15px] leading-relaxed text-[#D4D4D4]">{description}</p>
-                <p className="mt-4 text-[18px] font-bold text-[#FF6B00]" data-testid={`text-company-price-${service.toLowerCase().replaceAll(" ", "-")}`}>From <CurrencyAmount amount={price} /></p>
-                <CardCurrencyPicker />
-                <p className="mt-2 text-[11px] text-[#A1A1A6]">Prices in your currency. Final quote confirmed on WhatsApp.</p>
-                <button onClick={() => openQuote(service)} className={`${btnOrange} mt-4 w-full`} data-testid={`button-company-service-${service.toLowerCase().replaceAll(" ", "-")}`}>Get Quote</button>
+                <p className="mt-4 text-[13px] text-[#4A4A4A]">Customized Quote - Price Depends on Quantity &amp; Branding</p>
+                <Link href={quotePath(product, "Services", service)} className={`${btnOrange} mt-4 w-full`} data-testid={`button-company-service-${service.toLowerCase().replaceAll(" ", "-")}`}>Get Custom Quote</Link>
               </article>
             ))}
           </div>

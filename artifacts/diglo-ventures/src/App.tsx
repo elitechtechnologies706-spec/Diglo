@@ -9,6 +9,7 @@ import Track from '@/pages/track';
 import Admin from '@/pages/admin';
 import About from '@/pages/about';
 import SeoPage from '@/pages/seo-page';
+import QuotePage from '@/pages/quote';
 import seo from '@/lib/seo-data.json';
 import { FloatingWhatsApp, SiteProviders } from '@/components/site-providers';
 import {
@@ -28,6 +29,7 @@ function Router() {
         <Route path="/track" component={Track} />
         <Route path="/about" component={About} />
         <Route path="/admin" component={Admin} />
+        <Route path="/quote" component={QuotePage} />
         {seo.pages.map((p) => (
           <Route key={p.slug} path={`/${p.slug}`}>
             <SeoPage slug={p.slug} />

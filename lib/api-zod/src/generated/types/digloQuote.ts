@@ -5,19 +5,26 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import type { DigloQuoteCurrency } from './digloQuoteCurrency';
 
 export interface DigloQuote {
   id: string;
   code: string;
   name: string;
   phone: string;
-  country: string;
-  currency: DigloQuoteCurrency;
-  service: string;
+  /** @nullable */
+  product: string | null;
+  /** @nullable */
+  category: string | null;
+  /** @nullable */
+  service: string | null;
   /** @minimum 1 */
   quantity: number;
-  total_text: string;
+  /** @nullable */
+  branding_details: string | null;
+  /** @nullable */
+  delivery_area: string | null;
+  /** @nullable */
+  message: string | null;
   status: string;
   created_at: Date;
 }

@@ -43,7 +43,7 @@ function Timeline({ order }: { order: TrackedOrder }) {
               {i < STAGES.length - 1 && (
                 <span className={`absolute left-[13px] top-7 h-[calc(100%-20px)] w-0.5 sm:left-7 sm:top-[13px] sm:h-0.5 sm:w-[calc(100%-20px)] ${past ? "bg-[#A1A1A6]" : "bg-[#3A3A3C]"}`} />
               )}
-              <span className={`relative z-10 grid h-7 w-7 shrink-0 place-items-center rounded-full border-2 ${current ? "border-[#FF6B00] bg-[#FF6B00] text-white" : past ? "border-[#A1A1A6] bg-[#2D2D2F] text-white" : "border-[#3A3A3C] bg-[#2D2D2F] text-[#A1A1A6]"}`}>
+              <span className={`relative z-10 grid h-7 w-7 shrink-0 place-items-center rounded-full border-2 ${current ? "border-black bg-black text-white" : past ? "border-[#A1A1A6] bg-[#2D2D2F] text-white" : "border-[#3A3A3C] bg-[#2D2D2F] text-[#A1A1A6]"}`}>
                 {past ? <Check className="h-3.5 w-3.5" /> : current ? <span className="pulse-dot h-2 w-2 rounded-full bg-white" /> : null}
               </span>
               <span className={`text-[14px] sm:mt-3 ${current ? "font-bold text-white" : past ? "font-medium text-[#D4D4D4]" : "text-[#A1A1A6]"}`}>{s}</span>
