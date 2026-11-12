@@ -74,7 +74,7 @@ export function DesktopProductsMenu({ active, linkClassName }: { active: boolean
       <button type="button" aria-haspopup="true" className={`${linkClassName} inline-flex items-center gap-1`} data-testid="button-products-desktop">
         Products <ChevronDown className="h-3 w-3 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
       </button>
-      <div className="invisible absolute left-1/2 top-full z-50 w-[min(920px,calc(100vw-32px))] -translate-x-1/2 translate-y-2 rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5 opacity-0 shadow-[0_12px_32px_rgba(0,0,0,.35)] transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+      <div style={{ width: "min(920px, calc(100vw - 32px))" }} className="desktop-products-panel invisible absolute left-1/2 top-full z-50 -translate-x-1/2 translate-y-2 rounded-xl border border-[#3A3A3C] bg-[#2D2D2F] p-5 opacity-0 shadow-[0_12px_32px_rgba(0,0,0,.35)] transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
         <ProductGroups />
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-[#3A3A3C] pt-4">
           <p className="text-[13px] text-[#A1A1A6]">Not sure what you need? <span className="text-white">We reply in 5 mins.</span></p>
